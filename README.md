@@ -2,9 +2,12 @@
 
 ## Architecture: 3 containerized services
 
-- **Frontend** (Vue served by nginx)
-- **Backend** (Node/Java/PHP/...)
-- *DB*? (MySQL/GraphQL/...)
+The application consists of three "microservices".
+Each has a specific function:
+
+- **Frontend**:a Nginx web server that **serves Vue.js** static files. (or Vue dev server during development)
+- **Backend**: a Node/Java/PHP application that **handles API requests** from the *Frontend*
+- **Database**: a database instance for development (MySQL/GraphQL/...)
 
 ## Setup
 

@@ -25,6 +25,7 @@
 
 ## Extra
 
+- Vue tutorial: https://www.taniarascia.com/getting-started-with-vue/
 - Install [Vue Dev Tools](https://github.com/vuejs/vue-devtools#vue-devtools)
 - Install [Vetur VSCode extension](https://marketplace.visualstudio.com/items?itemName=octref.vetur)
   - Syntax-highlighting

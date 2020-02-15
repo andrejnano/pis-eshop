@@ -1,0 +1,18 @@
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Base for different docker-compose configurations
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+version: "3.7"
+
+services:
+
+  frontend:
+    build: ./frontend
+    environment:
+      - TERM=xterm-256color
+    tty: true
+
+  backend:
+    build: ./backend
+    environment:
+      - TERM=xterm-256color
+    tty: true

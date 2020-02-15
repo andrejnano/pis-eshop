@@ -1,0 +1,25 @@
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Development configuration
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+version: "3.7"
+
+services:
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - './frontend:/app'
+      - '/app/node_modules' # exclude node_modules
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+    ports:
+      - 4000:4000
+    volumes:
+      - ./backend:/app

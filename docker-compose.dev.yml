@@ -9,6 +9,7 @@ services:
     container_name: frontend
     build:
       context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - 3000:3000
     volumes:
@@ -19,6 +20,7 @@ services:
     container_name: backend
     build:
       context: ./backend
+      dockerfile: Dockerfile
     ports:
       - 4000:4000
     volumes:

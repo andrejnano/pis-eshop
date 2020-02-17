@@ -24,7 +24,8 @@ dev-restart: # Restart all services in dev configuration.
 
 dev: # Run all services
 	docker-compose -f docker-compose.common.yml -f docker-compose.dev.yml up --detach
-
+	open http://localhost:3000
+	open http://localhost:4000
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 dev-frontend:

@@ -12,8 +12,11 @@ WORKDIR /app
 # install dependencies
 RUN yarn
 
-# enable listening on port 4000 on this container
-EXPOSE 4000
+# enable listening on a given port on this container
+ARG BACKEND_PORT
+ENV BACKEND_PORT $BACKEND_PORT
+RUN echo $BACKEND_PORT
+EXPOSE $BACKEND_PORT
 
 # execute server.js script using Node.js
 ENTRYPOINT node ./src/server.js

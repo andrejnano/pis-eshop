@@ -8,7 +8,7 @@ const express = require('express')
 
 
 // basic configuration
-const PORT = 4000;
+const PORT = (process.env.BACKEND_PORT === undefined) ? 4000 : process.env.BACKEND_PORT;
 const HOST = '0.0.0.0';
 
 

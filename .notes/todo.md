@@ -1,0 +1,1 @@
+- [ ] fix nginx reverse proxy resolver, not point to backend container

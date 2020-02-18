@@ -17,6 +17,7 @@ During development, each service works a bit different.
 - Backend is currently not configured for development (TODO: add nodemon/pm2/... process manager)
 - Database should be using volume for development purposes.
 
+
 ## Setup
 
 1. Install [Docker](https://docs.docker.com/install/)

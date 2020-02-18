@@ -1,9 +1,11 @@
 // Vue app configuration file
 // For more info see: https://cli.vuejs.org/config/#vue-config-js
 
+// console.log("FRONTEND_PORT => " + process.env.FRONTEND_PORT);
+
 module.exports = {
   // options...
   devServer: {
-    port: 3000
+    port: (process.env.FRONTEND_PORT === undefined) ? 3000 : process.env.FRONTEND_PORT
   }
 }

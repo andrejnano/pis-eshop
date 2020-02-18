@@ -24,8 +24,6 @@ dev-restart: # Restart all services in dev configuration.
 
 dev: # Run all services
 	docker-compose -f docker-compose.common.yml -f docker-compose.dev.yml up --detach
-	open http://localhost:3000
-	open http://localhost:4000
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 dev-frontend:
@@ -44,6 +42,14 @@ log-backend: # Show logs only from 'backend' service container
 
 log-frontend: # Show logs only from 'frontend' service container
 	docker-compose -f docker-compose.common.yml -f docker-compose.dev.yml logs --follow frontend
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+production-build: # Build all services with Production Configuration
+	docker-compose -f docker-compose.common.yml -f docker-compose.prod.yml build --no-cache
+
+production: # Run all services with Production Configuration
+	docker-compose -f docker-compose.common.yml -f docker-compose.prod.yml up --detach
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

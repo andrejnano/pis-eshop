@@ -2,9 +2,20 @@
 
 ## Architecture: 3 containerized services
 
-- **Frontend** (Vue served by nginx)
-- **Backend** (Node/Java/PHP/...)
-- *DB*? (MySQL/GraphQL/...)
+The application consists of three "microservices".
+Each has a specific function:
+
+- **Frontend**:a Nginx web server that **serves Vue.js** static files.
+- **Backend**: a Node/Java/PHP application that **handles API requests** from the *Frontend*
+- **Database**: a database instance for development (MySQL/GraphQL/...)
+
+### Development configuration
+
+During development, each service works a bit different.
+
+- Frontend doesn't use nginx, but a node development server (webpack+vue), so it is possible to **live-edit** the source code of frontend, and see changes **hot-reloaded** instantly in the browser.
+- Backend is currently not configured for development (TODO: add nodemon/pm2/... process manager)
+- Database should be using volume for development purposes.
 
 ## Setup
 
@@ -22,6 +33,19 @@
 - `make dev-build` to rebuild images
 - `make help` to display usage help
 
+## Typical workflow:
+
+0. **Docker** must be running in the background on host OS
+1. `cd` to project dir
+2. `git pull` for new repo changes
+3. `make dev-build` to build images
+4. `make dev` to run services
+5. Make changes to project source code
+
+- `make log` to display logs from both services, `make log-frontend` or `make log-backend` to display logs from a single service. *Tip: open 2 terminal windows/tabs, in each show logs form a single service side by side*
+- `CTRL + c` to close log stream
+- When finished, use `make clean` to stop running services & remove images.
+- Stage & commit changes + `git push`
 
 ## Extra
 

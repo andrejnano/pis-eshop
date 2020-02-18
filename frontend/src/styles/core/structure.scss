@@ -1,0 +1,27 @@
+.container {
+  width: 100%;
+  max-width: 90vw;
+  padding: 0 1.5rem;
+  margin: auto;
+
+  @include sm-screen {
+    max-width: $content-width;
+    padding: 0 2rem;
+  }
+}
+
+#app {
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  position: absolute;
+}
+
+#main {
+  background: pink;
+  margin-top: $navigation-height;
+  height: calc(100vh - $navigation-height);
+  // height: calc(100vh - $navigation-height);
+  position: relative;
+  width: 100%;
+}

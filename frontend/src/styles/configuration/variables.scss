@@ -1,0 +1,27 @@
+// Variables
+
+/*Breakpoints*/
+
+//small
+$sm-breakpoint: 800px;
+//medium
+$md-breakpoint: 1200px;
+//large
+$lg-breakpoint: 1600px;
+
+
+/*Content*/
+$content-width: $sm-breakpoint;
+$navigation-height: 60px;
+
+/*Typography*/
+
+
+/* Color */
+
+$button-background: rgba(0, 0, 0, 0);
+$button-background-hover: rgba(0, 0, 0, 0.05);
+$button-color: #111;
+$button-weight: 600;
+
+// TODO: fill this with more variables

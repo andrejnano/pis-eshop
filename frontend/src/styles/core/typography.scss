@@ -1,0 +1,65 @@
+@import url('https://rsms.me/inter/inter.css');
+
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: BlinkMacSystemFont, -apple-system, 'Roboto', Helvetica Neue, Helvetica, Arial,
+  sans-serif;
+  font-family: 'Inter', sans-serif;
+  font-size: 84% !important;
+}
+
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: 'Inter var', sans-serif;
+  }
+}
+
+body {
+  font-size: 1rem;
+}
+
+@include sm-screen {
+  body {
+    font-size: 1.15rem;
+  }
+}
+
+p {
+  width: auto;
+  max-width: 100%;
+  font-size: 16px;
+  letter-spacing: -0.011em;
+  line-height: 22px;
+  color: #333;
+}
+
+body {
+  font-size: 16px;
+  letter-spacing: -0.011em;
+  line-height: 22px;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 2.75rem 0 1.05rem;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 3.052em;
+}
+
+h2 {font-size: 2.441em;}
+
+h3 {font-size: 1.953em;}
+
+h4 {font-size: 1.563em;}
+
+h5 {font-size: 1.25em;}
+
+small, .text_small {
+  font-size: 0.8em;
+}

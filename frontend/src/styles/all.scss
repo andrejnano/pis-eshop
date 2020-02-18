@@ -1,3 +1,25 @@
 @charset "utf-8";
 
-@import 'reset.scss';
+/*** Configuration ***/
+@import 'configuration/variables.scss';
+@import 'configuration/mixins.scss';
+
+/*** Helpers ***/
+@import 'helpers/common.scss';
+@import 'helpers/reset.scss';
+@import 'helpers/normalize.scss';
+
+/*** Core ***/
+@import 'core/base.scss';
+@import 'core/typography.scss';
+@import 'core/structure.scss';
+
+/*** Components ***/
+@import 'components/navigation.scss';
+@import 'components/buttons.scss';
+@import 'components/forms.scss';
+
+/*** Animations ***/
+//todo: add
+
+//? themes

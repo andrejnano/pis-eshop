@@ -28,7 +28,8 @@ export default {
 
     callbackend: function () {
 
-      axios.get('http://localhost:4000/api/healthcheck')
+
+      axios.get(`${process.env.BackendUrl}/healthcheck`)
         .then((response) => {
           this.message = JSON.stringify(response.data, null, 4);
 

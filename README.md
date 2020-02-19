@@ -9,6 +9,9 @@ Each has a specific function:
 - **Backend**: a Node/Java/PHP application that **handles API requests** from the *Frontend*
 - **Database**: a database instance for development (MySQL/GraphQL/...)
 
+User <-> Browser <-> Client-side web app (FE) <-> HTTP <-> API (BE) <-> Routes <-> Controllers <-> Model <-> Database
+
+
 ### Development configuration
 
 During development, each service works a bit different.

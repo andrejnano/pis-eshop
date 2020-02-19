@@ -2,7 +2,7 @@
   <div id="healthcheck">
     <div class="alert-box">
       <span class="caption">Backend connection status</span>
-      <a href="http://localhost:4000/api/healthcheck" title="Backend API" class="url">http://localhost:4000/api/healthcheck</a>
+      <a v-bind:href="{backendApiUrl}" title="Backend API" class="url">{{ backendApiUrl }}</a>
       <span class="statusLabel" v-bind:class="{ online: isOnline }">{{ statusText }}</span>
 
       <span class="response-caption">Response</span>
@@ -21,6 +21,7 @@ export default {
       statusText: "Unknown",
       isOnline: false,
       message: "{ test }",
+      backendApiUrl: `${process.env.EXTERNAL_URL}/api/healthcheck`,
     }
   },
 
@@ -29,7 +30,7 @@ export default {
     callbackend: function () {
 
 
-      axios.get(`${process.env.BackendUrl}/healthcheck`)
+      axios.get(backendApiUrl)
         .then((response) => {
           this.message = JSON.stringify(response.data, null, 4);
 

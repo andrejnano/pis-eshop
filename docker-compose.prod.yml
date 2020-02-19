@@ -5,34 +5,39 @@ version: "3.7"
 
 services:
 
-  frontend:
-    container_name: frontend
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        - FRONTEND_PORT=${FRONTEND_PORT:-3000}
-    ports:
-      - ${EXTERNAL_HTTP_PORT:-8080}:${FRONTEND_PORT:-3000}
-    links:
-      - backend
-    depends_on:
-      - backend
-    volumes:
-      - './frontend:/app'
-      - '/app/node_modules' # exclude node_modules
-      - './frontend/server/nginx.conf:/etc/nginx/nginx.conf'
-    restart: always
+    frontend:
+        container_name: frontend
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+            args:
+                - FRONTEND_PORT=${FRONTEND_PORT:-3000}
+        environment:
+            - BackendUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:${BACKEND_PORT:-4000}
+        expose:
+            - ${EXTERNAL_HTTP_PORT:-8080}
+        ports:
+            - ${EXTERNAL_HTTP_PORT:-8080}:${FRONTEND_PORT:-3000}
+        links:
+            - backend
+        depends_on:
+            - backend
+        volumes:
+            - './frontend:/app'
+            - '/app/node_modules' # exclude node_modules
+            - ./frontend/server/nginx.conf:/etc/nginx/nginx.conf
+        restart: always
+        privileged: true
 
-  backend:
-    container_name: backend
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-      args:
-        - BACKEND_PORT=${BACKEND_PORT:-4000}
-    expose:
-      - ${BACKEND_PORT:-4000}
-    volumes:
-      - ./backend:/app
-    restart: always
+    backend:
+        container_name: backend
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+            args:
+                - BACKEND_PORT=${BACKEND_PORT:-4000}
+        expose:
+            - ${BACKEND_PORT:-4000}
+        volumes:
+            - ./backend:/app
+        restart: always

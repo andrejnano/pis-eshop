@@ -1,1 +1,3 @@
-- [ ] fix nginx reverse proxy resolver, not point to backend container
+- [x] fix nginx reverse proxy resolver, not point to backend container
+- [x] add healthcheck, visualize communication between FE <-> BE
+- [ ] add font-awesome

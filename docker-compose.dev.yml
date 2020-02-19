@@ -19,6 +19,10 @@ services:
       - './frontend:/app'
       - '/app/node_modules' # exclude node_modules
     command: '/bin/sh -c "yarn run serve"'
+    environment:
+        - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    tty: true
 
   backend:
     container_name: backend
@@ -31,3 +35,7 @@ services:
       - ${BACKEND_PORT:-4000}:${BACKEND_PORT:-4000}
     volumes:
       - ./backend:/app
+    environment:
+        - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    tty: true

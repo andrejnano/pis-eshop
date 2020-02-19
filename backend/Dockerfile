@@ -9,7 +9,11 @@ FROM node:latest
 # use 'app/' as the working dir
 WORKDIR /app
 
-# install dependencies
+# add '/app/node_modules/.bin' to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install & cache dependencies
+COPY package*.json ./
 RUN npm install
 
 # enable listening on a given port on this container

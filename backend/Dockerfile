@@ -1,7 +1,7 @@
 ## PIS - backend Dockerfile
 
 # pull base image
-FROM node:12-alpine
+FROM node:latest
 
 # # copy project files to (and create) directory '/app'
 # COPY . app/
@@ -10,7 +10,7 @@ FROM node:12-alpine
 WORKDIR /app
 
 # install dependencies
-RUN yarn
+RUN npm install
 
 # enable listening on a given port on this container
 ARG BACKEND_PORT

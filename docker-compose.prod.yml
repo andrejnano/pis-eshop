@@ -13,7 +13,7 @@ services:
             args:
                 - FRONTEND_PORT=${FRONTEND_PORT:-3000}
         environment:
-            - BackendUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:${BACKEND_PORT:-4000}
+            - BackendUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}/api/
         expose:
             - ${EXTERNAL_HTTP_PORT:-8080}
         ports:
@@ -41,3 +41,4 @@ services:
         volumes:
             - ./backend:/app
         restart: always
+        privileged: true

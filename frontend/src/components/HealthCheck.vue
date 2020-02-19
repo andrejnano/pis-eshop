@@ -28,7 +28,7 @@ export default {
 
     callbackend: function () {
 
-      axios.get(backendApiUrl)
+      axios.get(this.backendApiUrl)
         .then((response) => {
           this.message = JSON.stringify(response.data, null, 4);
 

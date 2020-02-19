@@ -21,14 +21,12 @@ export default {
       statusText: "Unknown",
       isOnline: false,
       message: "{ test }",
-      backendApiUrl: `${process.env.EXTERNAL_URL}/api/healthcheck`,
     }
   },
 
   methods: {
 
     callbackend: function () {
-
 
       axios.get(backendApiUrl)
         .then((response) => {
@@ -56,6 +54,12 @@ export default {
     this.callbackend();
     setInterval(function() { this.callbackend(); }.bind(this), 1000);
   },
+
+  computed: {
+    backendApiUrl: function() {
+      return `${process.env.EXTERNAL_URL}/api/healthcheck`;
+    }
+  }
 }
 </script>
 

@@ -1,6 +1,60 @@
 <template>
   <div class="products-page">
     <h1>This is a products page</h1>
-    <p>Projected of a the a descriptions, which client is editorials of in now you himself of ago discipline's on. Derided moving advised motivator, clean facilitate for was to where about was who the in talking I target. Experience to shown of one weary would series epic partiality support example, title desk small the boundless to I our sad. Origin; An and who minutes. To occasion when sign of you they room. Subjective fur that travelling, his he way countries time attention they of frequency lay present trumpet touch more it at hearing. Typically of entered a I travelling read stand.</p>
+
+    <div class="product-wall">
+      <div>
+        <h4>Title</h4>
+        <p class="description">
+          Some description
+        </p>
+        <code>tags</code>
+      </div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 </template>
+
+
+<style lang="scss" scoped>
+
+
+.products-page {
+  color: #fff;
+}
+
+
+.product-wall {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  > div {
+    margin: 0 1rem 2rem;
+    padding: 1rem;
+    width: 180px;
+    background: #121212;
+    color: #fff;
+    border-radius: 10px;
+    height: auto;
+    min-height: 291.24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    .description {
+      color: rgba(255,255,255,0.75);
+    }
+  }
+}
+</style>

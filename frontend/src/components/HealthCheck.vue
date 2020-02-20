@@ -18,9 +18,8 @@ const axios = require('axios').default;
 // import backend api url from environment
 // for dev it is usually: http://localhost:4000/api/healthcheck
 // for production:  http://eshop.blue/api/healthcheck
-let backendApiFromEnv = process.env.backendApiUrl;
+let backendApiFromEnv = process.env.BACKEND_API_URL;
 if (backendApiFromEnv === undefined) {
-  console.log("backendApiFromEnv is undefined");
   backendApiFromEnv = "http://localhost:4000/api/";
 }
 

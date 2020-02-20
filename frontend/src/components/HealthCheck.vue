@@ -4,7 +4,6 @@
       <span class="caption">Backend connection status</span>
       <a v-bind:href="backendApiUrl" title="Backend API" class="url">{{ backendApiUrl }}</a>
       <span class="statusLabel" v-bind:class="{ online: isOnline }">{{ statusText }}</span>
-
       <span class="response-caption">Response</span>
       <pre class="message"><code>{{ message }}</code></pre>
     </div>

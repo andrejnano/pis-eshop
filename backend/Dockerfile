@@ -3,9 +3,6 @@
 # pull base image
 FROM node:latest
 
-# # copy project files to (and create) directory '/app'
-# COPY . app/
-
 # use 'app/' as the working dir
 WORKDIR /app
 

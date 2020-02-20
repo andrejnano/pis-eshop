@@ -6,6 +6,6 @@
 module.exports = {
   // options...
   devServer: {
-    port: (process.env.FRONTEND_PORT === undefined) ? 3000 : process.env.FRONTEND_PORT
+    port: (process.env.FRONTEND_PORT !== undefined) ? process.env.FRONTEND_PORT : 3000
   }
 }

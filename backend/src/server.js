@@ -1,6 +1,5 @@
 'use strict';
 
-
 /* Example of a primitive Express.js web server */
 
 // import express.js framework

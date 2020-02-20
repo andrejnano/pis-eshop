@@ -41,6 +41,7 @@ services:
             dockerfile: Dockerfile
             args:
                 - BACKEND_PORT=${BACKEND_PORT:-4000}
+        command: '/bin/sh -c "node ./src/server.js"'
         expose:
             - ${BACKEND_PORT:-4000}
         volumes:

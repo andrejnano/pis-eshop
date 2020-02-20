@@ -15,6 +15,7 @@ const app = express();
 
 app.use(cors());
 
+
 // Setup the index route "/" and return simple message
 app.get('/api', (req, res) => {
 	res.send('Backend is live.');

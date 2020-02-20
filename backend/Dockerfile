@@ -16,5 +16,4 @@ RUN npm install
 # enable listening on a given port on this container
 ARG BACKEND_PORT
 ENV BACKEND_PORT $BACKEND_PORT
-RUN echo $BACKEND_PORT
 EXPOSE $BACKEND_PORT

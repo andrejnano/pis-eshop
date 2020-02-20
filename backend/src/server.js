@@ -3,17 +3,17 @@
 /* Example of a primitive Express.js web server */
 
 // import express.js framework
-const express = require('express')
-let cors = require('cors')
+const express = require('express');
+let cors = require('cors');
 
 // basic configuration
-const PORT = (process.env.BACKEND_PORT === undefined) ? 4000 : process.env.BACKEND_PORT;
+const PORT = (process.env.BACKEND_PORT !== undefined) ? process.env.BACKEND_PORT : 4000;
 const HOST = '0.0.0.0';
 
 // instantiate express app globally
 const app = express();
 
-app.use(cors())
+app.use(cors());
 
 // Setup the index route "/" and return simple message
 app.get('/api', (req, res) => {

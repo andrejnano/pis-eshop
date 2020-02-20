@@ -28,9 +28,10 @@ During development, each service works a bit different.
 2. Run **Docker Daemon**
 3. `git clone https://github.com/andrejnano/pis-eshop.git`
 4. `cd pis-eshop`
-5. `make dev` (build & run services/containers in a dev configuration)
-6. Open **frontend** app in browser: http://localhost:3000
-7. Open **backend** app in browser: http://localhost:4000
+5. `cp .template.env .env` copy environment configuration file template to an actual config file
+6. `make dev` (build & run services/containers in a dev configuration)
+7. Open **frontend** app in browser: http://localhost:3000
+8. Open **backend** app in browser: http://localhost:4000
 
 **Optionally:**
 - `make ps` to display running services (containers)

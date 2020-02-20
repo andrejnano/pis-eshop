@@ -39,8 +39,8 @@ FROM nginx:latest as production-stage
 # copy built production-ready vue app
 COPY --from=build-stage /app/dist/ srv/www/static
 
-ARG FRONTEND_PORT
-ENV FRONTEND_PORT $FRONTEND_PORT
-EXPOSE $FRONTEND_PORT
+# ARG FRONTEND_PORT
+# ENV FRONTEND_PORT $FRONTEND_PORT
+# EXPOSE $FRONTEND_PORT
 
 CMD ["nginx", "-g", "daemon off;"]

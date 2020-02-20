@@ -3,6 +3,10 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 version: "3.7"
 
+networks:
+    eshop-network:
+        driver: bridge
+
 services:
 
     frontend:
@@ -17,8 +21,8 @@ services:
         ports:
             - 80:80
             - 443:443
-        links:
-            - backend
+        networks:
+            - eshop-network
         depends_on:
             - backend
         volumes:
@@ -28,7 +32,7 @@ services:
             # - ./nginx/error.log:/etc/nginx/error_log.log
             # - ./nginx/cache/:/etc/nginx/cache
             # - /etc/letsencrypt/:/etc/letsencrypt/
-        restart: always
+        restart: unless-stopped
 
     backend:
         container_name: backend
@@ -41,5 +45,6 @@ services:
             - ${BACKEND_PORT:-4000}
         volumes:
             - ./backend:/app
-        restart: always
-        privileged: true
+        restart: unless-stopped
+        networks:
+            - eshop-network

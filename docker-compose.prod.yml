@@ -40,5 +40,6 @@ services:
             - ${BACKEND_PORT:-4000}
         volumes:
             - ./backend:/app
+            - '/app/node_modules' # exclude node_modules
         restart: always
         privileged: true

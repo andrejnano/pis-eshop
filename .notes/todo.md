@@ -7,8 +7,6 @@
 - [ ] create backend *Controllers*
 - [ ] create backend **Model** (DataModel)
 - [ ] Make *Controllers* use **Model** <-> Database
-
-
+- [ ] Fix production deployment pipeline: dont stop running production containers when rebuilding updated images.
 
 User <-> Browser <-> Client-side web application (FE) <-> HTTP <-> API <-> Routes <-> Controllers <-> Model <-> Database
-

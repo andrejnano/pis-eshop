@@ -15,6 +15,9 @@ ENV PATH /app/node_modules/.bin:$PATH
 ARG FA_TOKEN
 ENV FA_TOKEN $FA_TOKEN
 
+ARG BACKEND_API_URL
+ENV BACKEND_API_URL $BACKEND_API_URL
+
 # install & cache dependencies
 COPY package*.json ./
 RUN npm install

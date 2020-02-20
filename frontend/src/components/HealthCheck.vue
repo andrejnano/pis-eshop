@@ -2,7 +2,7 @@
   <div id="healthcheck">
     <div class="alert-box">
       <span class="caption">Backend connection status</span>
-      <a v-bind:href="{backendApiUrl}" title="Backend API" class="url">{{ backendApiUrl }}</a>
+      <a v-bind:href="backendApiUrl" title="Backend API" class="url">{{ backendApiUrl }}</a>
       <span class="statusLabel" v-bind:class="{ online: isOnline }">{{ statusText }}</span>
 
       <span class="response-caption">Response</span>
@@ -14,6 +14,16 @@
 <script>
 const axios = require('axios').default;
 
+
+// import backend api url from environment
+// for dev it is usually: http://localhost:4000/api/healthcheck
+// for production:  http://eshop.blue/api/healthcheck
+let backendApiFromEnv = process.env.backendApiUrl;
+if (backendApiFromEnv === undefined) {
+  console.log("backendApiFromEnv is undefined");
+  backendApiFromEnv = "http://localhost:4000/api/";
+}
+
 export default {
   name: 'healthcheck',
   data() {
@@ -21,7 +31,7 @@ export default {
       statusText: "Unknown",
       isOnline: false,
       message: "{ test }",
-      backendApiUrl: "http://eshop.blue/api/healthcheck",
+      backendApiUrl: backendApiFromEnv + "healthcheck",
     }
   },
 

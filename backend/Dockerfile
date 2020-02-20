@@ -21,6 +21,3 @@ ARG BACKEND_PORT
 ENV BACKEND_PORT $BACKEND_PORT
 RUN echo $BACKEND_PORT
 EXPOSE $BACKEND_PORT
-
-# execute server.js script using Node.js
-ENTRYPOINT node ./src/server.js

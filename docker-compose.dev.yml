@@ -36,6 +36,8 @@ services:
       - ${BACKEND_PORT:-4000}:${BACKEND_PORT:-4000}
     volumes:
       - ./backend:/app
+      - '/app/node_modules' # exclude node_modules
+    command: '/bin/sh -c "node ./src/server.js"'
     environment:
         - CHOKIDAR_USEPOLLING=true
     stdin_open: true

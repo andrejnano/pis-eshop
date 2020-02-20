@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <h1>Webhooks works!</h1>
     <h1 class="title">Welcome to the <strong>Eshop</strong></h1>
     <span class="subtitle">This will be filled with products that can be bought..</span>
     <health-check/>

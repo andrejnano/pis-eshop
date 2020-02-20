@@ -1,57 +1,63 @@
 .navigation {
   position: fixed;
-  width: 100%;
+  width: 60px;
   top: 0;
   left: 0;
+  height: 100vh;
   background: #fff;
 
   .navigation-inner {
+    height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    padding: 0 1.5rem;
-    height: $navigation-height;
-    max-width: 90vw;
+    // justify-content: flex-end;
+    // padding: 0 1.5rem;
+    // height: $navigation-height;
+    // padding: 1rem 0;
     margin: auto;
   }
 
   .logo {
+    width: 100%;
     a {
-      color: #0F4C81;
+      background: orangered;
+      color: rgba(0,0,0,0.9);
       margin-right: 0;
-      font-weight: 1000;
+      padding: 1.4rem 0;
+      width: 100%;
+      font-weight: 800;
       font-size: 1.15rem;
       text-decoration: none;
-
       &:hover {
-        color: #000;
+        color: orangered;
+        background: cyan;
       }
     }
   }
 
   .links {
-    height: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    flex: 1;
+    // flex: 1;
     margin: 0;
 
     a {
       display: flex;
       align-items: center;
-      color: rgba(0,0,0, 0.6);
-      background: #fff;
+      color: rgba(0,0,0, 0.75);
+      // background: #fff;
       margin: 0;
       padding: 1rem;
       text-align: center;
       border-radius: 4px;
-      font-size: 1.2rem;
-      margin: 0 0.5rem;
+      font-size: 1.6rem;
+      margin: 0.5rem 0;
 
       &:hover {
-        color: #111111;
+        background: rgba(0,0,0, 0.1);
       }
 
       &:active {

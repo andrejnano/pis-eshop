@@ -13,6 +13,7 @@ services:
       target: 'dev-stage'
       args:
         - FRONTEND_PORT=${FRONTEND_PORT:-3000}
+        - FA_TOKEN=${FA_TOKEN}
     ports:
       - ${FRONTEND_PORT:-3000}:${FRONTEND_PORT:-3000}
     volumes:

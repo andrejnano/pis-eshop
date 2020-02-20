@@ -11,6 +11,10 @@ WORKDIR app/
 # add '/app/node_modules/.bin' to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
+# import fontawesome token
+ARG FA_TOKEN
+ENV FA_TOKEN $FA_TOKEN
+
 # install & cache dependencies
 COPY package*.json ./
 RUN npm install

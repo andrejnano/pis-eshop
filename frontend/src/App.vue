@@ -8,12 +8,20 @@
           </router-link>
         </div>
         <div class="links">
-          <router-link to="/products" class="button">Products</router-link>
-          <router-link to="/about" class="button">About</router-link>
+          <router-link to="/products" class="nav-button">
+            <font-awesome-icon icon="shapes" title="Products"/>
+          </router-link>
+          <router-link to="/about" class="nav-button">
+            <font-awesome-icon icon="info-circle" title="About"/>
+          </router-link>
         </div>
         <div class="links">
-          <router-link to="/account" class="button">My account</router-link>
-          <router-link to="/cart" class="button">Cart</router-link>
+          <router-link to="/account" class="nav-button">
+            <font-awesome-icon icon="user" title="My Account"/>
+          </router-link>
+          <router-link to="/cart" class="nav-button">
+            <font-awesome-icon icon="shopping-cart" title="My Account"/>
+          </router-link>
         </div>
       </div>
     </nav>

@@ -8,7 +8,8 @@
 - [ ] create backend **Model** (DataModel)
 - [ ] Make *Controllers* use **Model** <-> Database
 - [ ] Fix production deployment pipeline: dont stop running production containers when rebuilding updated images.
-- [ ] add http2
-- [ ] add SSL/https
+- [x] add http2
+- [x] add SSL/https
+- [ ] fix web-root volume not including built /app/dist files
 
 User <-> Browser <-> Client-side web application (FE) <-> HTTP <-> API <-> Routes <-> Controllers <-> Model <-> Database

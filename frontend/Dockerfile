@@ -34,10 +34,10 @@ COPY ./ .
 RUN npm run build
 
 # [3] PRODUCTION STAGE
-FROM nginx:latest as production-stage
+FROM nginx:mainline-alpine as production-stage
 
 # copy built production-ready vue app
-COPY --from=build-stage /app/dist/ srv/www/static
+COPY --from=build-stage /app/dist/ /var/www/html
 
 # ARG FRONTEND_PORT
 # ENV FRONTEND_PORT $FRONTEND_PORT

@@ -8,14 +8,21 @@ import './styles/all.scss'
 // icons
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faShoppingCart, faShapes, faInfo, faInfoCircle, faUser } from '@fortawesome/free-solid-svg-icons'
+// import { faShoppingCart, faShapes, faInfo, faInfoCircle, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faLambda, faAngleDoubleRight, faHomeLg, faInfoCircle, faShoppingCart, faSignOut, faSparkles, faStream, faStore, faUserAlt } from '@fortawesome/pro-duotone-svg-icons'
+
 
 library.add([
-  faShoppingCart,
-  faShapes,
-  faInfo,
+  faLambda,
+  faAngleDoubleRight,
+  faHomeLg,
   faInfoCircle,
-  faUser
+  faShoppingCart,
+  faSignOut,
+  faSparkles,
+  faStream,
+  faStore,
+  faUserAlt
 ]);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

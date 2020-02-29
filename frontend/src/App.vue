@@ -1,30 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navigation">
-      <div class="navigation-inner">
-        <div class="logo">
-          <router-link to="/" class="button">
-            <span class="text">Eshop</span>
-          </router-link>
-        </div>
-        <div class="links">
-          <router-link to="/products" class="nav-button">
-            <font-awesome-icon icon="shapes" title="Products"/>
-          </router-link>
-          <router-link to="/about" class="nav-button">
-            <font-awesome-icon icon="info-circle" title="About"/>
-          </router-link>
-        </div>
-        <div class="links">
-          <router-link to="/account" class="nav-button">
-            <font-awesome-icon icon="user" title="My Account"/>
-          </router-link>
-          <router-link to="/cart" class="nav-button">
-            <font-awesome-icon icon="shopping-cart" title="My Account"/>
-          </router-link>
-        </div>
-      </div>
-    </nav>
+    <navigation/>
     <main id="main">
       <router-view class="container flex column justify-content-center"/>
     </main>
@@ -32,4 +8,39 @@
 </template>
 
 <style lang="scss">
+$navbar-size-closed: 5rem;
+$navbar-size-open: 16rem;
+
+#main {
+  min-height: 100vh;
+  background: #fff;
+  /* border: 1rem solid #110; */
+}
+
+/* Small screens */
+@media only screen and (max-width: 600px) {
+
+  #main {
+    padding-left: 0;
+  }
+
+}
+
+/* Large screens */
+@media only screen and (min-width: 600px) {
+
+  #main {
+    padding-left: $navbar-size-closed;
+  }
+
+}
+
 </style>
+
+<script>
+export default {
+  components: {
+    navigation: () => import(/* webpackChunkName: "navigation" */ './components/Navigation.vue')
+  }
+}
+</script>

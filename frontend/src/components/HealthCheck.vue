@@ -99,7 +99,8 @@ code[class*=language-], pre[class*=language-], pre code {
 }
 
 #healthcheck {
-  position: relative;
+  z-index: 0;
+  /* position: relative; */
   margin: 2rem;
 
   .alert-box {
@@ -118,11 +119,13 @@ code[class*=language-], pre[class*=language-], pre code {
 
     .url {
       margin: 0;
+      margin-right: 1rem;
       display: inline-block;
       background: rgba(255,255,255, 0.15);
-      padding: 0.2rem 0.4rem;
+      padding: 0.3rem 0.4rem;
       color: rgba(255,255,255, 0.5);
       text-decoration: none;
+      border-radius: 4px;
       font-weight: 400;
 
       &:visited {
@@ -136,15 +139,16 @@ code[class*=language-], pre[class*=language-], pre code {
     }
 
     .statusLabel {
-      padding: 0.4rem 2rem;
-      margin: 1rem 1rem;
+      padding: 0.2rem 2rem;
+      margin: 1rem 0;
       background: orangered;
       font-weight: 600;
       border-radius: 4px;
       opacity: 0.8;
+      display: inline-block;
 
       &.online {
-        background: green;
+        background: rgb(0,200,0);
         opacity: 1;
       }
     }

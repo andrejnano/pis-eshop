@@ -1,5 +1,5 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Production configuration
+# eshop.blue - Production configuration
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 version: "3.7"
 

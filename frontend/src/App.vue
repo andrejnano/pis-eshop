@@ -2,7 +2,7 @@
   <div id="app">
     <navigation/>
     <main id="main">
-      <router-view class="container flex column justify-content-center"/>
+      <router-view/>
     </main>
   </div>
 </template>

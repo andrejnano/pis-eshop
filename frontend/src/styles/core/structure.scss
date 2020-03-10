@@ -9,3 +9,34 @@
     padding: 0 2rem;
   }
 }
+
+
+$column-width: 250px;
+$row-height: 250px;
+
+.basic-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax($column-width, 1fr));
+}
+
+.tetris-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax($column-width, 1fr));
+  grid-auto-rows: $row-height;
+}
+
+@media screen and (min-width: 600px) {
+
+  // vertical big card
+  .box-tall {
+    grid-row: span 2 / auto;
+  }
+
+  // horizontal big card
+  .box-wide {
+    grid-column: span 2 / auto;
+  }
+
+}

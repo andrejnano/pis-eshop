@@ -10,6 +10,7 @@
 - [ ] Fix production deployment pipeline: dont stop running production containers when rebuilding updated images.
 - [x] add http2
 - [x] add SSL/https
-- [ ] fix web-root volume not including built /app/dist files
+- [x] fix web-root volume not including built /app/dist files
+- [ ] add charts to dashboard (d3.js or chartjs)
 
 User <-> Browser <-> Client-side web application (FE) <-> HTTP <-> API <-> Routes <-> Controllers <-> Model <-> Database

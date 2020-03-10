@@ -1,0 +1,20 @@
+{
+    "name": "eshop.blue",
+    "short_name": "eshop.blue",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png?v=xQObx6gKNw",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-256x256.png?v=xQObx6gKNw",
+            "sizes": "256x256",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "start_url": "https://eshop.blue",
+    "display": "standalone"
+}

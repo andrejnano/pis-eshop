@@ -4,57 +4,44 @@
       <li class="logo">
         <router-link to="/" class="nav-link">
           <span class="link-text">
-            <!-- <font-awesome-icon :icon="['fad', 'lambda']" /> -->
+            <font-awesome-icon :icon="['fad', 'lambda']" />
             Eshop
           </span>
           <font-awesome-icon :icon="['fad', 'angle-double-right']" class="rotation-icon" title="Home" />
         </router-link>
       </li>
-      <li class="nav-item">
-        <router-link to="/" class="nav-link">
-          <font-awesome-icon :icon="['fad', 'home-lg']" title="Home" />
-          <span class="link-text">Home</span>
+
+      <!-- Navigation Links Loop -->
+      <li v-for="link in navigationLinks" :key="link.url" class="nav-item">
+        <router-link :to="link.url" class="nav-link">
+          <font-awesome-icon :icon="[ link.iconType, link.icon ]" :title="link.text" />
+          <span class="link-text">{{ link.text }}</span>
         </router-link>
       </li>
-      <li class="nav-item">
-        <router-link to="/products" class="nav-link">
-          <font-awesome-icon :icon="['fad', 'store']" title="Products" />
-          <span class="link-text">Products</span>
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/about" class="nav-link">
-          <font-awesome-icon :icon="['fad', 'info-circle']" title="About" />
-          <span class="link-text">About</span>
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/deals" class="nav-link">
-          <font-awesome-icon :icon="['fad', 'sparkles']" title="Deals" />
-          <span class="link-text">Deals</span>
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/cart" class="nav-link">
-          <font-awesome-icon
-            :icon="['fad', 'shopping-cart']"
-            title="Shopping cart"
-          />
-          <span class="link-text">Cart</span>
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/account" class="nav-link">
-          <font-awesome-icon :icon="['fad', 'user-alt']" title="Account" />
-          <span class="link-text">Account</span>
-        </router-link>
-      </li>
+
     </ul>
   </nav>
 </template>
 
 <script>
-export default {};
+export default {
+
+  data() {
+    return {
+      navigationLinks: [
+        { url: "/", text: "Home", icon: "home-lg", iconType: "fad" },
+        { url: "/products", text: "Products", icon: "store", iconType: "fad" },
+        { url: "/about", text: "About", icon: "info-circle", iconType: "fad" },
+        { url: "/cart", text: "Cart", icon: "shopping-cart", iconType: "fad" },
+        { url: "/account", text: "Home", icon: "home-lg", iconType: "fad" },
+        { url: "/login", text: "Log in", icon: "home-lg", iconType: "fad" },
+        { url: "/registration", text: "Registration", icon: "home-lg", iconType: "fad" },
+        { url: "/dashboard", text: "Dashboard", icon: "home-lg", iconType: "fad" },
+        { url: "/admin", text: "Admin", icon: "home-lg", iconType: "fad" },
+      ]
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

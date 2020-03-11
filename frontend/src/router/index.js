@@ -5,6 +5,17 @@ import Home from '../pages/Home.vue'
 Vue.use(VueRouter)
 
 const routes = [
+
+  {
+    path: '/sandbox-dev',
+    name: 'Sandbox',
+    component: () => import(/* webpackChunkName: "sandbox" */ '../pages/SANDBOX.vue'),
+    meta: {
+      auth: false,
+      title: 'Sandbox'
+    }
+  },
+
   {
     path: '/',
     name: 'Home',

@@ -1,18 +1,30 @@
 <template>
   <a class="card" href="#">
-    <font-awesome-icon :icon="[icontype, icon]"/>
+    <font-awesome-icon :icon="[ icontype, icon ]"/>
     <span class="insideText">{{ title }}</span>
   </a>
 </template>
 
 <script>
 export default {
-  props: [
-    'title',
-    'type',
-    'icon',
-    'icontype'
-  ]
+  props: {
+    title: {
+      type: String,
+      default: "Sample Title"
+    },
+    type: {
+      type: String,
+      default: "?"
+    },
+    icon: {
+      type: String,
+      default: "home-lg"
+    },
+    icontype: {
+      type: String,
+      default: "fad"
+    }
+  }
 }
 </script>
 

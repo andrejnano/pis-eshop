@@ -4,6 +4,7 @@
       <h3>Dashboard</h3>
     </header>
     <main>
+
       <section>
         <four-columns class="statistic-group">
           <box
@@ -73,6 +74,8 @@
 </template>
 
 <script>
+
+// todo: refactor this to be more dynamic
 import TwoColumns from '../layouts/TwoColumns'
 // import ThreeColumns from '../layouts/ThreeColumns'
 import FourColumns from '../layouts/FourColumns'

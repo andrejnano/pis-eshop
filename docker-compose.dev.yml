@@ -39,7 +39,7 @@ services:
     volumes:
       - ./backend:/app
       - '/app/node_modules' # exclude node_modules
-    command: '/bin/sh -c "node ./src/server.js"'
+    entrypoint: 'pm2-dev start ecosystem.config.js'
     environment:
         - CHOKIDAR_USEPOLLING=true
     stdin_open: true

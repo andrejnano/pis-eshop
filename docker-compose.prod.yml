@@ -42,7 +42,7 @@ services:
             dockerfile: Dockerfile
             args:
                 - BACKEND_PORT=${BACKEND_PORT:-4000}
-        command: '/bin/sh -c "node ./src/server.js"'
+        command: '/bin/sh -c "pm2-runtime start ecosystem.config.js --env production"'
         expose:
             - ${BACKEND_PORT:-4000}
         volumes:

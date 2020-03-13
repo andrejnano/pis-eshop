@@ -1,7 +1,8 @@
 ## PIS - backend Dockerfile
 
 # pull base image
-FROM node:latest
+# Production ready nodeJS Docker image including the PM2 runtime.
+FROM keymetrics/pm2:latest-alpine
 
 # use 'app/' as the working dir
 WORKDIR /app

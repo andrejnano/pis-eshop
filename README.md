@@ -17,8 +17,8 @@ User <-> Browser <-> Client-side web app (FE) <-> HTTP <-> API (BE) <-> Routes <
 
 During development, each service works a bit different.
 
-- Frontend doesn't use nginx, but a node development server (webpack+vue), so it is possible to **live-edit** the source code of frontend, and see changes **hot-reloaded** instantly in the browser.
-- Backend is currently not configured for development (TODO: add nodemon/pm2/... process manager)
+- Frontend doesn't use nginx, but a Vue development server, so it is possible to **live-edit** the source code of frontend, and see changes **hot-reloaded** instantly in the browser.
+- Backend uses **pm2** process manager, which restarts node server each time source code changes.
 - Database should be using volume for development purposes.
 
 

@@ -1,5 +1,11 @@
 <template>
   <div id="app">
+
+    <!-- only for development, remove for production -->
+    <router-link id="sandbox-link" to="/sandbox-dev">
+      Sandbox
+    </router-link>
+
     <navigation/>
     <main id="main">
       <router-view/>
@@ -15,7 +21,7 @@
 */
 export default {
   components: {
-    navigation: () => import(/* webpackChunkName: "navigation" */ './components/Navigation.vue')
+    navigation: () => import(/* webpackChunkName: "navigation" */ './components/SimpleNavigation.vue')
   }
 }
 </script>
@@ -23,9 +29,33 @@ export default {
 
 <style lang="scss">
 
+#sandbox-link {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  width: 150px;
+  height: 50px;
+  padding: 1rem;
+  text-decoration: none;
+  font-weight: 1000;
+  text-shadow: -1px -2px 1px pink;
+  transition: border 100ms ease;
+  border: 2px solid transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #0f0f0f;
+
+  &:hover {
+    color: #000;
+    border: 2px dashed cyan;
+  }
+}
+
 // Shift `Main Page Content` according to the Navigation's position
-$navbar-size-closed: 5rem;
+/* $navbar-size-closed: 5rem; */
 $navbar-size-open: 16rem;
+$navbar-size-closed: 0;
 
 /* For all window sizes */
 #main {

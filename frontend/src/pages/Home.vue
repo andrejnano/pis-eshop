@@ -1,7 +1,7 @@
 <template>
   <div class="home">
 
-    <two-columns>
+    <basic-grid>
       <hgroup>
         <h1 class="title">Welcome to the <strong>Eshop</strong></h1>
         <h3 class="subtitle">This will be filled with products that can be bought..</h3>
@@ -10,13 +10,13 @@
         <h4>Here is a button</h4> <Button title="test"/>
         <Card icon="angle-double-right" icontype="fad" title="Some important wide link"/>
       </div>
-    </two-columns>
+    </basic-grid>
 
-    <three-columns>
+    <tetris-grid>
       <h1>A</h1>
       <h1>B</h1>
       <h1>C</h1>
-    </three-columns>
+    </tetris-grid>
 
     <health-check/>
   </div>
@@ -27,9 +27,9 @@
 import HealthCheck from '../components/HealthCheck'
 import Button from '../components/Button'
 import Card from '../components/Card'
-import TwoColumns from '../layouts/TwoColumns'
-import ThreeColumns from '../layouts/ThreeColumns'
 
+import BasicGrid from '../layouts/BasicGrid'
+import TetrisGrid from '../layouts/TetrisGrid'
 
 export default {
   name: 'Home',
@@ -37,8 +37,8 @@ export default {
     HealthCheck,
     Button,
     Card,
-    TwoColumns,
-    ThreeColumns
+    BasicGrid,
+    TetrisGrid
   },
 }
 </script>

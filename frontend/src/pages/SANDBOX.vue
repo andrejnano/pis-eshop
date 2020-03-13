@@ -4,7 +4,7 @@
     <button-component/>
     <card-component/>
     <health-check-component/>
-    <navigation-component/>
+    <!-- <navigation-component/> -->
   </tetris-grid>
 </template>
 
@@ -18,8 +18,7 @@ import BoxComponent from '../components/Box'
 import ButtonComponent from '../components/Button'
 import CardComponent from '../components/Card'
 import HealthCheckComponent from '../components/HealthCheck'
-import NavigationComponent from '../components/Navigation'
-
+// import NavigationComponent from '../components/Navigation'
 
 export default {
   components: {
@@ -37,7 +36,7 @@ export default {
     ButtonComponent,
     CardComponent,
     HealthCheckComponent,
-    NavigationComponent,
+    // NavigationComponent,
   }
 }
 </script>

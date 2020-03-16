@@ -1,5 +1,7 @@
 const CONFIG = require('../config');
-var router = require('express').Router()
+var router = require('express').Router();
+
+const { SuccessResponse, ErrorResponse } = require('../utils/response.js');
 
 /*
 |--------------------------------------------------------------------------------
@@ -8,7 +10,26 @@ var router = require('express').Router()
 */
 
 router.get('/', (req, res) => {
-  res.send('Backend is live :)');
+  let response_data = {
+    message: `VPS Eshop.blue ${new Date().getFullYear()} ~ Backend service`,
+    comment: 'This is the index route for the whole backend application.',
+  }
+  return SuccessResponse(res, response_data, 200)
+});
+
+
+/*
+|--------------------------------------------------------------------------------
+| API Index
+|--------------------------------------------------------------------------------
+*/
+
+router.get('/api/', (req, res) => {
+  let response_data = {
+    message: `API for [ VPS | eshop.blue ]`,
+    comment: 'This is the API route for the whole backend application.',
+  }
+  return SuccessResponse(res, response_data, 200)
 });
 
 /*
@@ -17,14 +38,12 @@ router.get('/', (req, res) => {
 |--------------------------------------------------------------------------------
 */
 router.get('/api/healthcheck', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.statusCode = 200;
-  let returnData = {
-    timestamp: Date.now(),
-    msg: `This is a msg from Backend at :${CONFIG.port}`
-  };
-  return res.send(returnData);
+  let response_data = {
+    message: `This message was sent by the backend service running on port :${CONFIG.port}`,
+  }
+  return SuccessResponse(res, response_data, 200)
 });
+
 
 /*
 |--------------------------------------------------------------------------------
@@ -34,6 +53,7 @@ router.get('/api/healthcheck', (req, res) => {
 router.get( '*' , (req, res, next) => {
   return ErrorResponse(res, {message: "Resource not found!"}, 404)
 })
+
 
 //-----------------------------------------------------------------------------
 module.exports = router

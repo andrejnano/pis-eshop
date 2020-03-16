@@ -50,9 +50,9 @@ router.get('/api/healthcheck', (req, res) => {
 | Catch all other invalid requests and respond with 404
 |--------------------------------------------------------------------------------
 */
-router.get( '*' , (req, res, next) => {
-  return ErrorResponse(res, {message: "Resource not found!"}, 404)
-})
+// router.get( '*' , (req, res, next) => {
+//   return ErrorResponse(res, {message: "Resource not found!"}, 404)
+// })
 
 
 //-----------------------------------------------------------------------------

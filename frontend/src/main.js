@@ -4,6 +4,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import './styles/all.scss'
+import Vuelidate from 'vuelidate'
 
 // icons
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -30,6 +31,7 @@ library.add([
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
 

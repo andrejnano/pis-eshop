@@ -5,25 +5,24 @@
 
       <form id="login" class="login-form" @submit.prevent="submit">
 
-        <div class="form-row" v-if="errors.length">
-          <b>There are errors with your credentials:</b>
-          <ul>
-            <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-          </ul>
-        </div>
-
-        <div class="form-row">
+        <div class="form-group" :class="{ 'form-group--error': $v.username.$error }">
           <label for="username-input">Username</label>
-          <input type="text" name="username" autocomplete="username" id="username-input" v-model="username">
+          <input type="text"  autocomplete="username" id="username-input" v-model.trim="$v.username.$model">
         </div>
 
-        <div class="form-row">
+        <div class="error" v-if="!$v.username.required">Username is required</div>
+        <div class="error" v-if="!$v.username.minLength">Username must be at least {{$v.username.$params.minLength.min }} characters long.</div>
+
+        <div class="form-group" :class="{ 'form-group--error': $v.password.$error }">
           <label for="password-input">Password</label>
-          <input type="password" name="password" autocomplete="current-password" id="password-input" v-model="password">
+          <input type="password" autocomplete="current-password" id="password-input" v-model.trim="$v.password.$model">
         </div>
 
-        <div class="form-row">
-          <input label="Sign in" type="submit"/>
+        <div class="error" v-if="!$v.password.required">Password is required</div>
+        <div class="error" v-if="!$v.password.minLength">Password must be at least {{$v.password.$params.minLength.min }} characters long.</div>
+
+        <div class="form-group">
+          <input class="submit-form-button" label="Sign in" type="submit"/>
         </div>
       </form>
 
@@ -34,6 +33,8 @@
 
 
 <script>
+import { required, minLength } from 'vuelidate/lib/validators'
+
 
 export default {
 
@@ -41,28 +42,28 @@ export default {
 
   data ()  {
     return {
-      username: null,
-      password: null,
-      errors: [],
+      username: '',
+      password: '',
     }
   },
 
+
+  validations: {
+    username: {
+      required,
+      minLength: minLength(4)
+    },
+    password: {
+      required,
+      minLength: minLength(4)
+    }
+  },
   methods: {
     submit: function () {
 
       if (this.username && this.password) {
         console.log(`${this.username} + ${this.password}`);
         return true;
-      }
-
-      this.errors = [];
-
-      if (!this.username) {
-        this.errors.push("Username missing.");
-      }
-
-      if (!this.password) {
-        this.errors.push("Password missing.")
       }
 
     }
@@ -81,27 +82,72 @@ export default {
     padding: 2rem;
 
 
-    .login-form {
+    .form-group {
+      margin-top: 1.2rem;
+      width: 300px;
+      max-width: 90vw;
 
-      .form-row {
-        margin-bottom: 1.2rem;
-        width: 300px;
-        max-width: 90vw;
+      border: 1px solid transparent;
 
-        label {
-          display: block;
-          color: #5f5f5f;
-          font-size: 1rem;
-          font-weight: 500;
-          padding: 2px;
-        }
+      label {
+        display: block;
+        color: #5f5f5f;
+        font-size: 1.2rem;
+        font-weight: 400;
+        padding: 5px 2px;
+      }
 
-        input[type=text], input[type=password] {
-          height: 3rem;
-          font-size: 1.8rem;
-          width: 100%;
-          padding: 5px;
-        }
+      input[type=text], input[type=password] {
+        outline: none;
+        border: 2px solid #5f5f5f;
+        border-radius: 5px;
+        height: 3rem;
+        font-size: 1.8rem;
+        width: 100%;
+        padding: 5px;
+      }
+    }
+
+    .form-group--error {
+
+      > input[type=text], input[type=password] {
+        border: 2px solid red;
+      }
+    }
+
+    .error {
+      display: absolute;
+      padding: 5px;
+      font-weight: 600;
+      /* font-style: italic; */
+      font-size: 1rem;
+      color: red;
+    }
+
+
+    .submit-form-button {
+      width: 100%;
+      color: #fff;
+      font-weight: 800;
+      padding: 1rem 2rem;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      background-color: #00f2fe;
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #4facfe;
+        transition: background-color 0.2s ease-in-out;
+      }
+
+      &:active {
+        box-shadow: 0px 0px 0px 2px #a3a3a3;
+      }
+
+      &:focus {
+        box-shadow: 0px 0px 0px 2px #5f5f5f;
       }
     }
   }

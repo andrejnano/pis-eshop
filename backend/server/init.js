@@ -11,24 +11,26 @@
 */
 
 /* IMPORT MAIN APPLICATION MODULE */
-const app = require('../app')
+const app = require("../app");
 
 /* CONFIGURE CONSOLE LOG OUTPUT */
-const chalk = require('chalk');
+const chalk = require("chalk");
 
 const successLogOutput = () => {
   console.log(`
 |------------------------------------------------------------------------------
-| ${chalk.bold.green('UP')}!
-| ${chalk.bold(' Listening on: ')} ${chalk.underline(`http://${app.get('host')}:${app.get('port')}/`)}
-| Running in ${app.get('env')} mode
+| ${chalk.bold.green("UP")}!
+| ${chalk.bold(" Listening on: ")} ${chalk.underline(
+    `http://${app.get("host")}:${app.get("port")}/`
+  )}
+| Running in ${app.get("env")} mode
 |------------------------------------------------------------------------------
-  `)
-}
+  `);
+};
 
 /* START EXPRESS SERVER */
-let Server = app.listen(app.get('port'), app.get('host'), successLogOutput)
+let Server = app.listen(app.get("port"), app.get("host"), successLogOutput);
 
 //-----------------------------------------------------------------------------
-module.exports = Server
+module.exports = Server;
 //-----------------------------------------------------------------------------

@@ -1,6 +1,108 @@
 <template>
   <div class="login-page">
-    <h1>This is a login page</h1>
-    <p>Projected of a the a descriptions, which client is editorials of in now you himself of ago discipline's on. Derided moving advised motivator, clean facilitate for was to where about was who the in talking I target. Experience to shown of one weary would series epic partiality support example, title desk small the boundless to I our sad. Origin; An and who minutes. To occasion when sign of you they room. Subjective fur that travelling, his he way countries time attention they of frequency lay present trumpet touch more it at hearing. Typically of entered a I travelling read stand.</p>
+
+    <div class="login-form-outer">
+
+      <form id="login" class="login-form" @submit.prevent="submit">
+
+        <div class="form-row" v-if="errors.length">
+          <b>There are errors with your credentials:</b>
+          <ul>
+            <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+          </ul>
+        </div>
+
+        <div class="form-row">
+          <label for="username-input">Username</label>
+          <input type="text" name="username" autocomplete="username" id="username-input" v-model="username">
+        </div>
+
+        <div class="form-row">
+          <label for="password-input">Password</label>
+          <input type="password" name="password" autocomplete="current-password" id="password-input" v-model="password">
+        </div>
+
+        <div class="form-row">
+          <input label="Sign in" type="submit"/>
+        </div>
+      </form>
+
+    </div>
+
   </div>
 </template>
+
+
+<script>
+
+export default {
+
+  name: 'LoginForm',
+
+  data ()  {
+    return {
+      username: null,
+      password: null,
+      errors: [],
+    }
+  },
+
+  methods: {
+    submit: function () {
+
+      if (this.username && this.password) {
+        console.log(`${this.username} + ${this.password}`);
+        return true;
+      }
+
+      this.errors = [];
+
+      if (!this.username) {
+        this.errors.push("Username missing.");
+      }
+
+      if (!this.password) {
+        this.errors.push("Password missing.")
+      }
+
+    }
+  },
+}
+</script>
+
+
+<style lang="scss" scoped>
+
+  .login-form-outer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+
+
+    .login-form {
+
+      .form-row {
+        margin-bottom: 1.2rem;
+        width: 300px;
+        max-width: 90vw;
+
+        label {
+          display: block;
+          color: #5f5f5f;
+          font-size: 1rem;
+          font-weight: 500;
+          padding: 2px;
+        }
+
+        input[type=text], input[type=password] {
+          height: 3rem;
+          font-size: 1.8rem;
+          width: 100%;
+          padding: 5px;
+        }
+      }
+    }
+  }
+</style>

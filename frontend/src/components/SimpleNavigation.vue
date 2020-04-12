@@ -21,20 +21,12 @@
 </template>
 
 <script>
+import navigationLinks from '../router/navigationLinks'
+
 export default {
   data() {
     return {
-      navigationLinks: [
-        { url: "/", text: "Home", icon: "home-lg", iconType: "fad" },
-        { url: "/products", text: "Products", icon: "store", iconType: "fad" },
-        { url: "/about", text: "About", icon: "info-circle", iconType: "fad" },
-        { url: "/account", text: "My account", icon: "user-alt", iconType: "fad" },
-        { url: "/login", text: "Log in", icon: "home-lg", iconType: "fad" },
-        { url: "/registration", text: "Registration", icon: "home-lg", iconType: "fad" },
-        { url: "/cart", text: "Cart", icon: "shopping-cart", iconType: "fad" },
-        { url: "/dashboard", text: "Dashboard", icon: "home-lg", iconType: "fad" },
-        { url: "/admin", text: "Admin", icon: "home-lg", iconType: "fad" },
-      ]
+      navigationLinks: navigationLinks
     }
   },
 }
@@ -58,17 +50,18 @@ export default {
 }
 
 .logo {
-  width: 100%;
   display: flex;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
+  margin-right: auto;
+  margin-left: 2rem;
 
   .logo-link {
     text-decoration: none;
     color: #0f0f0f;
     font-weight: 1000;
     font-style: italic;
-    text-shadow: -6px -3px 0px cyan;
+    /* text-shadow: -6px -3px 0px; */
     transition: text-shadow 100ms ease;
     border: 2px solid transparent;
     padding: 1rem 2rem;
@@ -76,7 +69,7 @@ export default {
     &:hover {
       color: #000;
       border: 2px dashed cyan;
-      text-shadow: -6px -6px 0px orangered;
+      text-shadow: -6px -6px 0px cyan;
     }
   }
 }
@@ -91,11 +84,12 @@ export default {
   /* filter: grayscale(35%) opacity(1); */
 
   .link-text {
-    color: #FF055F;
+    color: #21D4FD;
   }
 
   &:hover {
-    filter: grayscale(50%) opacity(1);
+    color: #B721FF;
+    /* filter: grayscale(50%) opacity(1); */
   }
 }
 
@@ -105,15 +99,15 @@ export default {
   font-size: 1rem;
   border-radius: 4px;
   font-weight: 600;
-  background: #f2f2f2;
+  background: #f3f3f3;
   text-decoration: none;
   /* filter: grayscale(90%) opacity(0.7); */
   transition: 100ms;
 
   &:hover {
-    filter: grayscale(0%) opacity(1);
+    /* filter: grayscale(0%) opacity(1); */
     background: #e5e5e5;
-    color: #555;
+    color: #B721FF;
   }
 
   svg {

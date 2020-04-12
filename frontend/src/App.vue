@@ -2,9 +2,9 @@
   <div id="app">
 
     <!-- only for development, remove for production -->
-    <router-link id="sandbox-link" to="/sandbox-dev">
+    <!-- <router-link id="sandbox-link" to="/sandbox-dev">
       Sandbox
-    </router-link>
+    </router-link> -->
 
     <navigation/>
     <main id="main">

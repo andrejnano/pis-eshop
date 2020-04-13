@@ -18,20 +18,20 @@
 */
 const CONFIG = require("../config");
 
-const catchErrorMiddleware = function(req, res, next) {
+const catchErrorMiddleware = function (req, res, next) {
   var err = new Error("Method Not Allowed");
   err.status = 405;
   return next(err);
 };
 
-const handleErrorMiddleware = function(err, req, res, next) {
+const handleErrorMiddleware = function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = CONFIG.app === "development" ? err : {};
   console.log(err);
-  res.status(err.status || 500).send({ error: "Something went wrong :-/" });
+  res.status(err.status || 500).send({ error: err.message });
 };
 
 module.exports = {
   catchErrorMiddleware,
-  handleErrorMiddleware
+  handleErrorMiddleware,
 };

@@ -12,7 +12,9 @@ const passport = require("passport");
 const expressStatus = require("express-status-monitor");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 
+dotenv.config();
 /*
 |--------------------------------------------------------------------------------
 | IMPORT GLOBAL CONFIGURATIONS
@@ -32,9 +34,9 @@ const app = express();
 
 /* CONNECT TO DB */
 mongoose.connect(
-  "TODO_ENV_URL",
+  process.env.MONGO_CONNECT_URL,
   { useNewUrlParser: true, useUnifiedTopology: true },
-  () => console.log("Not connected to db")
+  () => console.log("Connected to db")
 );
 
 require("./models/User");

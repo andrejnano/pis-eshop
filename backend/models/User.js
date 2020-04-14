@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
+const CONFIG = require("../config");
 
 const userSchema = new mongoose.Schema({
   email: String,
@@ -21,6 +22,13 @@ userSchema.methods.validatePassword = function (password) {
     .toString("hex");
   return this.hash === hash;
 };
+
+
+/*
+|--------------------------------------------------------------------------------
+|  Sign and return JWT - Auth Token
+|--------------------------------------------------------------------------------
+*/
 
 userSchema.methods.generateJWT = function () {
   const today = new Date();
@@ -44,5 +52,33 @@ userSchema.methods.toAuthJSON = function () {
     token: this.generateJWT(),
   };
 };
+
+// alternative implementation:
+// -- start
+/*
+|--------------------------------------------------------------------------------
+|  Sign and return JWT - Auth Token
+|--------------------------------------------------------------------------------
+*/
+userSchema.methods.getJWT = function() {
+  let expirationTime = parseInt(CONFIG.jwt_expiration)
+  let token = jwt.sign({ user_id: this._id}, CONFIG.jwt_secret, {expiresIn: expirationTime})
+  return `Bearer ${token}`
+}
+
+
+/*
+|--------------------------------------------------------------------------------
+|  Data Model -> JSON
+|--------------------------------------------------------------------------------
+*/
+userSchema.methods.toWeb = function() {
+  let json = this.toJSON()
+  delete json.password
+  delete json._id
+  return json
+}
+
+// --- end
 
 module.exports = mongoose.model("User", userSchema);

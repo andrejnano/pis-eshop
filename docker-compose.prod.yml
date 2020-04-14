@@ -51,6 +51,22 @@ services:
         networks:
             - eshop-network
 
+    mongo:
+        container_name: mongo
+        image: mongo
+        environment:
+            - ENV=production
+            - MONGO_DATA_DIR=/data/db
+            - MONGO_LOG_DIR=/dev/null
+            - MONGODB_USER=${MONGODB_USER}
+            - MONGODB_PASS=${MONGODB_PASS}
+        volumes:
+            - ./data/db:/data/db
+        expose:
+            - ${MONGODB_PORT}
+        command: mongod --port ${MONGODB_PORT}
+
+
     certbot:
         image: certbot/certbot
         container_name: certbot

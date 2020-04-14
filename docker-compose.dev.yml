@@ -5,42 +5,57 @@ version: "3.7"
 
 services:
 
-  frontend:
-    container_name: frontend
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      target: 'dev-stage'
-      args:
-        - FRONTEND_PORT=${FRONTEND_PORT:-3000}
-        - BACKEND_API_URL=${BACKEND_API_URL}
-        - FA_TOKEN=${FA_TOKEN}
-    ports:
-      - ${FRONTEND_PORT:-3000}:${FRONTEND_PORT:-3000}
-    volumes:
-      - './frontend:/app'
-      - '/app/node_modules' # exclude node_modules
-    command: '/bin/sh -c "yarn run serve"'
-    environment:
-        - CHOKIDAR_USEPOLLING=true
-        - FA_TOKEN=${FA_TOKEN}
-    stdin_open: true
-    tty: true
+    frontend:
+        container_name: frontend
+        build:
+        context: ./frontend
+        dockerfile: Dockerfile
+        target: 'dev-stage'
+        args:
+            - FRONTEND_PORT=${FRONTEND_PORT:-3000}
+            - BACKEND_API_URL=${BACKEND_API_URL}
+            - FA_TOKEN=${FA_TOKEN}
+        ports:
+            - ${FRONTEND_PORT:-3000}:${FRONTEND_PORT:-3000}
+        volumes:
+            - './frontend:/app'
+            - '/app/node_modules' # exclude node_modules
+        command: '/bin/sh -c "yarn run serve"'
+        environment:
+            - CHOKIDAR_USEPOLLING=true
+            - FA_TOKEN=${FA_TOKEN}
+        stdin_open: true
+        tty: true
 
-  backend:
-    container_name: backend
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-      args:
-        - BACKEND_PORT=${BACKEND_PORT:-4000}
-    ports:
-      - ${BACKEND_PORT:-4000}:${BACKEND_PORT:-4000}
-    volumes:
-      - ./backend:/app
-      - '/app/node_modules' # exclude node_modules
-    entrypoint: 'pm2-dev start ecosystem.config.js'
-    environment:
-        - CHOKIDAR_USEPOLLING=true
-    stdin_open: true
-    tty: true
+    backend:
+        container_name: backend
+        build:
+        context: ./backend
+        dockerfile: Dockerfile
+        args:
+            - BACKEND_PORT=${BACKEND_PORT:-4000}
+        ports:
+            - ${BACKEND_PORT:-4000}:${BACKEND_PORT:-4000}
+        volumes:
+            - ./backend:/app
+            - '/app/node_modules' # exclude node_modules
+        entrypoint: 'pm2-dev start ecosystem.config.js'
+        environment:
+            - CHOKIDAR_USEPOLLING=true
+        stdin_open: true
+        tty: true
+
+    mongo:
+        container_name: mongo
+        image: mongo
+        environment:
+            - ENV=development
+            - MONGO_DATA_DIR=/data/db
+            - MONGO_LOG_DIR=/dev/null
+            - MONGODB_USER=${MONGODB_USER}
+            - MONGODB_PASS=${MONGODB_PASS}
+        volumes:
+            - ./data/db:/data/db
+        ports:
+            - ${MONGODB_PORT}:${MONGODB_PORT}
+        command: mongod --port ${MONGODB_PORT} --smallfiles --logpath=/dev/null

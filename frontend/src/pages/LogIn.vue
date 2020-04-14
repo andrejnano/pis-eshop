@@ -34,6 +34,7 @@
 
 <script>
 import { required, minLength } from 'vuelidate/lib/validators'
+const axios = require('axios').default;
 
 
 export default {
@@ -61,11 +62,15 @@ export default {
   methods: {
     submit: function () {
 
+      // validate input and only then send to API
       if (this.username && this.password) {
         console.log(`${this.username} + ${this.password}`);
         return true;
       }
+    },
 
+    submitCredentialsToAPI: function (username, password) {
+      axios.post('http://localhost:4000/api/users')
     }
   },
 }

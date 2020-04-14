@@ -27,3 +27,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+#mongo db persistent storage
+data/

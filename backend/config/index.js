@@ -12,9 +12,9 @@ let CONFIG = {}
 | Express Server
 |--------------------------------------------------------------------------------
 */
-CONFIG.app  = process.env.NODE_ENV      || 'development'
-CONFIG.port = process.env.BACKEND_PORT  || '4000'
-CONFIG.host = process.env.BACKEND_HOST  || '0.0.0.0'
+CONFIG.app          = process.env.NODE_ENV          || 'development'
+CONFIG.port         = process.env.BACKEND_PORT      || '4000'
+CONFIG.host         = process.env.BACKEND_HOST      || '0.0.0.0'
 
 /*
 |--------------------------------------------------------------------------------

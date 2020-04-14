@@ -8,13 +8,13 @@ services:
     frontend:
         container_name: frontend
         build:
-        context: ./frontend
-        dockerfile: Dockerfile
-        target: 'dev-stage'
-        args:
-            - FRONTEND_PORT=${FRONTEND_PORT:-3000}
-            - BACKEND_API_URL=${BACKEND_API_URL}
-            - FA_TOKEN=${FA_TOKEN}
+            context: ./frontend
+            dockerfile: Dockerfile
+            target: 'dev-stage'
+            args:
+                - FRONTEND_PORT=${FRONTEND_PORT:-3000}
+                - BACKEND_API_URL=${BACKEND_API_URL}
+                - FA_TOKEN=${FA_TOKEN}
         ports:
             - ${FRONTEND_PORT:-3000}:${FRONTEND_PORT:-3000}
         volumes:
@@ -30,10 +30,10 @@ services:
     backend:
         container_name: backend
         build:
-        context: ./backend
-        dockerfile: Dockerfile
-        args:
-            - BACKEND_PORT=${BACKEND_PORT:-4000}
+            context: ./backend
+            dockerfile: Dockerfile
+            args:
+                - BACKEND_PORT=${BACKEND_PORT:-4000}
         ports:
             - ${BACKEND_PORT:-4000}:${BACKEND_PORT:-4000}
         volumes:
@@ -42,6 +42,13 @@ services:
         entrypoint: 'pm2-dev start ecosystem.config.js'
         environment:
             - CHOKIDAR_USEPOLLING=true
+            - MONGODB_HOST=mongo
+            - MONGODB_USER=${MONGODB_USER}
+            - MONGODB_PASS=${MONGODB_PASS}
+            - MONGODB_DATABASE=${MONGODB_DATABASE}
+            - MONGODB_PORT=${MONGODB_PORT}
+            - JWT_SECRET=${JWT_SECRET}
+            - JWT_EXPIRATION=${JWT_EXPIRATION}
         stdin_open: true
         tty: true
 
@@ -58,4 +65,4 @@ services:
             - ./data/db:/data/db
         ports:
             - ${MONGODB_PORT}:${MONGODB_PORT}
-        command: mongod --port ${MONGODB_PORT} --smallfiles --logpath=/dev/null
+        command: mongod --port ${MONGODB_PORT}

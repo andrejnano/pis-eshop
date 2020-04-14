@@ -64,13 +64,24 @@ export default {
 
       // validate input and only then send to API
       if (this.username && this.password) {
-        console.log(`${this.username} + ${this.password}`);
-        return true;
+        this.submitCredentialsToAPI(this.username, this.password)
       }
     },
 
     submitCredentialsToAPI: function (username, password) {
-      axios.post('http://localhost:4000/api/users')
+
+      let credentials = {
+        username: username,
+        password: password
+      }
+
+      axios({ url: 'http://localhost:4000/api/users/login', data: credentials, method: 'POST' })
+        .then((response) => {
+          console.log(`RESPONSE: ${response}`)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     }
   },
 }

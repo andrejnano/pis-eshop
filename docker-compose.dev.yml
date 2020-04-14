@@ -24,6 +24,7 @@ services:
         environment:
             - CHOKIDAR_USEPOLLING=true
             - FA_TOKEN=${FA_TOKEN}
+            - TERM=xterm-256color
         stdin_open: true
         tty: true
 
@@ -41,6 +42,7 @@ services:
             - '/app/node_modules' # exclude node_modules
         entrypoint: 'pm2-dev start ecosystem.config.js'
         environment:
+            - TERM=xterm-256color
             - CHOKIDAR_USEPOLLING=true
             - MONGODB_HOST=mongo
             - MONGODB_USER=${MONGODB_USER}
@@ -56,6 +58,7 @@ services:
         container_name: mongo
         image: mongo
         environment:
+            - TERM=xterm-256color
             - ENV=development
             - MONGO_DATA_DIR=/data/db
             - MONGO_LOG_DIR=/dev/null

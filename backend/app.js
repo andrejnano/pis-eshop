@@ -32,15 +32,17 @@ const CONFIG = require("./config");
 */
 const app = express();
 
-/* CONNECT TO DB */
-mongoose.connect(
-  process.env.MONGO_CONNECT_URL,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  () => console.log("Connected to db")
-);
 
-require("./models/User");
-require("./config/passport");
+/*
+|--------------------------------------------------------------------------------
+| IMPORT DATA MODELS & SETUP DATABASE CONNECTIONS
+|--------------------------------------------------------------------------------
+*/
+
+const models = require("../models");
+
+
+// require("./config/passport");
 
 /*
 |--------------------------------------------------------------------------------

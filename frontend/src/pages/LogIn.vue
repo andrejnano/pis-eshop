@@ -5,13 +5,13 @@
 
       <form id="login" class="login-form" @submit.prevent="submit">
 
-        <div class="form-group" :class="{ 'form-group--error': $v.username.$error }">
-          <label for="username-input">Username</label>
-          <input type="text"  autocomplete="username" id="username-input" v-model.trim="$v.username.$model">
+        <div class="form-group" :class="{ 'form-group--error': $v.email.$error }">
+          <label for="email-input">Email</label>
+          <input type="text" autocomplete="email" id="email-input" v-model.trim="$v.email.$model">
         </div>
 
-        <div class="error" v-if="!$v.username.required">Username is required</div>
-        <div class="error" v-if="!$v.username.minLength">Username must be at least {{$v.username.$params.minLength.min }} characters long.</div>
+        <div class="error" v-if="!$v.email.required">Email is required</div>
+        <div class="error" v-if="!$v.email.minLength">Email must be at least {{$v.email.$params.minLength.min }} characters long.</div>
 
         <div class="form-group" :class="{ 'form-group--error': $v.password.$error }">
           <label for="password-input">Password</label>
@@ -25,6 +25,10 @@
           <input class="submit-form-button" label="Sign in" type="submit"/>
         </div>
       </form>
+
+      <div v-if="showResult" class='result'>
+        <br>Logged in as <strong>{{ resEmail }}</strong> with the token: <br><textarea v-model='resToken'></textarea>
+      </div>
 
     </div>
 
@@ -43,14 +47,17 @@ export default {
 
   data ()  {
     return {
-      username: '',
+      email: '',
       password: '',
+      showResult: false,
+      resEmail: '',
+      resToken: ''
     }
   },
 
 
   validations: {
-    username: {
+    email: {
       required,
       minLength: minLength(4)
     },
@@ -63,21 +70,23 @@ export default {
     submit: function () {
 
       // validate input and only then send to API
-      if (this.username && this.password) {
-        this.submitCredentialsToAPI(this.username, this.password)
+      if (this.email && this.password) {
+        this.submitCredentialsToAPI(this.email, this.password)
       }
     },
 
-    submitCredentialsToAPI: function (username, password) {
+    submitCredentialsToAPI: function (email, password) {
 
       let credentials = {
-        username: username,
+        email: email,
         password: password
       }
 
       axios({ url: 'http://localhost:4000/api/users/login', data: credentials, method: 'POST' })
         .then((response) => {
-          console.log(`RESPONSE: ${response}`)
+          this.showResult = true
+          this.resEmail = response.data.user.email;
+          this.resToken = response.data.token;
         })
         .catch((error) => {
           console.error(error)

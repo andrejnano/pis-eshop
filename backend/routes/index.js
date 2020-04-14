@@ -1,3 +1,4 @@
+
 const CONFIG = require('../config');
 var router = require('express').Router();
 
@@ -24,13 +25,7 @@ router.get('/', (req, res) => {
 |--------------------------------------------------------------------------------
 */
 
-router.get('/api/', (req, res) => {
-  let response_data = {
-    message: `API for [ VPS | eshop.blue ]`,
-    comment: 'This is the API route for the whole backend application.',
-  }
-  return SuccessResponse(res, response_data, 200)
-});
+router.use('/api/', require('./api'));
 
 /*
 |--------------------------------------------------------------------------------

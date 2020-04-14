@@ -45,7 +45,7 @@ module.exports.login = function(req, res) {
 */
 module.exports.get = function(req, res) {
   if (req.user) {
-    return SuccessResponse(res, { user: req.user.toJSON() }, 200)
+    return SuccessResponse(res, { user: req.user.toWeb() }, 200)
   } else {
     return ErrorResponse(res, { message: "Could not get any data" }, 404)
   }

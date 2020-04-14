@@ -14,7 +14,7 @@ let router = require('express').Router()
 | Use Custom Strategy w/ Passport middleware
 |--------------------------------------------------------------------------------
 */
-// passport.use(require('../../middleware/passport').authStrategy())
+passport.use(require('../../middleware/passport').userIdAuthStrategy())
 
 
 /*
@@ -22,7 +22,7 @@ let router = require('express').Router()
 | Import All Controllers
 |--------------------------------------------------------------------------------
 */
-// let user_controller    = require('../../controllers/UserController')
+let UserController = require('../../controllers/UserController')
 // let configuration_controller  = require('../../controllers/ConfigurationController')
 // let order_controller = require('../../controllers/OrderController')
 // let product_controller = require('../../controllers/ProductController')
@@ -46,10 +46,10 @@ router.get('/', (req, res, next) => {
 | Users Route   "/api/users/"
 |--------------------------------------------------------------------------------
 */
-// router.post(    '/users',   user_controller.create)                                                  // C
-// router.get(     '/users',   passport.authenticate('jwt', {session: false}), user_controller.get)     // R
-// router.put(     '/users',   passport.authenticate('jwt', {session: false}), user_controller.update)  // U
-// router.delete(  '/users',   passport.authenticate('jwt', {session: false}), user_controller.delete)  // D
+// router.post(    '/users',   UserController.create)                                                  // C
+router.get('/users',   passport.authenticate('jwt', {session: false}), UserController.get)     // R
+// router.put(     '/users',   passport.authenticate('jwt', {session: false}), UserController.update)  // U
+// router.delete(  '/users',   passport.authenticate('jwt', {session: false}), UserController.delete)  // D
 
 
 /*
@@ -57,7 +57,7 @@ router.get('/', (req, res, next) => {
 | User Login Route   "/api/users/login/"
 |--------------------------------------------------------------------------------
 */
-// router.post(    '/users/login', user_controller.login)
+router.post('/users/login', UserController.login)
 
 
 

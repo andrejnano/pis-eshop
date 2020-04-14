@@ -14,13 +14,19 @@ userSchema.methods.setPassword = function (password) {
   this.hash = crypto
     .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
     .toString("hex");
+
+    // STORE
+    this.save();
 };
 
 userSchema.methods.validatePassword = function (password) {
+
   const hash = crypto
     .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
     .toString("hex");
-  return this.hash === hash;
+
+  // return user object if password is correct, otherwise null
+  return (this.hash === hash) ? this : null;
 };
 
 
@@ -74,7 +80,9 @@ userSchema.methods.getJWT = function() {
 */
 userSchema.methods.toWeb = function() {
   let json = this.toJSON()
-  delete json.password
+  delete json.salt
+  delete json.hash
+  delete json.__v
   delete json._id
   return json
 }

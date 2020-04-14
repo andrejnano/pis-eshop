@@ -45,7 +45,7 @@ const createAdminAccount = function (user) {
   }
 
   const admin = {
-    email: 'admin@eshop.blue',
+    email: 'administrator@eshop.blue',
     password: 'secretadminpass'
   }
 

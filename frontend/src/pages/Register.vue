@@ -16,6 +16,7 @@
         </div>
 
         <div class="error" v-if="!$v.email.required">Email is required</div>
+        <div class="error" v-if="!$v.email.email">Email format is invalid.</div>
         <div class="error" v-if="!$v.email.minLength">Email must be at least {{$v.email.$params.minLength.min }} characters long.</div>
 
         <div class="form-group" :class="{ 'form-group--error': $v.password.$error }">
@@ -31,6 +32,7 @@
           <input type="password" autocomplete="new-password" id="repeat-password-input" v-model.trim="$v.repeatPassword.$model">
         </div>
 
+        <div class="error" v-if="!$v.repeatPassword.required">You need to confirm your password by repeating it.</div>
         <div class="error" v-if="!$v.repeatPassword.sameAsPassword">Passwords don't match!</div>
 
         <div class="form-group">
@@ -45,7 +47,7 @@
 
 
 <script>
-import { required, sameAs, minLength } from 'vuelidate/lib/validators'
+import { required, sameAs, email, minLength } from 'vuelidate/lib/validators'
 // const axios = require('axios').default;
 
 
@@ -70,30 +72,30 @@ export default {
     },
     email: {
       required,
-      minLength: minLength(4)
+      minLength: minLength(4),
+      email
     },
     password: {
       required,
       minLength: minLength(6),
     },
     repeatPassword: {
+      required,
       sameAsPassword: sameAs('password')
     }
   },
 
   methods: {
     submit: function () {
-
-      this.errors = [];
-
-      if (!this.username) {
-        this.errors.push("Username missing.");
+      if (this.email && this.password && this.repeatPassword && this.fullname) {
+        this.$store.dispatch('AUTH_CREATE', { email: this.email, password: this.password })
+          .then(() => {
+            this.$router.push('/')
+          })
+          .catch((error) => {
+            console.error(error)
+          })
       }
-
-      if (!this.password) {
-        this.errors.push("Password missing.")
-      }
-
     }
   },
 }

@@ -87,6 +87,26 @@ userSchema.methods.toWeb = function() {
   return json
 }
 
+/*
+|--------------------------------------------------------------------------------
+|  User Orders
+|--------------------------------------------------------------------------------
+*/
+// userSchema.methods.myOrders = async function () {
+//   return new Promise((resolve, reject) => {
+//     // search for all orders made by the currently logged in user
+//     let searchQuery = { owner: { permissions: [], user_id: this._id } }
+//     Order.find(searchQuery, (err, results) => {
+//       if (err) reject(err)
+//       else resolve(results)
+//     })
+//   })
+// }
+
+
+
+
+
 // --- end
 
 module.exports = mongoose.model("User", userSchema);

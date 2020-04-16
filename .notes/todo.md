@@ -13,5 +13,6 @@
 - [x] fix web-root volume not including built /app/dist files
 - [ ] add charts to dashboard (d3.js or chartjs)
 - [ ] remove unnecessary web-root directory, but still keep let's encrypt working inside docker-compose
+- [ ] enable password change
 
 User <-> Browser <-> Client-side web application (FE) <-> HTTP <-> API <-> Routes <-> Controllers <-> Model <-> Database

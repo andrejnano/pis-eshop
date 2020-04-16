@@ -10,14 +10,34 @@ let User = require('../models/User')
 const { SuccessResponse, ErrorResponse} = require('../utils/response')
 
 
-
 /*
 |--------------------------------------------------------------------------------
 | Create a new User Account (Registration)
 |--------------------------------------------------------------------------------
 */
 module.exports.create = function(req, res) {
-  // TODO: Implement
+
+  let email = req.body.email
+  let password = req.body.password
+
+  if (!email || !password) {
+    return ErrorResponse(res, { message: "Parameter is missing."}, 422)
+  }
+
+  try {
+    User.create({ email: email })
+      .then((user) => {
+        user.setPassword(password)
+        let message = {
+          message: 'Successfully created new user account.',
+          user: user.toWeb(),
+          token: user.getJWT()
+        }
+        return SuccessResponse(res, message, 200)
+      })
+  } catch (error) {
+    return ErrorResponse(res, error, 422)
+  }
 }
 
 
@@ -69,8 +89,19 @@ module.exports.get = function(req, res) {
 | Update User Account data
 |--------------------------------------------------------------------------------
 */
-module.exports.update = function(req, res) {
-  // TODO: Implement
+
+// todo: password update doesn't work
+// there should be a mechanism, which detects if the password in the request
+// is a new one, if so, it should call the setPassword() method
+// alternatively, userSchema can directly specify password as a hash
+module.exports.update = async function(req, res) {
+  try {
+    await req.user.set(req.body)
+    await req.user.save()
+    return SuccessResponse(res, { user: req.user.toWeb() }, 200)
+  } catch (error) {
+    return ErrorResponse(res, error, 501)
+  }
 }
 
 
@@ -80,5 +111,13 @@ module.exports.update = function(req, res) {
 |--------------------------------------------------------------------------------
 */
 module.exports.delete = function(req, res) {
-  // TODO: Implement
+  try {
+    User.deleteOne({_id: req.user._id})
+      .then(() => {
+        return SuccessResponse(res, { message: 'User Account Deleted' }, 204)
+      })
+  } catch(error) {
+    return ErrorResponse(res, error, 400)
+  }
+
 }

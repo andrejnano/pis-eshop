@@ -5,35 +5,36 @@
 
       <form id="register" class="register-form" @submit.prevent="submit">
 
-        <div class="form-row" v-if="errors.length">
-          <b>There are errors with your credentials:</b>
-          <ul>
-            <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-          </ul>
+        <div class="form-group">
+          <label for="fullname-input">Full Name</label>
+          <input type="text" id="fullname-input" v-model="$v.fullname.$model">
         </div>
 
-        <div class="form-row">
-          <label for="username-input">Username</label>
-          <input type="text" name="username" autocomplete="username" id="username-input" v-model="username">
-        </div>
-
-        <div class="form-row">
+        <div class="form-group" :class="{ 'form-group--error': $v.email.$error }">
           <label for="email-input">Email</label>
-          <input type="email" name="email" autocomplete="email" id="email-input" v-model="email">
+          <input type="text" autocomplete="email" id="email-input" v-model.trim="$v.email.$model">
         </div>
 
-        <div class="form-row">
+        <div class="error" v-if="!$v.email.required">Email is required</div>
+        <div class="error" v-if="!$v.email.minLength">Email must be at least {{$v.email.$params.minLength.min }} characters long.</div>
+
+        <div class="form-group" :class="{ 'form-group--error': $v.password.$error }">
           <label for="password-input">Password</label>
-          <input type="password" name="password" autocomplete="new-password" id="password-input" v-model="password">
+          <input type="password" autocomplete="new-password" id="password-input" v-model.trim="$v.password.$model">
         </div>
 
-        <div class="form-row">
+        <div class="error" v-if="!$v.password.required">Password is required</div>
+        <div class="error" v-if="!$v.password.minLength">Password must be at least {{$v.password.$params.minLength.min }} characters long.</div>
+
+        <div class="form-group" :class="{ 'form-group--error': $v.repeatPassword.$error }">
           <label for="repeat-password-input">Repeat password</label>
-          <input type="password" name="repeat-password" autocomplete="new-password" id="repeat-password-input" v-model="password">
+          <input type="password" autocomplete="new-password" id="repeat-password-input" v-model.trim="$v.repeatPassword.$model">
         </div>
 
-        <div class="form-row">
-          <input label="Sign in" type="submit"/>
+        <div class="error" v-if="!$v.repeatPassword.sameAsPassword">Passwords don't match!</div>
+
+        <div class="form-group">
+          <input class="submit-form-button" label="Register" type="submit"/>
         </div>
       </form>
 
@@ -44,28 +45,44 @@
 
 
 <script>
+import { required, sameAs, minLength } from 'vuelidate/lib/validators'
+// const axios = require('axios').default;
+
 
 export default {
 
-  name: 'RegistrationForm',
+  name: 'Register',
 
   data ()  {
     return {
-      username: null,
-      email: null,
-      password: null,
-      repeatedPassword: null,
+      fullname: '',
+      email: '',
+      password: '',
+      repeatPassword: '',
       errors: [],
+    }
+  },
+
+  validations: {
+    fullname: {
+      required,
+      minLength: minLength(4)
+    },
+    email: {
+      required,
+      minLength: minLength(4)
+    },
+    password: {
+      required,
+      minLength: minLength(6),
+    },
+    repeatPassword: {
+      sameAsPassword: sameAs('password')
     }
   },
 
   methods: {
     submit: function () {
-
-      if (this.username && this.password) {
-        console.log(`${this.username} + ${this.password}`);
-        return true;
-      }
 
       this.errors = [];
 
@@ -93,27 +110,72 @@ export default {
     padding: 2rem;
 
 
-    .register-form {
+    .form-group {
+      margin-top: 1.2rem;
+      width: 300px;
+      max-width: 90vw;
 
-      .form-row {
-        margin-bottom: 1.2rem;
-        width: 300px;
-        max-width: 90vw;
+      border: 1px solid transparent;
 
-        label {
-          display: block;
-          color: #5f5f5f;
-          font-size: 1rem;
-          font-weight: 500;
-          padding: 2px;
-        }
+      label {
+        display: block;
+        color: #5f5f5f;
+        font-size: 1.2rem;
+        font-weight: 400;
+        padding: 5px 2px;
+      }
 
-        input[type=text], input[type=email], input[type=password] {
-          height: 3rem;
-          font-size: 1.8rem;
-          width: 100%;
-          padding: 5px;
-        }
+      input[type=text], input[type=password] {
+        outline: none;
+        border: 2px solid #5f5f5f;
+        border-radius: 5px;
+        height: 3rem;
+        font-size: 1.8rem;
+        width: 100%;
+        padding: 5px;
+      }
+    }
+
+    .form-group--error {
+
+      > input[type=text], input[type=password] {
+        border: 2px solid red;
+      }
+    }
+
+    .error {
+      display: absolute;
+      padding: 5px;
+      font-weight: 600;
+      /* font-style: italic; */
+      font-size: 1rem;
+      color: red;
+    }
+
+
+    .submit-form-button {
+      width: 100%;
+      color: #fff;
+      font-weight: 800;
+      padding: 1rem 2rem;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      background-color: #00f2fe;
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #4facfe;
+        transition: background-color 0.2s ease-in-out;
+      }
+
+      &:active {
+        box-shadow: 0px 0px 0px 2px #a3a3a3;
+      }
+
+      &:focus {
+        box-shadow: 0px 0px 0px 2px #5f5f5f;
       }
     }
   }

@@ -9,26 +9,72 @@
         </router-link>
       </li>
 
-      <!-- Navigation Links Loop -->
-      <li v-for="link in navigationLinks" :key="link.url" class="nav-item">
-        <router-link :to="link.url" class="nav-link">
-          <!-- <font-awesome-icon :icon="[ link.iconType, link.icon ]" :title="link.text" /> -->
-          <span class="link-text">{{ link.text }}</span>
+      <li class="nav-item">
+        <router-link to="products" class="nav-link">
+          <font-awesome-icon :icon="[ 'fad', 'store' ]" title="Products" />
+          <span class="link-text">Products</span>
         </router-link>
       </li>
+
+
+      <li class="nav-item"><!-- separator --></li>
+      <li class="nav-item"><!-- separator --></li>
+
+      <li v-if="!userData.email" class="nav-item">
+        <router-link to="login" class="nav-link">
+          <span class="link-text">Log in</span>
+        </router-link>
+      </li>
+
+      <li v-if="!userData.email" class="nav-item">
+        <router-link to="register" class="nav-link">
+          <span class="link-text">Sign up</span>
+        </router-link>
+      </li>
+
+      <li v-if="userData.email" class="nav-item">
+        <router-link to="cart" class="nav-link">
+          <font-awesome-icon :icon="[ 'fad', 'shopping-cart' ]" title="Cart" />
+          <span class="link-text">Cart</span>
+        </router-link>
+      </li>
+
+      <li v-if="userData.email" class="nav-item">
+        <router-link to="orders" class="nav-link">
+          <font-awesome-icon :icon="[ 'fad', 'shopping-cart' ]" title="Orders" />
+          <span class="link-text">My orders</span>
+        </router-link>
+      </li>
+
+      <li v-if="userData.email" class="nav-item">
+        <logout-button class="nav-link"/>
+      </li>
+
     </ul>
   </nav>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import navigationLinks from '../router/navigationLinks'
+import LogoutButton from './LogoutButton'
 
 export default {
   data() {
     return {
-      navigationLinks: navigationLinks
+      navigationLinks: navigationLinks,
     }
   },
+
+  computed: {
+    ...mapState({
+      userData: state => state.user.userData,
+    }),
+  },
+
+  components: {
+    LogoutButton
+  }
 }
 </script>
 

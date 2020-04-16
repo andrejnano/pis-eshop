@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../pages/Home.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -103,9 +104,30 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  scrollBehavior: () => ({ y: 0 }),
+  routes,
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+})
+
+
+
+// control auth access with router middleware
+router.beforeEach((to, from, next) => {
+  // allow acces depending on the login state
+  if (to.matched.some(record => record.meta.auth)) {
+    // check if user is authenticated using a token
+    if (!store.getters.isAuth) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 // update page title

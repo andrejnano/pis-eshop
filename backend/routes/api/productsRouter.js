@@ -1,12 +1,38 @@
 const router = require("express").Router();
-const Configuration = require("../models/Configuration");
-const Product = require("../models/Product");
-const Coupon = require("../models/Coupon");
+const auth = require("../../middleware/auth");
+const Configuration = require("../../models/Configuration");
+const Product = require("../../models/Product");
+const Coupon = require("../../models/Coupon");
 
-const { SuccessResponse, ErrorResponse } = require("../utils/response.js");
+const { SuccessResponse, ErrorResponse } = require("../../utils/response.js");
 
 //Validation
 const Joi = require("@hapi/joi");
+
+
+router.get("/", auth.optional, (req, res) => {
+  Product.find({}, (err, products) =>{
+      let response_data = {
+        message: 'Default products route',
+        products: products
+      };
+      return SuccessResponse(res, response_data, 200);
+    }
+  );
+
+  
+});
+
+router.get("/id/:productId", auth.optional, (req, res) => {
+    Product.findById(req.params.productId, (err, product) => {
+      let response_data = {
+        message: 'Default products with number ' + req.params.orderId + ' route',
+        product: product
+      };
+      return SuccessResponse(res, response_data, 200);
+    })
+    
+});
 
 router.get("/init", async (req, res) => {
   const savedConfig1 = await new Configuration({
@@ -83,10 +109,6 @@ router.get("/init", async (req, res) => {
     message: `MongoDB had been initialized.`,
   };
   return SuccessResponse(res, response_data, 200);
-});
-
-router.get("/all", auth.optional, (req, res) => {
-  Product.find({}, (err, products) => res.send(products));
 });
 
 module.exports = router;

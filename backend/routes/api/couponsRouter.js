@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const Coupon = require("../models/Coupon");
+const Coupon = require("../../models/Coupon");
 
-const { SuccessResponse, ErrorResponse } = require("../utils/response.js");
+const { SuccessResponse, ErrorResponse } = require("../../utils/response.js");
 
 //Validation
 const Joi = require("@hapi/joi");

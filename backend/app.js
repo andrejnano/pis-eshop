@@ -22,8 +22,6 @@ dotenv.config();
 */
 const CONFIG = require("./config");
 
-/* Passport auth middleware configuration */
-// const passportConfig = require('./config/passport');
 
 /*
 |--------------------------------------------------------------------------------
@@ -42,7 +40,9 @@ const app = express();
 const models = require("./models");
 
 
-// require("./config/passport");
+/* Passport auth middleware configuration */
+const passportConfig = require('./config/passport');
+
 
 /*
 |--------------------------------------------------------------------------------
@@ -75,7 +75,6 @@ app.use(cors());
 // app.use("/api/products/", require("./routes/productsRouter"));
 // app.use("/api/coupons/", require("./routes/couponsRouter"));
 
-app.use("/test", require("./routes/testRouter"));
 app.use("/", require("./routes/index"));
 
 /*

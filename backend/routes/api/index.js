@@ -22,7 +22,6 @@ passport.use(require('../../middleware/passport').userIdAuthStrategy())
 | Import All Controllers
 |--------------------------------------------------------------------------------
 */
-let UserController = require('../../controllers/UserController')
 // let configuration_controller  = require('../../controllers/ConfigurationController')
 // let order_controller = require('../../controllers/OrderController')
 // let product_controller = require('../../controllers/ProductController')
@@ -41,25 +40,9 @@ router.get('/', (req, res, next) => {
   return SuccessResponse(res, response_data, 200)
 })
 
-/*
-|--------------------------------------------------------------------------------
-| Users Route   "/api/users/"
-|--------------------------------------------------------------------------------
-*/
-// router.post(    '/users',   UserController.create)                                                  // C
-router.get('/users',   passport.authenticate('jwt', {session: false}), UserController.get)     // R
-// router.put(     '/users',   passport.authenticate('jwt', {session: false}), UserController.update)  // U
-// router.delete(  '/users',   passport.authenticate('jwt', {session: false}), UserController.delete)  // D
-
-
-/*
-|--------------------------------------------------------------------------------
-| User Login Route   "/api/users/login/"
-|--------------------------------------------------------------------------------
-*/
-router.post('/users/login', UserController.login)
-
-
+router.use('/user', require('./usersRouter'));
+router.use('/orders', require('./ordersRouter'));
+router.use('/products', require('./productsRouter'));
 
 
 /*

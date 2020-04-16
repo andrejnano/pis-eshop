@@ -9,6 +9,18 @@
 let User = require('../models/User')
 const { SuccessResponse, ErrorResponse} = require('../utils/response')
 
+
+
+/*
+|--------------------------------------------------------------------------------
+| Create a new User Account (Registration)
+|--------------------------------------------------------------------------------
+*/
+module.exports.create = function(req, res) {
+  // TODO: Implement
+}
+
+
 /*
 |--------------------------------------------------------------------------------
 | Authenticate User (Login)
@@ -49,4 +61,24 @@ module.exports.get = function(req, res) {
   } else {
     return ErrorResponse(res, { message: "Could not get any data" }, 404)
   }
+}
+
+
+/*
+|--------------------------------------------------------------------------------
+| Update User Account data
+|--------------------------------------------------------------------------------
+*/
+module.exports.update = function(req, res) {
+  // TODO: Implement
+}
+
+
+/*
+|--------------------------------------------------------------------------------
+| Delete User Account
+|--------------------------------------------------------------------------------
+*/
+module.exports.delete = function(req, res) {
+  // TODO: Implement
 }

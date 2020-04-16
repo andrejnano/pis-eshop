@@ -38,8 +38,6 @@
 
 <script>
 import { required, minLength } from 'vuelidate/lib/validators'
-const axios = require('axios').default;
-
 
 export default {
 
@@ -71,27 +69,15 @@ export default {
 
       // validate input and only then send to API
       if (this.email && this.password) {
-        this.submitCredentialsToAPI(this.email, this.password)
+        this.$store.dispatch('AUTH_REQUEST', { email: this.email, password: this.password })
+          .then(() => {
+            this.$router.push('/')
+          })
+          .catch((error) => {
+            console.error(error)
+          })
       }
     },
-
-    submitCredentialsToAPI: function (email, password) {
-
-      let credentials = {
-        email: email,
-        password: password
-      }
-
-      axios({ url: 'http://localhost:4000/api/users/login', data: credentials, method: 'POST' })
-        .then((response) => {
-          this.showResult = true
-          this.resEmail = response.data.user.email;
-          this.resToken = response.data.token;
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-    }
   },
 }
 </script>

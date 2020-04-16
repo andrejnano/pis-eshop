@@ -16,7 +16,6 @@
         </router-link>
       </li>
 
-
       <li class="nav-item"><!-- separator --></li>
       <li class="nav-item"><!-- separator --></li>
 
@@ -43,6 +42,14 @@
         <router-link to="orders" class="nav-link">
           <font-awesome-icon :icon="[ 'fad', 'shopping-cart' ]" title="Orders" />
           <span class="link-text">My orders</span>
+        </router-link>
+      </li>
+
+
+      <li v-if="userData.email" class="nav-item">
+        <router-link to="account" class="nav-link">
+          <font-awesome-icon :icon="[ 'fad', 'user-alt' ]" title="Account" />
+          <span class="link-text">{{ userData.email }}</span>
         </router-link>
       </li>
 

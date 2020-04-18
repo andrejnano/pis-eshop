@@ -3,6 +3,9 @@
 
     <div class="login-form-outer">
 
+
+      <h1 class="title">Sign in</h1>
+
       <form id="login" class="login-form" @submit.prevent="submit">
 
         <div class="form-group" :class="{ 'form-group--error': $v.email.$error }">
@@ -122,7 +125,7 @@ export default {
     .form-group--error {
 
       > input[type=text], input[type=password] {
-        border: 2px solid red;
+        border: 2px solid orangered;
       }
     }
 
@@ -132,7 +135,7 @@ export default {
       font-weight: 600;
       /* font-style: italic; */
       font-size: 1rem;
-      color: red;
+      color: orangered;
     }
 
 
@@ -144,7 +147,7 @@ export default {
       outline: none;
       border: none;
       border-radius: 5px;
-      background-color: #00f2fe;
+      background-color: #5F5CFF;
       transition: background-color 0.2s ease-in-out;
       cursor: pointer;
 

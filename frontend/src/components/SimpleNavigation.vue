@@ -11,13 +11,20 @@
 
       <li class="nav-item">
         <router-link to="products" class="nav-link">
-          <font-awesome-icon :icon="[ 'fad', 'store' ]" title="Products" />
+          <!-- <font-awesome-icon :icon="[ 'fad', 'store' ]" title="Products" /> -->
           <span class="link-text">Products</span>
         </router-link>
       </li>
 
-      <li class="nav-item"><!-- separator --></li>
-      <li class="nav-item"><!-- separator --></li>
+
+      <li class="nav-item">
+        <router-link to="pricing" class="nav-link">
+          <!-- <font-awesome-icon :icon="[ 'fad', 'store' ]" title="Products" /> -->
+          <span class="link-text">Pricing</span>
+        </router-link>
+      </li>
+
+      <li class="nav-separator"><!-- separator --></li>
 
       <li v-if="!userData.email" class="nav-item">
         <router-link to="login" class="nav-link">
@@ -88,17 +95,22 @@ export default {
 <style lang="scss" scoped>
 
 .simple-navbar {
-  width: 100vw;
+  width: 100%;
   top: 0;
-  height: 100px;
+  height: 50px;
+  background: #5F5CFF;
+  /* background-image: linear-gradient(to right, #4facfe 0%, #5F5CFF 100%); */
+  color: #fff;
 }
 
 .simple-navbar-nav {
+  max-width: 90vw;
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   height: 100%;
 }
 
@@ -106,29 +118,37 @@ export default {
   display: flex;
   justify-content: center;
   font-size: 1.5rem;
-  margin-right: auto;
+  /* margin-right: auto; */
   margin-left: 2rem;
 
   .logo-link {
     text-decoration: none;
-    color: #0f0f0f;
-    font-weight: 1000;
+    color: #fff;
+    font-weight: 800;
     font-style: italic;
     /* text-shadow: -6px -3px 0px; */
     transition: text-shadow 100ms ease;
     border: 2px solid transparent;
-    padding: 1rem 2rem;
+    padding: 0.5rem 1rem;
 
     &:hover {
-      color: #000;
-      border: 2px dashed cyan;
-      text-shadow: -6px -6px 0px cyan;
+      color: #fff;
+      border: 2px dashed palegreen;
+      text-shadow: -6px -6px 0px rgb(184, 184, 184);
     }
   }
 }
 
 .nav-item {
-  margin-right: 1rem;
+  height: 100%;
+  /* margin-right: 1rem; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nav-separator {
+  margin-right: auto;
 }
 
 // Currently active route in vue router
@@ -141,26 +161,25 @@ export default {
   }
 
   &:hover {
-    color: #B721FF;
+    background:rgb(62, 58, 255);
     /* filter: grayscale(50%) opacity(1); */
   }
 }
 
 .nav-link {
-  padding: 0.5rem 0.75rem;
-  color: #5f5f5f;
+  display: flex;
+  align-items:center;
+  height: 100%;
+  color: #fff;
   font-size: 1rem;
-  border-radius: 4px;
+  padding: 0 2rem;
   font-weight: 600;
-  background: #f3f3f3;
+  background: transparent;
   text-decoration: none;
-  /* filter: grayscale(90%) opacity(0.7); */
   transition: 100ms;
 
   &:hover {
-    /* filter: grayscale(0%) opacity(1); */
-    background: #e5e5e5;
-    color: #B721FF;
+    background:rgb(62, 58, 255);
   }
 
   svg {

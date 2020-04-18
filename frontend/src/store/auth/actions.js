@@ -69,7 +69,7 @@ export function AUTH_REQUEST (context, credentials) {
 |--------------------------------------------------------------------------
 */
 export function AUTH_LOGOUT (context) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     // finalize and dispatch user logout/ remove data
     context.commit('AUTH_LOGOUT')
     context.dispatch('USER_LOGOUT')

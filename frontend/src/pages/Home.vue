@@ -3,51 +3,38 @@
 
 
     <div class="featured-panel">
-      <h1>One-click install and deploy</h1>
-      <div class="subtitle">VPS hosting made easy</div>
+      <div class="title">VPS Hosting Platform</div>
+      <div class="subtitle">Servers for gaming, e-commerce and web app deployment.</div>
+      <div class="subtitle-2">Built by developers for developers.</div>
       <div class="cta">
-        <Button title="Configure a VPS now"/>
+        <router-link to="register" class="button primary-button">
+          <span class="link-text">Sign up</span>
+        </router-link>
+        <router-link to="pricing" class="button secondary-button">
+          <span class="link-text">View pricing</span>
+        </router-link>
       </div>
     </div>
 
-    <!-- <basic-grid>
-      <hgroup>
-        <h1 class="title">Welcome to the <strong>Eshop</strong></h1>
-        <h3 class="subtitle">This will be filled with products that can be bought..</h3>
-      </hgroup>
-      <div>
-        <h4>Here is a button</h4> <Button title="test"/>
-        <Card icon="angle-double-right" icontype="fad" title="Some important wide link"/>
-      </div>
-    </basic-grid>
+    <ShoppingCart/>
 
-    <tetris-grid>
-      <h1>A</h1>
-      <h1>B</h1>
-      <h1>C</h1>
-    </tetris-grid>
-
-    <health-check/> -->
+    <div id='illustration-wrapper'>
+      <img class="illustration" src="../assets/undraw_gaming_6oy3.svg" alt="server-cluster"/>
+      <img class="illustration" src="../assets/undraw_secure_server.svg" alt="server-cluster"/>
+      <img class="illustration" src="../assets/undraw_maintenance.svg" alt="server-cluster"/>
+    </div>
   </div>
 </template>
 
 
 <script>
-// import HealthCheck from '../components/HealthCheck'
-import Button from '../components/Button'
-// import Card from '../components/Card'
 
-// import BasicGrid from '../layouts/BasicGrid'
-// import TetrisGrid from '../layouts/TetrisGrid'
+import ShoppingCart from '../components/ShoppingCart'
 
 export default {
   name: 'Home',
   components: {
-    // HealthCheck,
-    Button,
-    // Card,
-    // BasicGrid,
-    // TetrisGrid
+    ShoppingCart,
   },
 }
 </script>
@@ -56,32 +43,101 @@ export default {
 <style lang="scss" scoped>
 
 
+.home {
+  background: rgb(247, 247, 255);
+}
+
+
+  #illustration-wrapper {
+    position: absolute;
+    top: 100px;
+    right: 200px;
+    display: flex;
+    flex-direction: column;
+
+    .illustration {
+      position: relative;
+      width: 200px;
+      margin: 1rem auto;
+
+      &:last-child {
+        /* margin; */
+      }
+
+      &:nth-child(2) {
+        margin-left: 100px;
+      }
+
+      &:first-child {
+        /* margin-top: 400px; */
+      }
+    }
+  }
+
+
   .featured-panel {
     width: 100%;
-    background: blue;
-    background: radial-gradient(circle, rgba(62,50,255,1) 0%, rgba(81,81,150,1) 100%);
-    background-color: #21D4FD;
-    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
-background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+    background: rgb(247, 247, 255);
 
-    min-height: 700px;
-    color: #fff;
+    height: calc(100vh - 50px);
+    max-width: 90vw;
+    margin: 0 auto;
+    color: #000;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
-    h1 {
-      font-weight: 800;
+    .title {
+      font-size: 2.2rem;
+      font-weight: 600;
     }
 
     .subtitle {
+      margin-top: 1rem;
       font-size: 2rem;
-      font-weight: 500;
+      font-weight: 600;
+      color: #5F5CFF;
+    }
+
+    .subtitle-2 {
+      margin-top: 2rem;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #666;
     }
 
     .cta {
-      margin: 2rem auto;
+      margin-top: 2rem;
+
+
+        .primary-button, .secondary-button {
+          text-decoration: none;
+          padding: auto 2rem;
+          transition: background-color 100ms linear;
+          border-radius: 4px;
+        }
+
+        .primary-button {
+          background-color: #5F5CFF;
+          border: 1px solid #5F5CFF;
+          color: #fff;
+
+          &:hover {
+            background-color: rgb(51, 47, 255);
+          }
+        }
+
+        .secondary-button {
+          color: #5F5CFF;
+          margin-left: 1rem;
+          border: 1px solid #5F5CFF;
+
+          &:hover {
+            border: 1px solid rgb(51, 47, 255);
+            color: rgb(51, 47, 255);
+          }
+        }
     }
   }
 

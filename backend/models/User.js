@@ -7,12 +7,28 @@ const userSchema = new mongoose.Schema({
   email: String,
   hash: String,
   salt: String,
-  admin: {
+  isAdmin: {
     type: Boolean,
     default: false
   },
 });
 
+
+// set this user as admin acc
+userSchema.methods.setAdmin = function () {
+  this.isAdmin = true;
+};
+
+// set this user as admin acc
+userSchema.methods.setRegularUser = function () {
+  this.isAdmin = false;
+};
+
+
+// return true if this user is an admin, otherwise false
+// userSchema.methods.isAdmin = function () {
+//   return this.isAdmin;
+// };
 
 userSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString("hex");
@@ -107,8 +123,6 @@ userSchema.methods.toWeb = function() {
 //     })
 //   })
 // }
-
-
 
 
 

@@ -58,7 +58,6 @@
 
 
 <script>
-
 import axios from 'axios';
 
 export default {
@@ -80,6 +79,7 @@ export default {
       this.errors.push(e)
     })
   }
+
 }
 </script>
 

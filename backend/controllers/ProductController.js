@@ -15,9 +15,9 @@ const { SuccessResponse, ErrorResponse} = require('../utils/response')
 
 module.exports.init =async function(req,res) {
 
-  // await Category.collection.drop();
-  // await Product.collection.drop();
-  // await Configuration.collection.drop();
+  await Category.collection.drop();
+  await Product.collection.drop();
+  await Configuration.collection.drop();
 
   const gameCat = await new Category({
     title: 'Gaming servers',
@@ -210,8 +210,9 @@ module.exports.init =async function(req,res) {
 module.exports.create = async function(req, res) {
   await req.user.set(req.body);
   if (req.user.isAdmin) {
-    let { name, price, icon, description } = req.body;
-    let doc = await new Product({ name, price, icon, description }).save();
+    let { name, price, icon, description, category, configuration} = req.body;
+    let conf = await new Configuration({...configuration}).save();
+    let doc = await new Product({ name, price, icon, description, category, configuration: conf._id }).save();
     return SuccessResponse(res, { created: doc }, 200)
   } else {
     return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)

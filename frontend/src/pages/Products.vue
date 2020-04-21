@@ -26,7 +26,7 @@
                   </li>
                   <li>
                     <label>HDD</label>
-                    <span>{{ product.configuration.memory }} GB</span>
+                    <span>{{ product.configuration.hdd }} GB</span>
                   </li>
                   <li>
                     <label>Type</label>
@@ -55,6 +55,9 @@
 
           </button>
         </li>
+        <li>
+          <editProduct v-if="userData.isAdmin" :createProduct="createProduct" />
+        </li>
       </ul>
     </div>
   </div>
@@ -71,6 +74,10 @@ export default {
       products: [],
       description: '',
     }
+  },
+
+  components: {
+    editProduct: () => import(/* webpackChunkName: "navigation" */ '../components/EditProduct.vue')
   },
 
   created() {
@@ -99,6 +106,17 @@ export default {
     deleteProduct(product_id) {
       axios.delete('http://localhost:4000/api/products/'+product_id)
       .then(() => {
+        this.fetchProducts();
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
+    createProduct(product) {
+      console.log("passed")
+      axios.post('http://localhost:4000/api/products/', product)
+      .then(response => {
+        console.log(response);
         this.fetchProducts();
       })
       .catch(e => {

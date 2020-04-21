@@ -46,8 +46,6 @@ export default {
   created() {
     axios.get('http://localhost:4000/api/categories')
     .then(response => {
-      // JSON responses are automatically parsed.
-      console.log(response.data)
       this.products = response.data
     })
     .catch(e => {

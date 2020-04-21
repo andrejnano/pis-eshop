@@ -8,8 +8,12 @@
 
       <ul class="products three-column-grid">
         <li class="product-item" v-for="product in products" :key="product.title">
-          <button class="product">
+          <button class="product">     
+            <button v-if="userData.isAdmin" @click="deleteProduct(product._id)" class="delete">
+                <font-awesome-icon :icon="[ 'fad', 'trash' ]" />
+            </button>
             <div class="cover">
+
               <div class="configuration">
                 <ul>
                   <li>
@@ -59,6 +63,7 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex'
 
 export default {
   data() {
@@ -69,15 +74,37 @@ export default {
   },
 
   created() {
-    axios.get('http://localhost:4000/api/categories/'+this.$route.params.category_id)
-    .then(response => {
-      // JSON responses are automatically parsed.
-      this.description = response.data.pop().description;
-      this.products = response.data;
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
+    this.fetchProducts();
+  },
+
+  computed: {
+    ...mapState({
+      userData: state => state.user.userData,
+      isAdmin: state => state.user.isAdmin
+    }),
+  },
+
+  methods: {
+    fetchProducts() {
+      axios.get('http://localhost:4000/api/categories/'+this.$route.params.category_id)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.description = response.data.pop().description;
+            this.products = response.data;
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+    },
+    deleteProduct(product_id) {
+      axios.delete('http://localhost:4000/api/products/'+product_id)
+      .then(() => {
+        this.fetchProducts();
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    }
   }
 
 }
@@ -147,6 +174,7 @@ export default {
         /* outline: none; */
         border: none;
         box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
+        position: relative;
 
 
         .cover {
@@ -234,7 +262,16 @@ export default {
           color: #666;
         }
 
-        }
+
+      }
+
+      .delete {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        z-index: 1;
+        color: #fff;
+      }
     }
   }
 

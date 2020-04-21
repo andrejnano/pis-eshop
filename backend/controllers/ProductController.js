@@ -311,9 +311,9 @@ module.exports.update = async function(req, res) {
 module.exports.delete = async function(req, res) {
   await req.user.set(req.body);
   if (req.user.isAdmin) {
-    Product.deleteOne({_id: req.params.product_id})
+    await Product.deleteOne({_id: req.params.product_id})
       .then(() => {
-        return SuccessResponse(res, { message: 'Product Deleted' }, 204)
+        return SuccessResponse(res, { message: 'Product Deleted' }, 200)
       })
   } else {
     return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)

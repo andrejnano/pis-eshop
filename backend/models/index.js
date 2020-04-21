@@ -47,7 +47,7 @@ const createAdminAccount = async function (user) {
   const admin = {
     email: 'administrator@eshop.blue',
     password: 'secretadminpass',
-    admin: true
+    isAdmin: true
   }
 
   user.findOne({ email: admin.email }, (err, existingUser) => {

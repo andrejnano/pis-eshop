@@ -11,3 +11,7 @@ export function getUserData (state) {
 export function isUserDataLoaded (state) {
   return !!state.userData.email
 }
+
+export function isAdmin (state) {
+  return state.isAdmin
+}

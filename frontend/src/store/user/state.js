@@ -7,4 +7,5 @@
 export default {
   status: '',
   userData: {},
+  isAdmin: null
 }

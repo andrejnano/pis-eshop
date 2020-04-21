@@ -56,7 +56,10 @@
       <li v-if="userData.email" class="nav-item">
         <router-link to="account" class="nav-link">
           <font-awesome-icon :icon="[ 'fad', 'user-alt' ]" title="Account" />
-          <span class="link-text">{{ userData.email }}</span>
+          <span class="link-text">
+            {{ userData.email }}
+            <span v-if="isAdmin">[ADMIN]</span>
+          </span>
         </router-link>
       </li>
 
@@ -83,6 +86,7 @@ export default {
   computed: {
     ...mapState({
       userData: state => state.user.userData,
+      isAdmin: state => state.user.isAdmin
     }),
   },
 

@@ -25,5 +25,10 @@ export function USER_ERROR (state) {
 
 export function USER_LOGOUT (state) {
   Vue.set(state, 'userData', {})
+  Vue.set(state, 'isAdmin', null)
   state.status = 'none'
+}
+
+export function USER_SET_ADMIN_FLAG (state, isAdmin) {
+  Vue.set(state, 'isAdmin', isAdmin)
 }

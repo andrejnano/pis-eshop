@@ -17,6 +17,10 @@ export function AUTH_CREATE (context, credentials) {
         const authToken = response.data.token
         localStorage.setItem('authToken', authToken)
 
+        // if auth user is admin, set flag to true
+        const isAdmin = JSON.parse(response.data.isAdmin);
+        localStorage.setItem('isAdmin', isAdmin);
+
         // make every next axios request attach token
         axios.defaults.headers.common['Authorization'] = authToken
 
@@ -47,12 +51,17 @@ export function AUTH_REQUEST (context, credentials) {
         const authToken = response.data.token
         localStorage.setItem('authToken', authToken)
 
+        // if auth user is admin, set flag to true
+        const isAdmin = JSON.parse(response.data.isAdmin);
+        localStorage.setItem('isAdmin', isAdmin);
+
         // make every axios request attach token
         axios.defaults.headers.common['Authorization'] = authToken
 
         // finalize and dispatch User data request
         context.commit('AUTH_SUCCESS', authToken)
         context.dispatch('USER_REQUEST')
+        context.dispatch('USER_SET_ADMIN_FLAG', isAdmin)
         resolve(response)
       })
       .catch((error) => {
@@ -76,6 +85,7 @@ export function AUTH_LOGOUT (context) {
 
     // remove TOKEN from local storage
     localStorage.removeItem('authToken')
+    localStorage.removeItem('isAdmin')
 
     resolve()
   })

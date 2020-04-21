@@ -33,6 +33,8 @@
 
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -67,7 +69,27 @@ export default {
         },
       ]
     }
+  },
+
+
+  methods: {
+    getAllProducts: function() {
+      const backend_api_url = "http://localhost:4000/api"
+
+      axios({ url: `${backend_api_url}/products`, method: 'GET' })
+        .then((response) => {
+          this.products = response.body.products;
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    }
+  },
+
+  mounted() {
+    // this.getAllProducts()
   }
+
 }
 </script>
 

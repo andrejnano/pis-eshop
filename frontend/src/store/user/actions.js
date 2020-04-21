@@ -68,6 +68,7 @@ export function USER_DELETE (context, credentials) {
       })
   })
 }
+
 /*
 |--------------------------------------------------------------------------
 | uset to remove temp. user data from client
@@ -75,4 +76,8 @@ export function USER_DELETE (context, credentials) {
 */
 export function USER_LOGOUT (context) {
   context.commit('USER_LOGOUT')
+}
+
+export function USER_SET_ADMIN_FLAG (context, isAdmin) {
+  context.commit('USER_SET_ADMIN_FLAG', isAdmin)
 }

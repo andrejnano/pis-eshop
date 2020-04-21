@@ -39,13 +39,13 @@ const successLogOutput = () => { console.log(`
 
 
 // create an initial admin account
-const createAdminAccount = function (user) {
+const createAdminAccount = async function (user) {
   if (typeof user === 'undefined') {
     throw new Error("Undefined model.");
   }
 
   const admin = {
-    email: 'administrator@eshop.blue',
+    email: 'admin3@eshop.blue',
     password: 'secretadminpass'
   }
 
@@ -57,10 +57,14 @@ const createAdminAccount = function (user) {
       console.log("Admin user account already exists.")
     } else {
       console.log("Creating a new default Admin account...")
+
       user.create(admin, (err, newUser) => {
         if (err) { console.error(err) }
         if (newUser) {
+
+          newUser.setAdmin()
           newUser.setPassword(admin.password)
+
           console.log("A new Admin account was created!")
         }
       })

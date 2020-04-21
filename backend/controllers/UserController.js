@@ -28,10 +28,12 @@ module.exports.create = function(req, res) {
     User.create({ email: email })
       .then((user) => {
         user.setPassword(password)
+        user.setRegularUser()
         let message = {
           message: 'Successfully created new user account.',
           user: user.toWeb(),
-          token: user.getJWT()
+          token: user.getJWT(),
+          isAdmin: user.isAdmin
         }
         return SuccessResponse(res, message, 200)
       })
@@ -58,8 +60,9 @@ module.exports.login = function(req, res) {
       }
       // compare passwords
       user = user.validatePassword(password)
+
       if (user) {
-        return SuccessResponse(res, { token: user.getJWT(), user: user.toWeb() }, 200)
+        return SuccessResponse(res, { token: user.getJWT(), user: user.toWeb(), isAdmin: user.isAdmin }, 200)
       } else {
         return ErrorResponse(res, { message: 'Invalid Password' }, 402)
       }

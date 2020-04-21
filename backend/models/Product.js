@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const Category = require("../models/Category");
+const Configuration = require("../models/Configuration");
 
-// Predefined products
 
 const productSchema = new mongoose.Schema({
   name: {
@@ -9,15 +10,25 @@ const productSchema = new mongoose.Schema({
     min: 6,
     max: 255
   },
-  configurationId: {
+  configuration: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    required: true,
+    ref: Configuration
+  },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: Category
   },
   price: {
     type: Number,
     required: true,
     min: 0
   },
+  icon: {
+    type: String,
+    required: true
+},
   description: {
     type: String,
     required: true,

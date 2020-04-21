@@ -46,7 +46,8 @@ const createAdminAccount = function (user) {
 
   const admin = {
     email: 'administrator@eshop.blue',
-    password: 'secretadminpass'
+    password: 'secretadminpass',
+    admin: true
   }
 
   user.findOne({ email: admin.email }, (err, existingUser) => {

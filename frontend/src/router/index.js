@@ -39,7 +39,16 @@ const routes = [
     }
   },
   {
-    path: '/products',
+    path: '/categories',
+    name: 'Categories',
+    component: () => import(/* webpackChunkName: "products" */ '../pages/Categories.vue'),
+    meta: {
+      auth: false,
+      title: 'Categories'
+    }
+  },
+  {
+    path: '/categories/:category_id',
     name: 'Products',
     component: () => import(/* webpackChunkName: "products" */ '../pages/Products.vue'),
     meta: {

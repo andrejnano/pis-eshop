@@ -10,7 +10,7 @@
       </li>
 
       <li class="nav-item">
-        <router-link to="products" class="nav-link">
+        <router-link to="/categories" class="nav-link">
           <!-- <font-awesome-icon :icon="[ 'fad', 'store' ]" title="Products" /> -->
           <span class="link-text">Products</span>
         </router-link>
@@ -18,7 +18,7 @@
 
 
       <li class="nav-item">
-        <router-link to="pricing" class="nav-link">
+        <router-link to="/pricing" class="nav-link">
           <!-- <font-awesome-icon :icon="[ 'fad', 'store' ]" title="Products" /> -->
           <span class="link-text">Pricing</span>
         </router-link>
@@ -27,26 +27,26 @@
       <li class="nav-separator"><!-- separator --></li>
 
       <li v-if="!userData.email" class="nav-item">
-        <router-link to="login" class="nav-link">
+        <router-link to="/login" class="nav-link">
           <span class="link-text">Log in</span>
         </router-link>
       </li>
 
       <li v-if="!userData.email" class="nav-item">
-        <router-link to="register" class="nav-link">
+        <router-link to="/register" class="nav-link">
           <span class="link-text">Sign up</span>
         </router-link>
       </li>
 
       <li v-if="userData.email" class="nav-item">
-        <router-link to="cart" class="nav-link">
+        <router-link to="/cart" class="nav-link">
           <font-awesome-icon :icon="[ 'fad', 'shopping-cart' ]" title="Cart" />
           <span class="link-text">Cart</span>
         </router-link>
       </li>
 
       <li v-if="userData.email" class="nav-item">
-        <router-link to="orders" class="nav-link">
+        <router-link to="/orders" class="nav-link">
           <font-awesome-icon :icon="[ 'fad', 'shopping-cart' ]" title="Orders" />
           <span class="link-text">My orders</span>
         </router-link>
@@ -54,7 +54,7 @@
 
 
       <li v-if="userData.email" class="nav-item">
-        <router-link to="account" class="nav-link">
+        <router-link to="/account" class="nav-link">
           <font-awesome-icon :icon="[ 'fad', 'user-alt' ]" title="Account" />
           <span class="link-text">{{ userData.email }}</span>
         </router-link>

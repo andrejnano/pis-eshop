@@ -19,9 +19,14 @@ module.exports.create = function(req, res) {
 
   let email = req.body.email
   let password = req.body.password
+  let admin = req.body.admin
 
   if (!email || !password) {
     return ErrorResponse(res, { message: "Parameter is missing."}, 422)
+  }
+
+  if (admin) {
+    return ErrorResponse(res, { message: "Nice try ;)"}, 422)
   }
 
   try {

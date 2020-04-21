@@ -3,52 +3,27 @@
 
     <div class="featured-panel">
       <div class="title">Choose from pre-set VPS images</div>
-      <div class="subtitle">{{description}}</div>
+      <div class="subtitle">Linux distributions, gaming servers and much more</div>
 
 
       <ul class="products three-column-grid">
         <li class="product-item" v-for="product in products" :key="product.title">
-          <button class="product">
+          <button class="product" @click="onClickCategory(product._id)">
             <div class="cover">
-              <div class="configuration">
-                <ul>
-                  <li>
-                    <label>RAM</label> 
-                    <span>{{ product.configuration.memory }} GB</span>
-                  </li>
-                  <li>
-                    <label>vCPU's</label>
-                    <span>{{ product.configuration.cpu }}</span>
-                  </li>
-                  <li>
-                    <label>HDD</label>
-                    <span>{{ product.configuration.memory }} GB</span>
-                  </li>
-                  <li>
-                    <label>Type</label>
-                    <span>{{ product.configuration.hddType }}</span>
-                  </li>
-                  <li>
-                    <label>IP's</label>
-                    <span>{{ product.configuration.ipCount }}</span>
-                  </li>
-                </ul>
-              </div>
-              <font-awesome-icon :icon="[ 'fad', 'server' ]" :title="product.title" />
+              <font-awesome-icon :icon="[ 'fad', product.icon ]" :title="product.title" />
             </div>
             <div class="top-info">
 
               <div class="column">
-                <div class="main-title">{{ product.name }}</div>
+                <div class="main-title">{{ product.title }}</div>
+                <div class="sub-title">{{ product.subtitle }}</div>
               </div>
               <div class="column">
-                <div class="label">Price:</div>
-                <div class="price">{{ product.price }}€/month</div>
+                <div class="label">Starting from:</div>
+                <div class="price">{{ product.startingPrice }}€/month</div>
               </div>
             </div>
             <div class="description">{{ product.description }}</div>
-
-
           </button>
         </li>
       </ul>
@@ -64,22 +39,28 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      products: [],
-      description: '',
+      products: []
     }
   },
 
   created() {
-    axios.get('http://localhost:4000/api/categories/'+this.$route.params.category_id)
+    axios.get('http://localhost:4000/api/categories')
     .then(response => {
       // JSON responses are automatically parsed.
-      this.description = response.data.pop().description;
-      this.products = response.data;
+      console.log(response.data)
+      this.products = response.data
     })
     .catch(e => {
       this.errors.push(e)
     })
+  },
+
+  methods: {
+      onClickCategory(id) {
+        this.$router.push({name: 'Products',  params: { category_id: id } }); 
+      }
   }
+
 }
 </script>
 
@@ -154,7 +135,7 @@ export default {
           width: 100%;
           height: 200px;
           display: flex;
-          justify-content: space-evenly;
+          justify-content: center;
           align-items: center;
           color: #fff;
           font-size: 3rem;
@@ -201,30 +182,6 @@ export default {
           }
         }
 
-        .configuration {
-          text-align: left;
-          display: table;
-          width: 50%;
-
-          li {
-            list-style-type: circle;
-            color: #fff;
-            display: table-row;
-
-            label {
-              width: 70%;
-              display: table-cell;
-              font-weight: 400;
-              font-size: 1rem;
-            } 
-
-            span {
-              display: table-cell;
-              font-weight: 600;
-              font-size: 1.5rem;
-            }
-          }
-        }
 
         .description {
           border-top: 1px solid #ccc;
@@ -234,7 +191,7 @@ export default {
           color: #666;
         }
 
-        }
+      }
     }
   }
 

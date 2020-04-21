@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema({
   email: String,
   hash: String,
   salt: String,
+  admin: {
+    type: Boolean,
+    default: false
+  },
 });
 
 

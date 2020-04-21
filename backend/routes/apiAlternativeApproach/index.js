@@ -80,8 +80,11 @@ router.delete(  '/orders/:order_id',   passport.authenticate('jwt', {session: fa
 |--------------------------------------------------------------------------------
 */
 router.post(    '/products',               passport.authenticate('jwt', {session: false}), ProductController.create)                                                  // C
-router.get(     '/products',               passport.authenticate('jwt', {session: false}), ProductController.getAll)
-router.get(     '/products/:product_id',   passport.authenticate('jwt', {session: false}), ProductController.get)
+router.get(     '/products/init',          ProductController.init)        
+router.get(     '/categories',             ProductController.getCategories)                                             // C
+router.get(     '/categories/:category_id',ProductController.getCategory)                                             // C
+router.get(     '/products',               ProductController.getAll)
+router.get(     '/products/:product_id',   ProductController.get)
 router.put(     '/products/:product_id',   passport.authenticate('jwt', {session: false}), ProductController.update)
 router.delete(  '/products/:product_id',   passport.authenticate('jwt', {session: false}), ProductController.delete)
 

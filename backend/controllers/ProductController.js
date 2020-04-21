@@ -275,7 +275,8 @@ module.exports.getCategory = function(req, res) {
 */
 module.exports.update = function(req, res) {
   if(!req.user) return ErrorResponse(res, { message: "Could not get any data" }, 404);
-  if (req.user.admin) {
+  //might be total bs, will fix later
+  if (req.user.isAdmin) {
     return SuccessResponse(res, { user: req.user.toWeb() }, 200)
   } else {
     return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)

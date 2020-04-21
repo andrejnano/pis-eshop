@@ -9,6 +9,7 @@
 const Configuration = require("../models/Configuration");
 const Category = require("../models/Category");
 const Product = require("../models/Product");
+const User = require("../models/User");
 const Coupon = require("../models/Coupon");
 const { SuccessResponse, ErrorResponse} = require('../utils/response')
 
@@ -206,8 +207,15 @@ module.exports.init =async function(req,res) {
 | Create a new product
 |--------------------------------------------------------------------------------
 */
-module.exports.create = function(req, res) {
-  // TODO: Implement
+module.exports.create = async function(req, res) {
+  await req.user.set(req.body);
+  if (req.user.isAdmin) {
+    let { name, price, icon, description } = req.body;
+    let doc = await new Product({ name, price, icon, description }).save();
+    return SuccessResponse(res, { created: doc }, 200)
+  } else {
+    return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)
+  }
 }
 
 
@@ -271,13 +279,24 @@ module.exports.getCategory = function(req, res) {
 /*
 |--------------------------------------------------------------------------------
 | Update a product (:product_id)
+
+example body:
+
+{
+    "name": "Apacfasfsafsafhe litffORO",
+    "price": 70,
+    "icon": "server",
+    "description": "LoHAKASAng elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula."
+}
+
 |--------------------------------------------------------------------------------
 */
-module.exports.update = function(req, res) {
-  if(!req.user) return ErrorResponse(res, { message: "Could not get any data" }, 404);
-  //might be total bs, will fix later
+module.exports.update = async function(req, res) {
+  await req.user.set(req.body);
   if (req.user.isAdmin) {
-    return SuccessResponse(res, { user: req.user.toWeb() }, 200)
+    let { name, price, icon, description } = req.body;
+    let doc = await Product.findOneAndUpdate({_id: req.params.product_id}, { name, price, icon, description });
+    return SuccessResponse(res, { updated: doc }, 200)
   } else {
     return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)
   }
@@ -289,6 +308,14 @@ module.exports.update = function(req, res) {
 | Delete a product (:product_id)
 |--------------------------------------------------------------------------------
 */
-module.exports.delete = function(req, res) {
-  // TODO: Implement
+module.exports.delete = async function(req, res) {
+  await req.user.set(req.body);
+  if (req.user.isAdmin) {
+    Product.deleteOne({_id: req.params.product_id})
+      .then(() => {
+        return SuccessResponse(res, { message: 'Product Deleted' }, 204)
+      })
+  } else {
+    return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)
+  }
 }

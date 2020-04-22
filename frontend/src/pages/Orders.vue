@@ -11,15 +11,14 @@
             <div class="top-info">
 
               <div class="column">
-                <div class="main-title">{{ order.title }}</div>
-                <div class="sub-title">{{ order.subTitle }}</div>
+                <div class="main-title">{{ order.product.name }}</div>
               </div>
               <div class="column">
                 <div class="label">Total price:</div>
                 <div class="price">{{ order.price }}€/month</div>
               </div>
             </div>
-            <div class="description">{{ order.description }}</div>
+            <div class="description">{{ order.product.description }}</div>
           </button>
         </li>
       </ul>
@@ -34,47 +33,20 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      orders: [
-        {
-          title: 'Gaming server',
-          subTitle: 'Minecraft',
-          price: 10,
-          description: 'High performance gaming server.',
-        },
-        {
-          title: 'Gaming server',
-          subTitle: 'Minecraft',
-          price: 10,
-          description: 'High performance gaming server.',
-        },
-        {
-          title: 'Gaming server',
-          subTitle: 'Minecraft',
-          price: 10,
-          description: 'High performance gaming server.',
-        },
-      ]
+      orders: []
     }
   },
 
 
-  methods: {
-    getAllOrders: function() {
-      const backend_api_url = "http://localhost:4000/api"
-
-      axios({ url: `${backend_api_url}/orders`, method: 'GET' })
-        .then((response) => {
-          this.orders = response.body.orders;
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-    }
+  created() {
+    axios.get('http://localhost:4000/api/orders/my')
+    .then(response => {
+      this.orders = response.data
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
   },
-
-  mounted() {
-    // this.getAllProducts()
-  }
 
 }
 </script>

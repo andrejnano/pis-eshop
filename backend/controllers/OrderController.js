@@ -15,13 +15,34 @@ const { SuccessResponse, ErrorResponse} = require('../utils/response')
 
 module.exports.init =async function(req,res) {
 
-  // await Order.collection.drop();
+  await Order.collection.drop();
+
+  let petr_user = await User.findOne({email: 'petr.kral@gmail.com'}, function (err, user) {
+    return user;
+  })
+  let anezka_user = await User.findOne({email: 'anezka.kratka@test.com'}, function (err, user) {
+    return user;
+  })
+
+  let minecraft_lite = await Product.findOne({name: 'Minecraft lite'}, function (err, product) {
+    return product;
+  })
+  let apache_lite = await Product.findOne({name: 'Apache lite'}, function (err, product) {
+    return product;
+  })
+  let cs_go = await Product.findOne({name: 'CS:GO'}, function (err, product) {
+    return product;
+  })
+  let temaspeak_lq = await Product.findOne({name: 'Basic TeamSpeak server'}, function (err, product) {
+    return product;
+  })
+
 
   await new Order({
       payment: "PaySafeCard",
       price: 70,
-      // user: // TODO
-      product: "apache_lite",
+      user: petr_user,
+      product: apache_lite,
       date: '2020-03-09',
       state: "paid",
   }).save();
@@ -29,8 +50,8 @@ module.exports.init =async function(req,res) {
   await new Order({
       payment: "GoPay",
       price: 50,
-      // user: // TODO
-      product: "minecraft_lite",
+      user: petr_user,
+      product: minecraft_lite,
       date: '2020-03-18',
       state: "cancelled",
   }).save();
@@ -38,8 +59,8 @@ module.exports.init =async function(req,res) {
   await new Order({
       payment: "PaySafeCard",
       price: 100,
-      // user: // TODO
-      product: "cs_go",
+      user: petr_user,
+      product: cs_go,
       date: '2020-04-25',
       state: "created",
   }).save();
@@ -47,8 +68,8 @@ module.exports.init =async function(req,res) {
   await new Order({
       payment: "GoPay",
       price: 280,
-      // user: // TODO
-      product: "temaspeak_lq",
+      user: anezka_user,
+      product: temaspeak_lq,
       date: '2020-01-14',
       state: "paid",
   }).save();
@@ -56,13 +77,13 @@ module.exports.init =async function(req,res) {
   await new Order({
       payment: "Bitcoin",
       price: 140,
-      // user: // TODO
-      product: "docker_3",
+      user: anezka_user,
+      product: cs_go,
       date: '2020-03-29',
       state: "cancelled",
   }).save();
 
-  return SuccessResponse(res, { 'message' : 'DB orders successfully initialized' }, 200)
+  return SuccessResponse(res, { 'message' : 'DB orders successfully initialized.' }, 200)
 }
 
 

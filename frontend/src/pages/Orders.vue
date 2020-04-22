@@ -39,7 +39,7 @@ export default {
 
 
   created() {
-    axios.get('http://localhost:4000/api/orders/my')
+    axios.get('http://localhost:4000/api/orders/all')
     .then(response => {
       this.orders = response.data
     })

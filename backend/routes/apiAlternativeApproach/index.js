@@ -73,6 +73,8 @@ router.get(     '/orders/all',             passport.authenticate('jwt', {session
 router.get(     '/orders/:order_id',   passport.authenticate('jwt', {session: false}), OrderController.get)
 router.put(     '/orders/:order_id',   passport.authenticate('jwt', {session: false}), OrderController.update)
 router.delete(  '/orders/:order_id',   passport.authenticate('jwt', {session: false}), OrderController.delete)
+router.get(  '/orders/:order_id/pay',   passport.authenticate('jwt', {session: false}), OrderController.pay)
+router.get(  '/orders/:order_id/cancel',   passport.authenticate('jwt', {session: false}), OrderController.cancel)
 
 
 /*

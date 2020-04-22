@@ -59,11 +59,92 @@
 
           </button>
         </li>
-      <button class="product dashed-border" v-if="userData.isAdmin" @click="addIsVisible = !addIsVisible"> 
+      <button class="product dashed-border" v-if="userData.isAdmin" @click="addIsVisible = !addIsVisible; trueEditFalseCreate = false"> 
         Add product </button>
         <li></li>
       </ul>
-          <editProduct v-if="condition" :createProduct="createProduct" :selectedProduct="selected"/>
+
+ <button class="edit-product" v-if="this.addIsVisible">   
+
+   <button v-if="userData.isAdmin" class="delete" @click="addIsVisible = !addIsVisible">
+        <font-awesome-icon :icon="[ 'fad', 'trash' ]" />
+    </button>
+    <div class="cover">
+
+        <div class="configuration">
+        <ul>
+            <li>
+            <label>RAM</label> 
+            <select v-model="newProduct.memory">
+              <option disabled value="">RAM</option>
+              <option>2</option>
+              <option>4</option>
+              <option>8</option>
+              <option>16</option>
+              <option>32</option>
+              <option>64</option>
+              <option>128</option>
+            </select> GB
+            </li>
+            <li>
+            <label>vCPU's</label>
+            <select v-model="newProduct.cpu">
+              <option disabled value="">vCPU's</option>
+              <option>2</option>
+              <option>4</option>
+              <option>8</option>
+              <option>16</option>
+              <option>32</option>
+            </select>
+            </li>
+            <li>
+            <label>HDD</label>
+            <select v-model="newProduct.hdd">
+              <option disabled value="">Hdd</option>
+              <option>128</option>
+              <option>256</option>
+              <option>512</option>
+              <option>1024</option>
+            </select> GB
+            </li>
+            <li>
+            <label>Type</label>
+            <select v-model="newProduct.hddType">
+              <option disabled value="">Hdd Type</option>
+              <option>HDD</option>
+              <option>SSD</option>
+            </select>
+            </li>
+            <li>
+            <label>IP's</label>
+            <input v-model="newProduct.ipCount" placeholder="1 - 255">
+            </li>
+        </ul>
+        </div>
+            <font-awesome-icon :icon="[ 'fad', 'server' ]" />
+
+    </div>
+    <div class="top-info">
+
+        <div class="column">
+        <div class="main-title">
+            <input class="name-input" v-model="newProduct.name" placeholder="Product name">
+        </div>
+        </div>
+        <div class="column">
+        <div class="label">Price:</div>
+        <input  class="price-input" v-model="newProduct.price" placeholder="price">€/month
+        </div>
+    </div>
+    <div class="description"><textarea v-model="newProduct.description" placeholder="New product description"  rows="4"></textarea></div>
+    <div class="footer">
+            <button  @click="createProduct()">
+              TODO Icon
+                <font-awesome-icon :icon="[ 'fad', 'plus' ]" />
+            </button>  
+    </div>
+    </button>
+
 
     </div>
   </div>
@@ -80,12 +161,23 @@ export default {
       products: [],
       selected: {},
       description: '',
-      addIsVisible: false
+      addIsVisible: false,
+      trueEditFalseCreate : false,
+      newProduct: {
+              memory: '',
+              cpu: '',
+              hdd: '',
+              hddType: '',
+              ipCount: '',
+              name: '',
+              price: '',
+              description: '',
+              _id: ''
+      }
     }
   },
 
   components: {
-    editProduct: () => import(/* webpackChunkName: "navigation" */ '../components/EditProduct.vue')
   },
 
   created() {
@@ -97,12 +189,14 @@ export default {
       userData: state => state.user.userData,
       isAdmin: state => state.user.isAdmin
     }),
-    condition() {
-      return this.userData.isAdmin && this.addIsVisible;
-    }
+    
   },
 
   methods: {
+    condition() {
+      this.trueEditFalseCreate = false;
+      return this.userData.isAdmin && this.addIsVisible;
+    },
     fetchProducts() {
       axios.get('http://localhost:4000/api/categories/'+this.$route.params.category_id)
           .then(response => {
@@ -123,21 +217,63 @@ export default {
         this.errors.push(e)
       })
     },
-    setSelectedProduct(product_id) {
-      this.selected = product_id;
-      this.addIsVisible = !this.addIsVisible;
+    setSelectedProduct(product) {
+      if(this.addIsVisible == false) this.addIsVisible = !this.addIsVisible;
+      this.trueEditFalseCreate = true;
+      this.selected = product;
+      this.newProduct.memory = product.configuration.memory;
+      this.newProduct.cpu = product.configuration.cpu;
+      this.newProduct.hdd = product.configuration.hdd;
+      this.newProduct.hddType = product.configuration.hddType;
+      this.newProduct.ipCount = product.configuration.ipCount;
+      this.newProduct.name = product.name;
+      this.newProduct.price = product.price;
+      this.newProduct.description = product.description;
+      this.newProduct._id = product._id;
     },
-    createProduct(product) {
-      console.log("passed")
-      axios.post('http://localhost:4000/api/products/', product)
-      .then(response => {
-        console.log(response);
-        this.fetchProducts();
-        this.addIsVisible = !this.addIsVisible;
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
+    createProduct() {
+      if (this.trueEditFalseCreate) {
+              let product = {
+                "name":  this.newProduct.name,
+                "price":  this.newProduct.price,
+                "icon": "server",
+                "description": this.newProduct.description
+            }
+            axios.put('http://localhost:4000/api/products/'+ this.newProduct._id, product)
+            .then(response => {
+              console.log(response);
+              this.fetchProducts();
+              this.addIsVisible = !this.addIsVisible;
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
+      }else {
+            let product = {
+                "name": this.newProduct.name,
+                "configuration": {
+                    "os": "Minecraft",
+                    "memory": this.newProduct.memory,
+                    "cpu": this.newProduct.cpu,
+                    "hdd": this.newProduct.hdd,
+                    "hddType": "HDD",
+                    "ipCount": this.newProduct.ipCount,
+                },
+                "category": this.$route.params.category_id,
+                "price": this.newProduct.price,
+                "icon": "server",
+                "description": this.newProduct.description
+            }
+            axios.post('http://localhost:4000/api/products/', product)
+            .then(response => {
+              console.log(response);
+              this.fetchProducts();
+              this.addIsVisible = !this.addIsVisible;
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
+      }
     }
   }
 
@@ -150,6 +286,16 @@ export default {
 .dashed-border {
     border:5px dashed #bbbbbb !important;  
 }
+
+
+  .footer {
+    background: #5F5CFF;
+    height: 80px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #fff;
+  }
 
 .products-page {
   background: rgb(247, 247, 255);
@@ -298,27 +444,177 @@ export default {
           font-weight: 400;
           color: #666;
         }
-
-
       }
+    }
+  }
+}
 
-      .delete {
-        position: absolute;
-        right: 0.5rem;
-        top: 0.5rem;
-        z-index: 1;
-        color: #fff;
-      }
-
-      .edit {
+ .edit {
         position: absolute;
         left: 0.5rem;
         top: 0.5rem;
         z-index: 2;
         color: #fff;
       }
+
+.delete {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  z-index: 1;
+  color: #fff;
+}
+
+.edit-product{
+  display: block; 
+  position: fixed; 
+  bottom: -2%; 
+  left: 40%;
+  padding: 0;
+  background: #fff;
+  appearance: none;
+  /* outline: none; */
+  border: none;
+  box-shadow: -26px -13px 62px 4px rgba(0,0,0,0.24);        
+  width: 60%;
+  z-index: 10;
+
+  .cover {
+    background: #5F5CFF;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #fff;
+    font-size: 3rem;
+  }
+
+  .footer {
+    background: #5F5CFF;
+    height: 80px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #fff;
+  }
+
+
+  .top-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 2rem 2rem;
+
+    .column {
+      width: 50%;
+    }
+
+    .main-title {
+      line-height: 2;
+      font-size: 1.6rem;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .sub-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #666;
+      text-align: left;
+    }
+
+    .label {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #666;
+      text-align: right;
+      margin: 0.5rem;
+    }
+
+    .price {
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-align: right;
+      color: #5F5CFF;
+    }
+
+    input {
+        display: table-cell;
+        font-weight: 600;
+        font-size: 1.5rem;
+        border: none;
+        width: 5rem;
+        padding: 0;
+        margin: 0;
+        border-bottom: 2px solid #5F5CFF;
+        color: #5F5CFF;
+        background-color: transparent;
+        margin-left: 3rem;
+      }
+      input::placeholder {
+          color: #5F5CFF;
+      }
+  }
+
+  .configuration {
+    text-align: left;
+    display: table;
+    width: 70%;
+    padding: 1rem;
+
+    li {
+      color: #fff;
+      display: table-row;
+      width: 100%;
+
+      label {
+        display: table-cell;
+        font-weight: 400;
+        font-size: 1rem;
+      } 
+
+      input {
+        display: table-cell;
+        font-weight: 600;
+        font-size: 1.5rem;
+        border: none;
+        width: 12rem;
+        padding: 0;
+        margin: 0;
+        border-bottom: 2px solid #fff;
+        color: #fff;
+        background-color: transparent;
+        margin-left: 3rem;
+      }
+      input::placeholder {
+          color: #ccc;
+      }
     }
   }
 
+  .description {
+    border-top: 1px solid #ccc;
+    padding: 2rem 2rem;
+    text-align: left;
+    font-weight: 400;
+    color: #666;
+  }
+
+  textarea {
+    border: solid 1px #5F5CFF;
+        resize: vertical;
+        width:100%
+
+  }
+
+  .name-input {
+    width: 100% !important;
+    font-size: 2rem !important;
+  }
+
 }
+  
+
+
 </style>

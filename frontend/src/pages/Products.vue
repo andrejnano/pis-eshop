@@ -59,8 +59,11 @@
 
           </button>
         </li>
+      <button class="product dashed-border" @click="addIsVisible = !addIsVisible"> 
+        Add product </button>
+        <li></li>
       </ul>
-          <editProduct v-if="userData.isAdmin" :createProduct="createProduct" />
+          <editProduct v-if="condition" :createProduct="createProduct" />
 
     </div>
   </div>
@@ -76,6 +79,7 @@ export default {
     return {
       products: [],
       description: '',
+      addIsVisible: false
     }
   },
 
@@ -92,6 +96,9 @@ export default {
       userData: state => state.user.userData,
       isAdmin: state => state.user.isAdmin
     }),
+    condition() {
+      return this.userData.isAdmin && this.addIsVisible;
+    }
   },
 
   methods: {
@@ -125,6 +132,7 @@ export default {
       .then(response => {
         console.log(response);
         this.fetchProducts();
+        this.addIsVisible = !this.addIsVisible;
       })
       .catch(e => {
         this.errors.push(e)
@@ -138,6 +146,9 @@ export default {
 
 <style lang="scss" scoped>
 
+.dashed-border {
+    border:5px dashed #bbbbbb !important;  
+}
 
 .products-page {
   background: rgb(247, 247, 255);

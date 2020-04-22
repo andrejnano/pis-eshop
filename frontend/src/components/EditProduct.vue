@@ -35,10 +35,10 @@
             <label>HDD</label>
             <select v-model="hdd">
               <option disabled value="">Hdd</option>
-              <option>10</option>
-              <option>20</option>
-              <option>30</option>
-              <option>40</option>
+              <option>128</option>
+              <option>256</option>
+              <option>512</option>
+              <option>1024</option>
             </select> GB
             </li>
             <li>
@@ -70,9 +70,10 @@
         <input v-model="price" placeholder="price">€/month
         </div>
     </div>
-    <div class="description"><textarea v-model="description" placeholder="add multiple lines"></textarea></div>
+    <div class="description"><textarea v-model="description" placeholder="New product description"  rows="4"></textarea></div>
     <div class="footer">
             <button  @click="execute()">
+              TODO Icon
                 <font-awesome-icon :icon="[ 'fad', 'plus' ]" />
             </button>  
     </div>
@@ -98,6 +99,7 @@ export default {
   },
   props: {
     createProduct: { type: Function },
+    showWindow: { type: Function },
   },
   methods: {
     execute() {
@@ -129,16 +131,18 @@ export default {
 <style lang="scss" scoped>
 
     .product {
-
+        display: block; 
+        position: fixed; 
+        bottom: -2%; 
+        left: 40%;
         padding: 0;
         background: #fff;
-        /* box-shadow: 1px solid #ccc; */
         appearance: none;
         /* outline: none; */
         border: none;
-        box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
-        position: relative;
-        width: 100%;
+        box-shadow: -26px -13px 62px 4px rgba(0,0,0,0.24);        
+        width: 60%;
+        z-index: 10;
 
         .cover {
           background: #5F5CFF;
@@ -260,6 +264,13 @@ export default {
           text-align: left;
           font-weight: 400;
           color: #666;
+        }
+
+        textarea {
+          border: solid 1px #5F5CFF;
+             resize: vertical;
+             width:100%
+
         }
 
 

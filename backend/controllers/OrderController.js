@@ -12,6 +12,60 @@ let Product = require('../models/Product')
 const { SuccessResponse, ErrorResponse} = require('../utils/response')
 
 
+
+module.exports.init =async function(req,res) {
+
+  // await Order.collection.drop();
+
+  await new Order({
+      payment: "PaySafeCard",
+      price: 70,
+      user: // TODO
+      product: ["apache_lite"],
+      date: '2020-03-09',
+      state: "paid",
+  }).save();
+
+  await new Order({
+      payment: "GoPay",
+      price: 50,
+      user: // TODO
+      product: ["minecraft_lite"],
+      date: '2020-03-18',
+      state: "cancelled",
+  }).save();
+
+  await new Order({
+      payment: "PaySafeCard",
+      price: 100,
+      user: // TODO
+      product: ["cs_go"],
+      date: '2020-04-25',
+      state: "created",
+  }).save();
+
+  await new Order({
+      payment: "GoPay",
+      price: 280,
+      user: // TODO
+      product: ["temaspeak_lq", "docker_1"],
+      date: '2020-01-14',
+      state: "paid",
+  }).save();
+
+  await new Order({
+      payment: "Bitcoin",
+      price: 140,
+      user: // TODO
+      product: ["docker_3"],
+      date: '2020-03-29',
+      state: "cancelled",
+  }).save();
+
+  return SuccessResponse(res, { 'message' : 'DB orders successfully initialized' }, 200)
+}
+
+
 /*
 |--------------------------------------------------------------------------------
 | Create a new Order
@@ -54,8 +108,8 @@ module.exports.getAll = async function(req, res) {
       .populate("user", "email")
       .populate("product")
       .exec(function(err, orders) {
-        res.send(orders);  
-      }) 
+        res.send(orders);
+      })
   } else {
     return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)
   }
@@ -77,7 +131,7 @@ module.exports.getMy = async function(req, res) {
         console.log(orders);
           if(orders) {res.send(orders);  }
           else {return ErrorResponse(res, { message: "Resource not found." }, 404)}
-      }) 
+      })
   } else {
     return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)
   }
@@ -96,7 +150,7 @@ module.exports.get = function(req, res) {
   .exec(function(err, order) {
     if(order) {res.send(order);  }
     else {return ErrorResponse(res, { message: "Resource not found." }, 404)}
-  }) 
+  })
 }
 
 

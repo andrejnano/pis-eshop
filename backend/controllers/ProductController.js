@@ -44,28 +44,52 @@ module.exports.init =async function(req,res) {
   const tsCat = await new Category({
     title: 'Teamspeak',
     subtitle: 'Minecraft, CS:GO and more',
-    startingPrice: 5,
+    startingPrice: 100,
     description: 'High quality voice calls for affordable price.',
     icon: "server"
   }).save();
 
-  const savedConfig1 = await new Configuration({
+  const minecraftConfig1 = await new Configuration({
     os: "Minecraft",
-    ram: 4,
+    ram: 8,
     cpu: 2,
     hddType: "HDD",
-    ipCount: 3,
+    ipCount: 2,
   }).save();
 
-  const savedConfig2 = await new Configuration({
+  const minecraftConfig2 = await new Configuration({
+    os: "Minecraft",
+    ram: 32,
+    cpu: 2,
+    hddType: "SSD",
+    ipCount: 6,
+  }).save();
+
+  const csGoConfig1 = await new Configuration({
     os: "CS:GO",
     ram: 16,
-    cpu: 4,
-    hddType: "SSD",
+    cpu: 1,
+    hddType: "HDD",
     ipCount: 1,
   }).save();
 
-  const savedConfig3 = await new Configuration({
+  const csGoConfig2 = await new Configuration({
+    os: "CS:GO",
+    ram: 32,
+    cpu: 1,
+    hddType: "SSD",
+    ipCount: 2,
+  }).save();
+
+  const csGoConfig3 = await new Configuration({
+    os: "CS:GO",
+    ram: 64,
+    cpu: 2,
+    hddType: "SSD",
+    ipCount: 4,
+  }).save();
+
+  const tsLQConfig = await new Configuration({
     os: "TeamSpeak3",
     ram: 4,
     cpu: 1,
@@ -73,17 +97,74 @@ module.exports.init =async function(req,res) {
     ipCount: 1,
   }).save();
 
-  const savedConfig4 = await new Configuration({
+  const tsNQConfig = await new Configuration({
     os: "TeamSpeak3",
     ram: 16,
     cpu: 2,
-    hddType: "SSD",
+    hddType: "HDD",
     ipCount: 2,
   }).save();
 
+  const tsHQConfig = await new Configuration({
+    os: "TeamSpeak3",
+    ram: 32,
+    cpu: 4,
+    hddType: "HDD",
+    ipCount: 4,
+  }).save();
+
+  const centOS1Config = await new Configuration({
+    os: "CentOS",
+    ram: 32,
+    cpu: 2,
+    hddType: "HDD",
+    ipCount: 2,
+  }).save();
+
+  const centOS2Config = await new Configuration({
+    os: "CentOS",
+    ram: 32,
+    cpu: 4,
+    hddType: "SSD",
+    ipCount: 4,
+  }).save();
+
+  const rhelConfig = await new Configuration({
+      os: "RHEL",
+      ram: 32,
+      cpu: 4,
+      hddType: "SSD",
+      ipCount: 2,
+  }).save();
+
+  const ubuntu1804Config = await new Configuration({
+    os: "Ubuntu 18.04",
+    ram: 64,
+    cpu: 2,
+    hddType: "SSD",
+    ipCount: 4,
+  }).save();
+
+  const ubuntu1910Config1 = await new Configuration({
+    os: "Ubuntu 19.10",
+    ram: 128,
+    cpu: 4,
+    hddType: "SSD",
+    ipCount: 3,
+  }).save();
+
+  const ubuntu1910Config2 = await new Configuration({
+    os: "Ubuntu 19.10",
+    ram: 128,
+    cpu: 6,
+    hddType: "SSD",
+    ipCount: 6,
+  }).save();
+
   await new Product({
+    _id: "apache_lite",
     name: "Apache lite",
-    configuration: savedConfig1._id,
+    configuration: centOS1Config._id,
     category: webCat._id,
     price: 70,
     icon: "server",
@@ -91,8 +172,9 @@ module.exports.init =async function(req,res) {
   }).save();
 
   await new Product({
+    _id: "nginx_lite",
     name: "Nginx lite",
-    configuration: savedConfig1._id,
+    configuration: centOS1Config._id,
     category: webCat._id,
     price: 78,
     icon: "server",
@@ -100,8 +182,9 @@ module.exports.init =async function(req,res) {
   }).save();
 
   await new Product({
+    _id: "ngnix_pro",
     name: "Nginx Pro",
-    configuration: savedConfig1._id,
+    configuration: centOS2Config._id,
     category: webCat._id,
     price: 125,
     icon: "server",
@@ -109,71 +192,89 @@ module.exports.init =async function(req,res) {
   }).save();
 
   await new Product({
+    _id: "minecraft_lite",
     name: "Minecraft lite",
-    configuration: savedConfig1._id,
+    configuration: minecraftConfig1._id,
     category: gameCat._id,
-    price: 125,
+    price: 50,
     icon: "server",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    name: "CS:GO palba",
-    configuration: savedConfig2._id,
+    _id: "minecraft_pro",
+    name: "Minecraft PRO",
+    configuration: minecraftConfig2._id,
     category: gameCat._id,
+    price: 80,
     icon: "server",
-    price: 22,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    name: "CS:GO palba II",
-    configuration: savedConfig2._id,
+    _id: "cs_go_lite",
+    name: "CS:GO lite",
+    configuration: csGoConfig1._id,
     category: gameCat._id,
     icon: "server",
-    price: 150,
+    price: 20,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    name: "CS:GO palba PRO",
-    configuration: savedConfig2._id,
+    _id: "cs_go",
+    name: "CS:GO",
+    configuration: csGoConfig2._id,
     category: gameCat._id,
     icon: "server",
-    price: 225,
-    description: "Tento server je kantrstrajk nejlepsi fakt top. Budes strilet na vsechno co se pohne",
+    price: 40,
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
+    _id: "cs_go_pro",
+    name: "CS:GO PRO",
+    configuration: csGoConfig3._id,
+    category: gameCat._id,
+    icon: "server",
+    price: 60,
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
+  }).save();
+
+  await new Product({
+    _id: "temaspeak_lq",
     name: "Basic TeamSpeak server",
-    configuration: savedConfig3._id,
+    configuration: tsLQConfig._id,
     category: tsCat._id,
     icon: "server",
-    price: 260,
+    price: 100,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
+    _id: "temaspeak_nq",
     name: "TeamSpeak server L",
-    configuration: savedConfig3._id,
+    configuration: tsNQConfig._id,
     category: tsCat._id,
     icon: "server",
-    price: 260,
+    price: 200,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
+    _id: "temaspeak_hq",
     name: "TeamSpeak server Ultimate",
-    configuration: savedConfig4._id,
+    configuration: tsHQConfig._id,
     category: tsCat._id,
     icon: "server",
-    price: 350,
-    description: "Pokecejte s kamosema ve vysoke moc moc kvalite a za super cenu nyni.",
+    price: 300,
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
+    _id: "docker_1",
     name: "Docker 1",
-    configuration: savedConfig4._id,
+    configuration: ubuntu1804Config._id,
     category: contCat._id,
     icon: "server",
     price: 80,
@@ -181,8 +282,9 @@ module.exports.init =async function(req,res) {
   }).save();
 
   await new Product({
+    _id: "docker_2",
     name: "Docker 2",
-    configuration: savedConfig4._id,
+    configuration: ubuntu1910Config1._id,
     category: contCat._id,
     icon: "server",
     price: 90,
@@ -190,8 +292,9 @@ module.exports.init =async function(req,res) {
   }).save();
 
   await new Product({
+    _id: "docker_3",
     name: "Docker 3",
-    configuration: savedConfig4._id,
+    configuration: ubuntu1910Config2._id,
     category: contCat._id,
     icon: "server",
     price: 140,
@@ -227,8 +330,8 @@ module.exports.getAll = function(req, res) {
   Product.find({})
     .populate("configuration")
     .exec(function(err, products) {
-      res.send(products);  
-    }) 
+      res.send(products);
+    })
 }
 
 
@@ -243,8 +346,8 @@ module.exports.get = function(req, res) {
   .populate("category")
   .exec(function(err, product) {
     if(product) {res.send(product);  }
-    else {return ErrorResponse(res, { message: "Resource not found." }, 404)} 
-  }) 
+    else {return ErrorResponse(res, { message: "Resource not found." }, 404)}
+  })
 }
 
 /*
@@ -254,7 +357,7 @@ module.exports.get = function(req, res) {
 */
 module.exports.getCategories = function(req, res) {
   Category.find({}, function(err, cats) {
-    res.send(cats);  
+    res.send(cats);
   });
 }
 
@@ -265,19 +368,19 @@ module.exports.getCategories = function(req, res) {
 */
 module.exports.getCategory = function(req, res) {
   let desc = '';
-  Category.find({_id:  req.params.category_id}, function(err, obj) {                      
+  Category.find({_id:  req.params.category_id}, function(err, obj) {
     desc = obj[0].description;
   })
   Product.find({category: req.params.category_id})
   .populate("configuration")
   .exec(function(err, categories) {
-    
+
     if(categories) {
       categories.push({description:desc});
-      res.send(categories);   
+      res.send(categories);
     }
-    else {return ErrorResponse(res, { message: "Resource not found." }, 404)}  
-  }) 
+    else {return ErrorResponse(res, { message: "Resource not found." }, 404)}
+  })
 }
 
 /*

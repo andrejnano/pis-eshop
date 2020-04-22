@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const Product = require("./Product");
+const User = require("./User");
 
 const orderSchema = new mongoose.Schema({
   payment: {
@@ -10,13 +12,15 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  userId: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    required: true,
+    ref: User
   },
-  configurationId: {
+  product: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    required: true,
+    ref: Product
   },
   date: {
     type: Date,

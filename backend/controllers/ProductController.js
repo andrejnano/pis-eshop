@@ -9,8 +9,6 @@
 const Configuration = require("../models/Configuration");
 const Category = require("../models/Category");
 const Product = require("../models/Product");
-const User = require("../models/User");
-const Coupon = require("../models/Coupon");
 const { SuccessResponse, ErrorResponse} = require('../utils/response')
 
 module.exports.init =async function(req,res) {
@@ -244,7 +242,8 @@ module.exports.get = function(req, res) {
   .populate("configuration")
   .populate("category")
   .exec(function(err, product) {
-    res.send(product);  
+    if(product) {res.send(product);  }
+    else {return ErrorResponse(res, { message: "Resource not found." }, 404)} 
   }) 
 }
 
@@ -272,8 +271,12 @@ module.exports.getCategory = function(req, res) {
   Product.find({category: req.params.category_id})
   .populate("configuration")
   .exec(function(err, categories) {
-    categories.push({description:desc});
-    res.send(categories);  
+    
+    if(categories) {
+      categories.push({description:desc});
+      res.send(categories);   
+    }
+    else {return ErrorResponse(res, { message: "Resource not found." }, 404)}  
   }) 
 }
 

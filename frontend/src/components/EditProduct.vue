@@ -174,7 +174,6 @@ export default {
             display: table-row;
 
             label {
-              width: 70%;
               display: table-cell;
               font-weight: 400;
               font-size: 1rem;
@@ -186,10 +185,12 @@ export default {
               font-size: 1.5rem;
               border: none;
               width: 5rem;
-            border-bottom: 2px solid #fff;
-            color: #fff;
-            background-color: transparent;
-            margin-left: 3rem;
+              padding: 0;
+              margin: 0;
+              border-bottom: 2px solid #fff;
+              color: #fff;
+              background-color: transparent;
+              margin-left: 3rem;
             }
             input::placeholder {
                 color: #ccc;

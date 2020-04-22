@@ -258,7 +258,7 @@ export default {
             display: table-row;
 
             label {
-              width: 70%;
+              width: 50%;
               display: table-cell;
               font-weight: 400;
               font-size: 1rem;

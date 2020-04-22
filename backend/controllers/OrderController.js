@@ -47,13 +47,18 @@ module.exports.create = async function(req, res) {
 | Return all Orders
 |--------------------------------------------------------------------------------
 */
-module.exports.getAll = function(req, res) {
-  Order.find({})
-  .populate("user", "email")
-  .populate("product")
-  .exec(function(err, orders) {
-    res.send(orders);  
-  }) 
+module.exports.getAll = async function(req, res) {
+  await req.user.set(req.body);
+  if (req.user.isAdmin) { // TODO user can delete own orders
+    Order.find({})
+      .populate("user", "email")
+      .populate("product")
+      .exec(function(err, orders) {
+        res.send(orders);  
+      }) 
+  } else {
+    return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)
+  }
 }
 
 /*

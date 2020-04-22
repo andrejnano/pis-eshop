@@ -68,8 +68,8 @@ router.post('/users/login', UserController.login)
 |--------------------------------------------------------------------------------
 */
 router.post(    '/orders',             passport.authenticate('jwt', {session: false}), OrderController.create)                                                  // C
-router.get(     '/orders',             passport.authenticate('jwt', {session: false}), OrderController.getAll)
-router.get(     '/orders/my',             passport.authenticate('jwt', {session: false}), OrderController.getMy)
+router.get(     '/orders',             passport.authenticate('jwt', {session: false}), OrderController.getMy)
+router.get(     '/orders/all',             passport.authenticate('jwt', {session: false}), OrderController.getAll)
 router.get(     '/orders/:order_id',   passport.authenticate('jwt', {session: false}), OrderController.get)
 router.put(     '/orders/:order_id',   passport.authenticate('jwt', {session: false}), OrderController.update)
 router.delete(  '/orders/:order_id',   passport.authenticate('jwt', {session: false}), OrderController.delete)

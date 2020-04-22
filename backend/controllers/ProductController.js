@@ -162,140 +162,140 @@ module.exports.init =async function(req,res) {
   }).save();
 
   await new Product({
-    _id: "apache_lite",
+    //_id: "apache_lite",
     name: "Apache lite",
-    configuration: centOS1Config._id,
-    category: webCat._id,
+    configuration: centOS1Config,
+    category: webCat,
     price: 70,
     icon: "server",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    _id: "nginx_lite",
+    //_id: "nginx_lite",
     name: "Nginx lite",
-    configuration: centOS1Config._id,
-    category: webCat._id,
+    configuration: centOS1Config,
+    category: webCat,
     price: 78,
     icon: "server",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl.",
   }).save();
 
   await new Product({
-    _id: "ngnix_pro",
+    //_id: "ngnix_pro",
     name: "Nginx Pro",
-    configuration: centOS2Config._id,
-    category: webCat._id,
+    configuration: centOS2Config,
+    category: webCat,
     price: 125,
     icon: "server",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    _id: "minecraft_lite",
+    //_id: "minecraft_lite",
     name: "Minecraft lite",
-    configuration: minecraftConfig1._id,
-    category: gameCat._id,
+    configuration: minecraftConfig1,
+    category: gameCat,
     price: 50,
     icon: "server",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    _id: "minecraft_pro",
+    //_id: "minecraft_pro",
     name: "Minecraft PRO",
-    configuration: minecraftConfig2._id,
-    category: gameCat._id,
+    configuration: minecraftConfig2,
+    category: gameCat,
     price: 80,
     icon: "server",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    _id: "cs_go_lite",
+    //_id: "cs_go_lite",
     name: "CS:GO lite",
-    configuration: csGoConfig1._id,
-    category: gameCat._id,
+    configuration: csGoConfig1,
+    category: gameCat,
     icon: "server",
     price: 20,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    _id: "cs_go",
+    //_id: "cs_go",
     name: "CS:GO",
-    configuration: csGoConfig2._id,
-    category: gameCat._id,
+    configuration: csGoConfig2,
+    category: gameCat,
     icon: "server",
     price: 40,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    _id: "cs_go_pro",
+    //_id: "cs_go_pro",
     name: "CS:GO PRO",
-    configuration: csGoConfig3._id,
-    category: gameCat._id,
+    configuration: csGoConfig3,
+    category: gameCat,
     icon: "server",
     price: 60,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    _id: "temaspeak_lq",
+    //_id: "temaspeak_lq",
     name: "Basic TeamSpeak server",
-    configuration: tsLQConfig._id,
-    category: tsCat._id,
+    configuration: tsLQConfig,
+    category: tsCat,
     icon: "server",
     price: 100,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    _id: "temaspeak_nq",
+    //_id: "temaspeak_nq",
     name: "TeamSpeak server L",
-    configuration: tsNQConfig._id,
-    category: tsCat._id,
+    configuration: tsNQConfig,
+    category: tsCat,
     icon: "server",
     price: 200,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    _id: "temaspeak_hq",
+    //_id: "temaspeak_hq",
     name: "TeamSpeak server Ultimate",
-    configuration: tsHQConfig._id,
-    category: tsCat._id,
+    configuration: tsHQConfig,
+    category: tsCat,
     icon: "server",
     price: 300,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    _id: "docker_1",
+    //_id: "docker_1",
     name: "Docker 1",
-    configuration: ubuntu1804Config._id,
-    category: contCat._id,
+    configuration: ubuntu1804Config,
+    category: contCat,
     icon: "server",
     price: 80,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    _id: "docker_2",
+    // _id: "docker_2",
     name: "Docker 2",
-    configuration: ubuntu1910Config1._id,
-    category: contCat._id,
+    configuration: ubuntu1910Config1,
+    category: contCat,
     icon: "server",
     price: 90,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
   }).save();
 
   await new Product({
-    _id: "docker_3",
+    // _id: "docker_3",
     name: "Docker 3",
-    configuration: ubuntu1910Config2._id,
-    category: contCat._id,
+    configuration: ubuntu1910Config2,
+    category: contCat,
     icon: "server",
     price: 140,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",

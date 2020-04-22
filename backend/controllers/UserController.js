@@ -18,19 +18,19 @@ module.exports.init =async function(req,res) {
 
   await User.collection.drop();
 
-  User.create({ email: 'petr.kral@gmail.com', fullname: 'Petr Kral', _id: 123456,})
+  User.create({ email: 'petr.kral@gmail.com', fullname: 'Petr Kral',})
     .then((user) => {
       user.setPassword("petrkral")
       user.setRegularUser()
     })
 
-  User.create({ email: 'jiri.maly@seznam.cz', fullname: 'Jiry Maly', _id: 123457,})
+  User.create({ email: 'jiri.maly@seznam.cz', fullname: 'Jiry Maly',})
     .then((user) => {
       user.setPassword("jirimaly")
       user.setRegularUser()
     })
 
-  User.create({ email: 'anezka.kratka@test.com', fullname: 'Anezka Kratka', _id: 123458})
+  User.create({ email: 'anezka.kratka@test.com', fullname: 'Anezka Kratka',})
     .then((user) => {
       user.setPassword("anezkakratka")
       user.setRegularUser()

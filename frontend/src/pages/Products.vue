@@ -59,7 +59,7 @@
 
           </button>
         </li>
-      <button class="product dashed-border" @click="addIsVisible = !addIsVisible"> 
+      <button class="product dashed-border" v-if="userData.isAdmin" @click="addIsVisible = !addIsVisible"> 
         Add product </button>
         <li></li>
       </ul>
@@ -194,15 +194,15 @@ export default {
   }
 
   .products {
-
     margin: 4rem 0;
 
     .product-item {
       margin-right: 1rem;
       margin-bottom: 2rem;
+      display: flex;
 
       .product {
-
+        flex-grow: 100;
         padding: 0;
         background: #fff;
         /* box-shadow: 1px solid #ccc; */

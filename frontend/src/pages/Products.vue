@@ -8,7 +8,7 @@
 
       <ul class="products three-column-grid">
         <li class="product-item" v-for="product in products" :key="product.title">
-          <button class="product">     
+          <button class="product">
             <button v-if="userData.isAdmin" @click="deleteProduct(product._id)" class="delete">
                 <font-awesome-icon :icon="[ 'fad', 'trash-alt' ]" />
             </button>
@@ -21,7 +21,7 @@
               <div class="configuration">
                 <ul>
                   <li>
-                    <label>RAM</label> 
+                    <label>RAM</label>
                     <span>{{ product.configuration.memory }} GB</span>
                   </li>
                   <li>
@@ -59,13 +59,13 @@
 
           </button>
         </li>
-      <button class="product dashed-border" v-if="userData.isAdmin" @click="addIsVisible = !addIsVisible; trueEditFalseCreate = false"> 
+      <button class="product dashed-border" v-if="userData.isAdmin" @click="addIsVisible = !addIsVisible; trueEditFalseCreate = false">
         Add product </button>
         <li></li>
       </ul>
 
 <div class="shadow"  v-if="this.addIsVisible">
- <button class="edit-product" v-if="this.addIsVisible">   
+ <button class="edit-product" v-if="this.addIsVisible">
 
    <button v-if="userData.isAdmin" class="delete" @click="addIsVisible = !addIsVisible">
         <font-awesome-icon :icon="[ 'fad', 'times' ]" />
@@ -75,7 +75,7 @@
         <div class="configuration">
         <ul>
             <li>
-            <label>RAM</label> 
+            <label>RAM</label>
             <select v-model="newProduct.memory">
               <option disabled value="">RAM</option>
               <option>1</option>
@@ -143,7 +143,7 @@
             <button  @click="createProduct()" class="addbutton">
               TODO Icon
                 <font-awesome-icon :icon="[ 'fad', 'plus' ]" />
-            </button>  
+            </button>
     </div>
     </button>
 </div>
@@ -191,7 +191,7 @@ export default {
       userData: state => state.user.userData,
       isAdmin: state => state.user.isAdmin
     }),
-    
+
   },
 
   methods: {
@@ -296,11 +296,11 @@ export default {
 <style lang="scss" scoped>
 
 .dashed-border {
-    border:5px dashed #bbbbbb !important;  
+    border:5px dashed #bbbbbb !important;
 }
 
 
- 
+
 
 .products-page {
   background: rgb(247, 247, 255);
@@ -366,7 +366,7 @@ export default {
 
 
         .cover {
-          background: #5F5CFF;
+          background: orangered;
           width: 100%;
           height: 200px;
           display: flex;
@@ -432,7 +432,7 @@ export default {
               display: table-cell;
               font-weight: 400;
               font-size: 1rem;
-            } 
+            }
 
             span {
               display: table-cell;
@@ -471,8 +471,8 @@ export default {
 }
 
 .shadow  {
- display: block; 
-  position: fixed; 
+ display: block;
+  position: fixed;
   height: 100%;
   width: 100%;
   top: 0;
@@ -482,16 +482,16 @@ export default {
 }
 
 .edit-product{
-  display: block; 
-  position: fixed; 
-  top: 20%; 
+  display: block;
+  position: fixed;
+  top: 20%;
   left: 20%;
   padding: 0;
   background: #fff;
   appearance: none;
   /* outline: none; */
   border: none;
-  box-shadow: -26px -13px 62px 4px rgba(0,0,0,0.24);        
+  box-shadow: -26px -13px 62px 4px rgba(0,0,0,0.24);
   width: 60%;
   z-index: 10;
 
@@ -557,7 +557,7 @@ export default {
         display: table-cell;
         font-weight: 400;
         font-size: 2rem;
-      } 
+      }
     }
   }
 
@@ -589,12 +589,12 @@ export default {
     justify-content: space-evenly;
     align-items: center;
   }
-  
+
   .addbutton {
     color: white;
     width: 80%;
     height: 80%;
-    padding:2rem; 
+    padding:2rem;
     margin: 0.5rem;}
 
 

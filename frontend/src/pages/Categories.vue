@@ -55,7 +55,7 @@ export default {
 
   methods: {
       onClickCategory(id) {
-        this.$router.push({name: 'Products',  params: { category_id: id } }); 
+        this.$router.push({name: 'Products',  params: { category_id: id } });
       }
   }
 
@@ -118,7 +118,7 @@ export default {
       margin-bottom: 2rem;
 
       .product {
-
+        width: 100%;
         padding: 0;
         background: #fff;
         /* box-shadow: 1px solid #ccc; */

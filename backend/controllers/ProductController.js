@@ -11,11 +11,11 @@ const Category = require("../models/Category");
 const Product = require("../models/Product");
 const { SuccessResponse, ErrorResponse} = require('../utils/response')
 
-module.exports.init =async function(req,res) {
+module.exports.init = async function(req,res) {
 
-  await Category.collection.drop();
-  await Product.collection.drop();
-  await Configuration.collection.drop();
+  // await Category.collection.drop();
+  // await Product.collection.drop();
+  // await Configuration.collection.drop();
 
   const gameCat = await new Category({
     title: 'Gaming servers',

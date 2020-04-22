@@ -56,6 +56,28 @@ module.exports.getAll = function(req, res) {
   }) 
 }
 
+/*
+|--------------------------------------------------------------------------------
+| Return my Orders
+|--------------------------------------------------------------------------------
+*/
+module.exports.getMy = async function(req, res) {
+
+  await req.user.set(req.body);
+  if (req.user) {
+    Order.find({user: req.user._id})
+      .populate("user", "email")
+      .populate("product")
+      .exec(function(err, orders) {
+        console.log(orders);
+          if(orders) {res.send(orders);  }
+          else {return ErrorResponse(res, { message: "Resource not found." }, 404)}
+      }) 
+  } else {
+    return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)
+  }
+}
+
 
 /*
 |--------------------------------------------------------------------------------

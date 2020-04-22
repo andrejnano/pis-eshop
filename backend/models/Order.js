@@ -8,6 +8,7 @@ const orderSchema = new mongoose.Schema({
     enum: ["PayPal", "PaySafeCard", "Bankovní převod", "Bitcoin", "GoPay"],
     default: "PayPal"
   },
+  
   price: {
     type: Number,
     required: true
@@ -25,6 +26,11 @@ const orderSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  state: {
+    type: String,
+    enum: ["created", "paid", "cancelled"],
+    default: "created"
   }
 });
 

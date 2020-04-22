@@ -123,7 +123,14 @@ export default {
           this.createProduct(product)
         }
       }
-  }
+  },
+  watch: { 
+  selectedProduct: function(newVal, oldVal) { // watch it
+          console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+          this.ipCount = this.selectedProduct.ipCount;
+          this.name = this.selectedProduct.name;
+        }
+      }
 }
 </script>
 

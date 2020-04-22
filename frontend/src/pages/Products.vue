@@ -12,6 +12,10 @@
             <button v-if="userData.isAdmin" @click="deleteProduct(product._id)" class="delete">
                 <font-awesome-icon :icon="[ 'fad', 'trash' ]" />
             </button>
+
+            <button v-if="userData.isAdmin" class="edit">
+                <font-awesome-icon :icon="[ 'fad', 'edit' ]" />
+            </button>
             <div class="cover">
 
               <div class="configuration">
@@ -55,10 +59,9 @@
 
           </button>
         </li>
-        <li>
-          <editProduct v-if="userData.isAdmin" :createProduct="createProduct" />
-        </li>
       </ul>
+          <editProduct v-if="userData.isAdmin" :createProduct="createProduct" />
+
     </div>
   </div>
 </template>
@@ -111,6 +114,10 @@ export default {
       .catch(e => {
         this.errors.push(e)
       })
+    },
+    editProduct(product_id) {
+      //todo
+      console.log(product_id);
     },
     createProduct(product) {
       console.log("passed")
@@ -285,9 +292,17 @@ export default {
 
       .delete {
         position: absolute;
-        right: 1rem;
-        top: 1rem;
+        right: 0.5rem;
+        top: 0.5rem;
         z-index: 1;
+        color: #fff;
+      }
+
+      .edit {
+        position: absolute;
+        left: 0.5rem;
+        top: 0.5rem;
+        z-index: 2;
         color: #fff;
       }
     }

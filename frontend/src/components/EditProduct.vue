@@ -1,36 +1,62 @@
 <template>
  
     <button class="product">   
-                    <button  @click="execute()">
-                <font-awesome-icon :icon="[ 'fad', 'trash' ]" />
-            </button>  
+
     <div class="cover">
 
         <div class="configuration">
         <ul>
             <li>
             <label>RAM</label> 
-            <input v-model="memory" placeholder="memory">
+            <select v-model="memory">
+              <option disabled value="">RAM</option>
+              <option>2</option>
+              <option>4</option>
+              <option>8</option>
+              <option>16</option>
+              <option>32</option>
+              <option>64</option>
+              <option>128</option>
+            </select> GB
             </li>
             <li>
             <label>vCPU's</label>
-            <input v-model="cpu" placeholder="cpu">
+            <select v-model="cpu">
+              <option disabled value="">vCPU's</option>
+              <option>2</option>
+              <option>4</option>
+              <option>8</option>
+              <option>16</option>
+              <option>32</option>
+              <option>64</option>>
+            </select>
             </li>
             <li>
             <label>HDD</label>
-            <input v-model="hdd" placeholder="hdd">
+            <select v-model="hdd">
+              <option disabled value="">Hdd</option>
+              <option>10</option>
+              <option>20</option>
+              <option>30</option>
+              <option>40</option>
+            </select> GB
             </li>
             <li>
             <label>Type</label>
-            <input v-model="hddType" placeholder="hddType">
+            <select v-model="hddType">
+              <option disabled value="">Hdd Type</option>
+              <option>HDD</option>
+              <option>SSD</option>
+            </select>
             </li>
             <li>
             <label>IP's</label>
-            <input v-model="ipCount" placeholder="ipCount">
+            <input v-model="ipCount" placeholder="1 - 255">
             </li>
         </ul>
         </div>
-        <font-awesome-icon :icon="[ 'fad', 'server' ]" />
+            <font-awesome-icon :icon="[ 'fad', 'server' ]" />
+
     </div>
     <div class="top-info">
 
@@ -41,12 +67,15 @@
         </div>
         <div class="column">
         <div class="label">Price:</div>
-        <input v-model="price" placeholder="price">
+        <input v-model="price" placeholder="price">€/month
         </div>
     </div>
     <div class="description"><textarea v-model="description" placeholder="add multiple lines"></textarea></div>
-
-
+    <div class="footer">
+            <button  @click="execute()">
+                <font-awesome-icon :icon="[ 'fad', 'plus' ]" />
+            </button>  
+    </div>
     </button>
 
 </template>
@@ -109,17 +138,26 @@ export default {
         border: none;
         box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
         position: relative;
-
+        width: 100%;
 
         .cover {
           background: #5F5CFF;
           width: 100%;
-          height: 200px;
+          height: 250px;
           display: flex;
           justify-content: space-evenly;
           align-items: center;
           color: #fff;
           font-size: 3rem;
+        }
+
+        .footer {
+          background: #5F5CFF;
+          height: 80px;
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+          color: #fff;
         }
 
 
@@ -161,17 +199,35 @@ export default {
             text-align: right;
             color: #5F5CFF;
           }
+
+          input {
+              display: table-cell;
+              font-weight: 600;
+              font-size: 1.5rem;
+              border: none;
+              width: 5rem;
+              padding: 0;
+              margin: 0;
+              border-bottom: 2px solid #5F5CFF;
+              color: #5F5CFF;
+              background-color: transparent;
+              margin-left: 3rem;
+            }
+            input::placeholder {
+                color: #5F5CFF;
+            }
         }
 
         .configuration {
           text-align: left;
           display: table;
-          width: 50%;
+          width: 70%;
+          padding: 1rem;
 
           li {
-            list-style-type: circle;
             color: #fff;
             display: table-row;
+            width: 100%;
 
             label {
               display: table-cell;
@@ -184,7 +240,7 @@ export default {
               font-weight: 600;
               font-size: 1.5rem;
               border: none;
-              width: 5rem;
+              width: 12rem;
               padding: 0;
               margin: 0;
               border-bottom: 2px solid #fff;

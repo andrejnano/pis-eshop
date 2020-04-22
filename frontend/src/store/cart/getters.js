@@ -3,6 +3,6 @@
 | get all products in the cart
 |--------------------------------------------------------------------------
 */
-export function cartProducts (state)  {
+export function getCartProducts (state)  {
   return state.cartProducts
 }

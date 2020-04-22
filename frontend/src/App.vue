@@ -1,15 +1,15 @@
 <template>
   <div id="app">
 
-    <!-- only for development, remove for production -->
-    <!-- <router-link id="sandbox-link" to="/sandbox-dev">
-      Sandbox
-    </router-link> -->
-
     <navigation/>
     <main id="main">
       <router-view/>
     </main>
+
+
+    <shoppingCart/>
+
+
   </div>
 </template>
 
@@ -21,7 +21,8 @@
 */
 export default {
   components: {
-    navigation: () => import(/* webpackChunkName: "navigation" */ './components/SimpleNavigation.vue')
+    navigation: () => import(/* webpackChunkName: "navigation" */ './components/SimpleNavigation.vue'),
+    shoppingCart: () => import(/* webpackChunkName: "shoppingCart" */ './components/ShoppingCart.vue')
   }
 }
 </script>

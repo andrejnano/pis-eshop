@@ -6,17 +6,6 @@ import store from '../store'
 Vue.use(VueRouter)
 
 const routes = [
-
-  {
-    path: '/sandbox-dev',
-    name: 'Sandbox',
-    component: () => import(/* webpackChunkName: "sandbox" */ '../pages/SANDBOX.vue'),
-    meta: {
-      auth: false,
-      title: 'Sandbox'
-    }
-  },
-
   {
     path: '/',
     name: 'Home',
@@ -127,7 +116,6 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
 })
-
 
 
 // control auth access with router middleware

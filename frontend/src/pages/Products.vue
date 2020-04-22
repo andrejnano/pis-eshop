@@ -64,6 +64,7 @@
         <li></li>
       </ul>
 
+<div class="shadow"  v-if="this.addIsVisible">
  <button class="edit-product" v-if="this.addIsVisible">   
 
    <button v-if="userData.isAdmin" class="delete" @click="addIsVisible = !addIsVisible">
@@ -144,7 +145,7 @@
             </button>  
     </div>
     </button>
-
+</div>
 
     </div>
   </div>
@@ -465,11 +466,22 @@ export default {
   color: #fff;
 }
 
+.shadow  {
+ display: block; 
+  position: fixed; 
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+   background-color: rgba(19, 19, 19, 0.767);
+  z-index: 8;
+}
+
 .edit-product{
   display: block; 
   position: fixed; 
-  bottom: -2%; 
-  left: 40%;
+  top: 20%; 
+  left: 20%;
   padding: 0;
   background: #fff;
   appearance: none;

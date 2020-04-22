@@ -10,7 +10,7 @@
         <li class="product-item" v-for="product in products" :key="product.title">
           <button class="product">     
             <button v-if="userData.isAdmin" @click="deleteProduct(product._id)" class="delete">
-                <font-awesome-icon :icon="[ 'fad', 'trash' ]" />
+                <font-awesome-icon :icon="[ 'fad', 'trash-alt' ]" />
             </button>
 
             <button v-if="userData.isAdmin" class="edit" @click="setSelectedProduct(product)">
@@ -68,7 +68,7 @@
  <button class="edit-product" v-if="this.addIsVisible">   
 
    <button v-if="userData.isAdmin" class="delete" @click="addIsVisible = !addIsVisible">
-        <font-awesome-icon :icon="[ 'fad', 'trash' ]" />
+        <font-awesome-icon :icon="[ 'fad', 'times' ]" />
     </button>
     <div class="cover">
 
@@ -78,6 +78,7 @@
             <label>RAM</label> 
             <select v-model="newProduct.memory">
               <option disabled value="">RAM</option>
+              <option>1</option>
               <option>2</option>
               <option>4</option>
               <option>8</option>
@@ -139,7 +140,7 @@
     </div>
     <div class="description"><textarea v-model="newProduct.description" placeholder="New product description"  rows="4"></textarea></div>
     <div class="footer">
-            <button  @click="createProduct()">
+            <button  @click="createProduct()" class="addbutton">
               TODO Icon
                 <font-awesome-icon :icon="[ 'fad', 'plus' ]" />
             </button>  
@@ -299,14 +300,7 @@ export default {
 }
 
 
-  .footer {
-    background: #5F5CFF;
-    height: 80px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    color: #fff;
-  }
+ 
 
 .products-page {
   background: rgb(247, 247, 255);
@@ -512,14 +506,7 @@ export default {
     font-size: 3rem;
   }
 
-  .footer {
-    background: #5F5CFF;
-    height: 80px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    color: #fff;
-  }
+
 
 
   .top-info {
@@ -529,29 +516,7 @@ export default {
     padding: 2rem 2rem;
 
     .column {
-      width: 50%;
-    }
-
-    .main-title {
-      line-height: 2;
-      font-size: 1.6rem;
-      font-weight: 600;
-      text-align: left;
-    }
-
-    .sub-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #666;
-      text-align: left;
-    }
-
-    .label {
-      font-size: 1rem;
-      font-weight: 500;
-      color: #666;
-      text-align: right;
-      margin: 0.5rem;
+      width: 80%;
     }
 
     .price {
@@ -569,21 +534,19 @@ export default {
         width: 5rem;
         padding: 0;
         margin: 0;
-        border-bottom: 2px solid #5F5CFF;
+        border-bottom: 1px solid #5F5CFF;
         color: #5F5CFF;
         background-color: transparent;
         margin-left: 3rem;
       }
-      input::placeholder {
-          color: #5F5CFF;
-      }
+
   }
 
   .configuration {
     text-align: left;
     display: table;
     width: 70%;
-    padding: 1rem;
+    padding: 2rem;
 
     li {
       color: #fff;
@@ -593,25 +556,8 @@ export default {
       label {
         display: table-cell;
         font-weight: 400;
-        font-size: 1rem;
+        font-size: 2rem;
       } 
-
-      input {
-        display: table-cell;
-        font-weight: 600;
-        font-size: 1.5rem;
-        border: none;
-        width: 12rem;
-        padding: 0;
-        margin: 0;
-        border-bottom: 2px solid #fff;
-        color: #fff;
-        background-color: transparent;
-        margin-left: 3rem;
-      }
-      input::placeholder {
-          color: #ccc;
-      }
     }
   }
 
@@ -636,7 +582,20 @@ export default {
   }
 
 }
+
+  .footer {
+    background: #5F5CFF;
+    height: 80px;
+    justify-content: space-evenly;
+    align-items: center;
+  }
   
+  .addbutton {
+    color: white;
+    width: 80%;
+    height: 80%;
+    padding:2rem; 
+    margin: 0.5rem;}
 
 
 </style>

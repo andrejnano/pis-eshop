@@ -9,7 +9,35 @@
 let User = require('../models/User')
 const { SuccessResponse, ErrorResponse} = require('../utils/response')
 
+/*
+|--------------------------------------------------------------------------------
+| Init DB of users
+|--------------------------------------------------------------------------------
+*/
+module.exports.init =async function(req,res) {
 
+  await User.collection.drop();
+
+  User.create({ email: 'petr.kral@gmail.com', fullname: 'Petr Kral', _id: 123456,})
+    .then((user) => {
+      user.setPassword("petrkral")
+      user.setRegularUser()
+    })
+
+  User.create({ email: 'jiri.maly@seznam.cz', fullname: 'Jiry Maly', _id: 123457,})
+    .then((user) => {
+      user.setPassword("jirimaly")
+      user.setRegularUser()
+    })
+
+  User.create({ email: 'anezka.kratka@test.com', fullname: 'Anezka Kratka', _id: 123458})
+    .then((user) => {
+      user.setPassword("anezkakratka")
+      user.setRegularUser()
+    })
+
+  return SuccessResponse(res, { 'message' : 'DB of Users successfully initialized.' }, 200)
+}
 /*
 |--------------------------------------------------------------------------------
 | Create a new User Account (Registration)

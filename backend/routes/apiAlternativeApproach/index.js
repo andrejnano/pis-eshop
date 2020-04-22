@@ -48,6 +48,7 @@ router.get('/', (req, res, next) => {
 | Users Route   "/api/users/"
 |--------------------------------------------------------------------------------
 */
+router.get(     '/users/init',  UserController.init)
 router.post(    '/users',   UserController.create)                                                  // C
 router.get(     '/users',   passport.authenticate('jwt', {session: false}), UserController.get)     // R
 router.put(     '/users',   passport.authenticate('jwt', {session: false}), UserController.update)  // U
@@ -83,7 +84,7 @@ router.get(  '/orders/:order_id/cancel',   passport.authenticate('jwt', {session
 |--------------------------------------------------------------------------------
 */
 router.post(    '/products',               passport.authenticate('jwt', {session: false}), ProductController.create)                                                  // C
-router.get(     '/products/init',          ProductController.init)        
+router.get(     '/products/init',          ProductController.init)
 router.get(     '/categories',             ProductController.getCategories)                                             // C
 router.get(     '/categories/:category_id',ProductController.getCategory)                                             // C
 router.get(     '/products',               ProductController.getAll)

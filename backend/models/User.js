@@ -5,6 +5,7 @@ const CONFIG = require("../config");
 
 const userSchema = new mongoose.Schema({
   email: String,
+  fullname: String,
   hash: String,
   salt: String,
   isAdmin: {

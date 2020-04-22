@@ -68,6 +68,7 @@ router.post('/users/login', UserController.login)
 | Orders Route   "/api/orders/"
 |--------------------------------------------------------------------------------
 */
+router.get(     '/orders/init',        OrderController.init)                                                  // C
 router.post(    '/orders',             passport.authenticate('jwt', {session: false}), OrderController.create)                                                  // C
 router.get(     '/orders',             passport.authenticate('jwt', {session: false}), OrderController.getMy)
 router.get(     '/orders/all',             passport.authenticate('jwt', {session: false}), OrderController.getAll)

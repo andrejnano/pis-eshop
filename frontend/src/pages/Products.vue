@@ -231,11 +231,21 @@ export default {
       this.newProduct.price = product.price;
       this.newProduct.description = product.description;
       this.newProduct._id = product._id;
+      this.newProduct.config_id = product.configuration._id;
     },
     createProduct() {
       if (this.trueEditFalseCreate) {
               let product = {
                 "name":  this.newProduct.name,
+                  "configuration": {
+                  "_id": this.newProduct.config_id,
+                    "os": "Minecraft",
+                    "memory": this.newProduct.memory,
+                    "cpu": this.newProduct.cpu,
+                    "hdd": this.newProduct.hdd,
+                    "hddType": this.newProduct.hddType,
+                    "ipCount": this.newProduct.ipCount
+                },
                 "price":  this.newProduct.price,
                 "icon": "server",
                 "description": this.newProduct.description
@@ -257,7 +267,7 @@ export default {
                     "memory": this.newProduct.memory,
                     "cpu": this.newProduct.cpu,
                     "hdd": this.newProduct.hdd,
-                    "hddType": "HDD",
+                    "hddType":  this.newProduct.hddType,
                     "ipCount": this.newProduct.ipCount,
                 },
                 "category": this.$route.params.category_id,

@@ -401,7 +401,9 @@ example body:
 module.exports.update = async function(req, res) {
   await req.user.set(req.body);
   if (req.user.isAdmin) {
-    let { name, price, icon, description } = req.body;
+    let { name, configuration, price, icon, description } = req.body;
+    let { os, memory, cpu, hdd, hddType, ipCount } = configuration;
+    await Configuration.findOneAndUpdate({_id: configuration._id}, { os, memory, cpu, hdd, hddType, ipCount });
     let doc = await Product.findOneAndUpdate({_id: req.params.product_id}, { name, price, icon, description });
     return SuccessResponse(res, { updated: doc }, 200)
   } else {

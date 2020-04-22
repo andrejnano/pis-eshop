@@ -13,7 +13,7 @@
                 <font-awesome-icon :icon="[ 'fad', 'trash' ]" />
             </button>
 
-            <button v-if="userData.isAdmin" class="edit">
+            <button v-if="userData.isAdmin" class="edit" @click="setSelectedProduct(product)">
                 <font-awesome-icon :icon="[ 'fad', 'edit' ]" />
             </button>
             <div class="cover">
@@ -63,7 +63,7 @@
         Add product </button>
         <li></li>
       </ul>
-          <editProduct v-if="condition" :createProduct="createProduct" />
+          <editProduct v-if="condition" :createProduct="createProduct" :selectedProduct="selected"/>
 
     </div>
   </div>
@@ -78,6 +78,7 @@ export default {
   data() {
     return {
       products: [],
+      selected: {},
       description: '',
       addIsVisible: false
     }
@@ -122,9 +123,9 @@ export default {
         this.errors.push(e)
       })
     },
-    editProduct(product_id) {
-      //todo
-      console.log(product_id);
+    setSelectedProduct(product_id) {
+      this.selected = product_id;
+      this.addIsVisible = !this.addIsVisible;
     },
     createProduct(product) {
       console.log("passed")

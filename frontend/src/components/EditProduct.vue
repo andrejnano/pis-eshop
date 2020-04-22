@@ -100,10 +100,10 @@ export default {
   props: {
     createProduct: { type: Function },
     showWindow: { type: Function },
+    selectedProduct: Object,
   },
   methods: {
     execute() {
-        console.log("here")
         if (this.createProduct) {
             let product = {
                 "name": this.name,

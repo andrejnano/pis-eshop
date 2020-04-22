@@ -20,8 +20,8 @@ module.exports.init =async function(req,res) {
   await new Order({
       payment: "PaySafeCard",
       price: 70,
-      user: // TODO
-      product: ["apache_lite"],
+      // user: // TODO
+      product: "apache_lite",
       date: '2020-03-09',
       state: "paid",
   }).save();
@@ -29,8 +29,8 @@ module.exports.init =async function(req,res) {
   await new Order({
       payment: "GoPay",
       price: 50,
-      user: // TODO
-      product: ["minecraft_lite"],
+      // user: // TODO
+      product: "minecraft_lite",
       date: '2020-03-18',
       state: "cancelled",
   }).save();
@@ -38,8 +38,8 @@ module.exports.init =async function(req,res) {
   await new Order({
       payment: "PaySafeCard",
       price: 100,
-      user: // TODO
-      product: ["cs_go"],
+      // user: // TODO
+      product: "cs_go",
       date: '2020-04-25',
       state: "created",
   }).save();
@@ -47,8 +47,8 @@ module.exports.init =async function(req,res) {
   await new Order({
       payment: "GoPay",
       price: 280,
-      user: // TODO
-      product: ["temaspeak_lq", "docker_1"],
+      // user: // TODO
+      product: "temaspeak_lq",
       date: '2020-01-14',
       state: "paid",
   }).save();
@@ -56,8 +56,8 @@ module.exports.init =async function(req,res) {
   await new Order({
       payment: "Bitcoin",
       price: 140,
-      user: // TODO
-      product: ["docker_3"],
+      // user: // TODO
+      product: "docker_3",
       date: '2020-03-29',
       state: "cancelled",
   }).save();

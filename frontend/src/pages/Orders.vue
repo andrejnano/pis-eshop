@@ -7,8 +7,21 @@
       <ul class="orders three-column-grid">
         <li class="order-item" v-for="order in orders" :key="order.title">
           <button class="order">
-                <div class="label">Total price:</div>
-                <div class="price">{{ order.price }}€/month</div>
+                <div class="violet">{{ order.price }}€/month</div>
+            <button  @click="actionOrder(order._id, 'pay')">
+                PAY
+              </button>
+              <button  @click="actionOrder(order._id, 'cancel')">
+                CANCEL
+              </button>
+
+               <button  @click="reorder(order)">
+                REORDER
+              </button>
+              <br>
+                Current status: <span class="violet">{{ order.state }}</span> <br>
+                Date created: <span class="violet">{{ order.date }}</span> <br>
+
             <div class="description" v-for="product in order.products" :key="product._id">
                 <div class="main-title">{{ product.name }}</div>
                 <ul>
@@ -30,18 +43,11 @@
                   </li>
                   <li>
                     <label>IP's</label>
-                    <span>{{ product.configuration.ipCount }}</span>
+                    <span>{{ generateIps(product.configuration.ipCount) }}</span>
                   </li>
                 </ul>
             </div>
-            <div class="description">Current status: <span class="violet">{{ order.state }}</span> <br>
-            <button  @click="actionOrder(order._id, 'pay')">
-                PAY
-              </button>
-              <button  @click="cancelOrder(order._id, 'cancel')">
-                CANCEL
-              </button>
-            </div>
+            
           </button>
         </li>
       </ul>
@@ -106,6 +112,76 @@ export default {
         }],
         "date": "2020-04-22T19:50:40.351Z",
         "__v": 0
+    },
+
+    {
+        "payment": "PayPal",
+        "state": "created",
+        "_id": "5ea0a01072298502608b7ecc",
+        "price": 123,
+        "user": {
+            "_id": "5ea09fde72298502608b7ecb",
+            "email": "testmail@test.cz"
+        },
+        "products": [{
+            "_id": "5ea08272170714020dccdcef",
+            "name": "Apache lite",
+            "configuration": {
+                "os": "CentOS",
+                "memory": 4,
+                "cpu": 2,
+                "hdd": 512,
+                "hddType": "HDD",
+                "_id": "5ea08272170714020dccdce9",
+                "ipCount": 2,
+                "__v": 0
+            },
+            "category": "5ea08272170714020dccdcdf",
+            "price": 70,
+            "icon": "server",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
+            "__v": 0
+        },
+        {
+            "_id": "5ea08272170714rqwr020dccdcef",
+            "name": "Apache Pro 2",
+            "configuration": {
+                "os": "CentOS",
+                "memory": 4,
+                "cpu": 2,
+                "hdd": 512,
+                "hddType": "HDD",
+                "_id": "5ea08272170714fer020dccdce9",
+                "ipCount": 2,
+                "__v": 0
+            },
+            "category": "5ea08272170fsaf714020dccdcdf",
+            "price": 70,
+            "icon": "server",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
+            "__v": 0
+        },
+        {
+            "_id": "5ea08272170714rqwr020dccdcef",
+            "name": "Apache Pro 2",
+            "configuration": {
+                "os": "CentOS",
+                "memory": 4,
+                "cpu": 2,
+                "hdd": 512,
+                "hddType": "HDD",
+                "_id": "5ea08272170714fer020dccdce9",
+                "ipCount": 2,
+                "__v": 0
+            },
+            "category": "5ea08272170fsaf714020dccdcdf",
+            "price": 70,
+            "icon": "server",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus nisl, sollicitudin ut sapien vitae, tincidunt vulputate ligula.",
+            "__v": 0
+        }],
+        "date": "2020-04-22T19:50:40.351Z",
+        "__v": 0
     }
 ]
     }
@@ -113,14 +189,7 @@ export default {
 
 
   created() {
-    axios.get('http://localhost:4000/api/orders/')
-    .then(response => {
-      console.log(response.data)
-      // this.orders = response.data
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
+    this.fetchProducts();
   },
   methods: {
     actionOrder(order_id, action) {
@@ -132,7 +201,39 @@ export default {
         this.errors.push(e)
       })
     },
-    
+    generateIps(count) {
+      var text = ""
+      for (var i = 0; i < count; i++) {
+        var ip = (Math.floor(Math.random() * 255) + 1)+"."+(Math.floor(Math.random() * 255))+"."+(Math.floor(Math.random() * 255))+"."+(Math.floor(Math.random() * 255));
+        text += ", "+ip;
+      }
+      return text;
+    },
+    fetchProducts() {
+      axios.get('http://localhost:4000/api/orders/')
+    .then(response => {
+      console.log(response.data)
+      this.orders = [...response.data, ...this.orders]
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
+    },
+    reorder(order) {
+      let o = {
+         "payment": order.payment,
+          "price": order.price,
+          "products":  order.products.map(a => a._id)
+      }
+      console.log(o)
+      axios.post('http://localhost:4000/api/orders', o)
+      .then(() => {
+        this.fetchProducts();
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
   }
 
 }
@@ -187,8 +288,8 @@ export default {
       margin-bottom: 2rem;
 
       .order {
-
-        padding: 0;
+        width: 100%;
+        padding: 2rem;
         background: #fff;
         /* box-shadow: 1px solid #ccc; */
         appearance: none;
@@ -207,12 +308,7 @@ export default {
             width: 50%;
           }
 
-          .main-title {
-            line-height: 2;
-            font-size: 1.6rem;
-            font-weight: 600;
-            text-align: left;
-          }
+
 
           .sub-title {
             font-size: 1rem;
@@ -221,13 +317,7 @@ export default {
             text-align: left;
           }
 
-          .label {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #666;
-            text-align: right;
-            margin: 0.5rem;
-          }
+
 
           .price {
             font-size: 1.4rem;
@@ -254,6 +344,21 @@ export default {
             color: #5F5CFF;
             font-size: 1.4rem;
             font-weight: 600;
+  }
+
+  label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #5F5CFF;
+    text-align: right;
+    margin: 1.5rem;
+  }
+
+  .main-title {
+    line-height: 2;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-align: left;
   }
 }
 </style>

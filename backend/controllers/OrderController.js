@@ -94,8 +94,8 @@ module.exports.init =async function(req,res) {
 example:
 {
   "payment": "PayPal",
-  "price": 123,
-  "product": "5e9f4a55423b54033ecbeadc"
+  "price": 1414,
+  "products": ["5ea08272170714020dccdcf1", "5ea08273170714020dccdcf5", "5ea08272170714020dccdce6"]
 }
 |--------------------------------------------------------------------------------
 */
@@ -105,11 +105,9 @@ module.exports.create = async function(req, res) {
     let user = await User.findById(req.user._id, function (err, user) {
       return user;
     })
-    let { payment, price, product } = req.body;
-    let prod = await Product.findOne({_id: product}, function (err, prod) {
-      return prod;
-    })
-    let doc = await new Order({ payment: payment, price: price, user: user, product: prod }).save();
+    let { payment, price, products } = req.body;
+    let prods = records = await Product.find().where('_id').in(products).exec();
+    let doc = await new Order({ payment: payment, price: price, user: user, products: prods }).save();
     return SuccessResponse(res, { created_order: doc }, 200)
   } else {
     return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)
@@ -127,7 +125,12 @@ module.exports.getAll = async function(req, res) {
   if (req.user.isAdmin) { // TODO user can delete own orders
     Order.find({})
       .populate("user", "email")
-      .populate("product")
+      .populate({
+        path: 'products',
+        populate: {
+            path: 'configuration',
+        }
+    })
       .exec(function(err, orders) {
         res.send(orders);
       })
@@ -147,7 +150,12 @@ module.exports.getMy = async function(req, res) {
   if (req.user) {
     Order.find({user: req.user._id})
       .populate("user", "email")
-      .populate("product")
+      .populate({
+        path: 'products',
+        populate: {
+            path: 'configuration',
+        }
+    })
       .exec(function(err, orders) {
         console.log(orders);
           if(orders) {res.send(orders);  }

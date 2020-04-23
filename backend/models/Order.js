@@ -18,18 +18,18 @@ const orderSchema = new mongoose.Schema({
     required: true,
     ref: User
   },
-  product: {
+  products: [{
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: Product
-  },
+  }],
   date: {
     type: Date,
     default: Date.now
   },
   state: {
     type: String,
-    enum: ["created", "paid", "cancelled"],
+    enum: ["created", "active", "cancelled", "expired"],
     default: "created"
   }
 });

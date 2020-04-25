@@ -107,6 +107,15 @@ const routes = [
       auth: true,
       title: 'Dashboard'
     }
+  },
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: () => import(/* webpackChunkName: "checkout" */ '../pages/Checkout.vue'),
+    meta: {
+      auth: true,
+      title: 'Checkout'
+    }
   }
 ]
 

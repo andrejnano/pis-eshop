@@ -42,16 +42,16 @@ module.exports.init =async function(req,res) {
       payment: "PaySafeCard",
       price: 70,
       user: petr_user,
-      product: apache_lite,
+      products: [apache_lite],
       date: '2020-03-09',
-      state: "paid",
+      state: "active",
   }).save();
 
   await new Order({
       payment: "GoPay",
       price: 50,
       user: petr_user,
-      product: minecraft_lite,
+      products: [minecraft_lite, temaspeak_lq, apache_lite],
       date: '2020-03-18',
       state: "cancelled",
   }).save();
@@ -60,7 +60,7 @@ module.exports.init =async function(req,res) {
       payment: "PaySafeCard",
       price: 100,
       user: petr_user,
-      product: cs_go,
+      products: [cs_go],
       date: '2020-04-25',
       state: "created",
   }).save();
@@ -69,16 +69,16 @@ module.exports.init =async function(req,res) {
       payment: "GoPay",
       price: 280,
       user: anezka_user,
-      product: temaspeak_lq,
+      products: [temaspeak_lq, minecraft_lite],
       date: '2020-01-14',
-      state: "paid",
+      state: "active",
   }).save();
 
   await new Order({
       payment: "Bitcoin",
       price: 140,
       user: anezka_user,
-      product: cs_go,
+      products: [cs_go],
       date: '2020-03-29',
       state: "cancelled",
   }).save();
@@ -100,11 +100,8 @@ example:
 |--------------------------------------------------------------------------------
 */
 module.exports.create = async function(req, res) {
-  await req.user.set(req.body);
   if (req.user) {
-    let user = await User.findById(req.user._id, function (err, user) {
-      return user;
-    })
+    let user = req.user._id;
     let { payment, price, products } = req.body;
     let prods = records = await Product.find().where('_id').in(products).exec();
     let doc = await new Order({ payment: payment, price: price, user: user, products: prods }).save();

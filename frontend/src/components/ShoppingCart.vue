@@ -23,7 +23,7 @@
         <div v-if="cartHasProducts()" class="cart-summary">
           <span>Total: {{ totalPrice() }}€</span>
           <router-link to="/checkout">
-            <button>Create order</button>
+            <button @click="toggleVisibility">Create order</button>
           </router-link>
         </div>
       </div>

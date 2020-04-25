@@ -24,29 +24,28 @@
         <div class="subtitle">Choose payment type:</div>
 
         <div class="payment-type">
-          <input type="radio" id="PayPal" value="PayPal" v-model="picked">
+          <input type="radio" id="PayPal" value="PayPal" v-model="payment">
           <label for="PayPal">PayPal</label>
           <br>
-          <input type="radio" id="PaySafeCard" value="PaySafeCard" v-model="picked">
+          <input type="radio" id="PaySafeCard" value="PaySafeCard" v-model="payment">
           <label for="PaySafeCard">PaySafeCard</label>
           <br>
-          <input type="radio" id="BankTransfer" value="BankTransfer" v-model="picked">
+          <input type="radio" id="BankTransfer" value="BankTransfer" v-model="payment">
           <label for="BankTransfer">Bank transfer</label>
           <br>
-          <input type="radio" id="Bitcoin" value="Bitcoin" v-model="picked">
+          <input type="radio" id="Bitcoin" value="Bitcoin" v-model="payment">
           <label for="Bitcoin">Bitcoin</label>
           <br>
-          <input type="radio" id="GoPay" value="GoPay" v-model="picked">
+          <input type="radio" id="GoPay" value="GoPay" v-model="payment">
           <label for="GoPay">GoPay</label>
         </div>
 
+        <!-- TODO - check that payment option is selected, or select one by default? -->
 
         <div class="subtitle">Total: {{ totalPrice() }}€</div>
 
-        <!-- TODO - po potvrdeni objednavky pridat novy zaznam do zoznamu objednavok -->
-
         <router-link to="/orders" class="button primary-button">
-          <span  @click="clearCart"> Confirm order </span>
+          <span  @click="clearCartAndCreateOrder"> Confirm order </span>
         </router-link>
       </div>
     </div>
@@ -57,14 +56,17 @@
 
 <script>
 
+import axios from 'axios';
+
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'Checkout',
 
   data() {
     return {
-      picked: null
+      products: this.getCartProducts,
+      price: 0,
+      payment: null
     }
   },
 
@@ -81,8 +83,29 @@ export default {
     clearCart: function() {
       this.$store.dispatch('CART_CLEAR');
     },
-    hideCart: function() {
-        this.cartVisible = false;
+
+    clearCartAndCreateOrder: function () {
+      this.createOrder();
+      this.clearCart();
+    },
+
+    createOrder: function() {
+      let order = {
+        "payment": this.payment,
+        "price": this.totalPrice(),
+        "products": ['5ea4a02a90cbe20017d8a318', '5ea4a02a90cbe20017d8a31c']
+        // "products": this.getCartProducts(),  - TODO - funkcia getCartProducts musi vracat id-cka produktov, nie cele objekty
+      }
+
+      console.log(order);
+
+      axios.post('http://localhost:4000/api/orders/', order)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
     },
   },
 
@@ -183,31 +206,34 @@ export default {
     }
   }
 
-  .primary-button, .secondary-button {
-    text-decoration: none;
-    padding: auto 2rem;
-    transition: background-color 100ms linear;
-    border-radius: 4px;
-  }
+  .order-confirm {
 
-  .primary-button {
-    background-color: #5F5CFF;
-    border: 1px solid #5F5CFF;
-    color: #fff;
-
-    &:hover {
-      background-color: rgb(51, 47, 255);
+    .primary-button, .secondary-button {
+      text-decoration: none;
+      padding: auto 2rem;
+      transition: background-color 100ms linear;
+      border-radius: 4px;
     }
-  }
 
-  .secondary-button {
-    color: #5F5CFF;
-    margin-left: 1rem;
-    border: 1px solid #5F5CFF;
+    .primary-button {
+      background-color: #5F5CFF;
+      border: 1px solid #5F5CFF;
+      color: #fff;
 
-    &:hover {
-      border: 1px solid rgb(51, 47, 255);
-      color: rgb(51, 47, 255);
+      &:hover {
+        background-color: rgb(51, 47, 255);
+      }
+    }
+
+    .secondary-button {
+      color: #5F5CFF;
+      margin-left: 1rem;
+      border: 1px solid #5F5CFF;
+
+      &:hover {
+        border: 1px solid rgb(51, 47, 255);
+        color: rgb(51, 47, 255);
+      }
     }
   }
 

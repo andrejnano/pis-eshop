@@ -310,7 +310,7 @@ module.exports.init = async function(req,res) {
 */
 module.exports.create = async function(req, res) {
   await req.user.set(req.body);
-  if (req.user.isAdmin) {
+  if (req.user) { // .isAdmin
     let { name, price, icon, description, category, configuration} = req.body;
     let conf = await new Configuration({...configuration}).save();
     let doc = await new Product({ name, price, icon, description, category, configuration: conf._id }).save();

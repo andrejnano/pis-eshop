@@ -61,13 +61,16 @@
         </li>
       <button class="product dashed-border" v-if="userData.isAdmin" @click="addIsVisible = !addIsVisible; trueEditFalseCreate = false">
         Add product </button>
+
+        <button class="product dashed-border" v-if="!userData.isAdmin" @click="addIsVisible = !addIsVisible; trueEditFalseCreate = false">
+        Create custom configuration</button>
         <li></li>
       </ul>
 
 <div class="shadow"  v-if="this.addIsVisible">
  <button class="edit-product" v-if="this.addIsVisible">
 
-   <button v-if="userData.isAdmin" class="delete" @click="addIsVisible = !addIsVisible">
+   <button class="delete" @click="addIsVisible = !addIsVisible">
         <font-awesome-icon :icon="[ 'fad', 'times' ]" />
     </button>
     <div class="cover">
@@ -130,12 +133,15 @@
 
         <div class="column">
         <div class="main-title">
-            <input class="name-input" v-model="newProduct.name" placeholder="Product name">
+            <input class="name-input" v-if="userData.isAdmin" v-model="newProduct.name" placeholder="Product name">
+            <span v-if="!userData.isAdmin">{{userData.email + " WomboConfiguration"}}</span>
         </div>
         </div>
         <div class="column">
         <div class="label">Price:</div>
-        <input  class="price-input" v-model="newProduct.price" placeholder="price">€/month
+        <input class="price-input" v-if="userData.isAdmin" v-model="newProduct.price" placeholder="price">
+        <span v-if="!userData.isAdmin">{{this.getPrice()}}</span>
+        €/month
         </div>
     </div>
     <div class="description"><textarea v-model="newProduct.description" placeholder="New product description"  rows="4"></textarea></div>
@@ -184,6 +190,7 @@ export default {
 
   created() {
     this.fetchProducts();
+
   },
 
   computed: {
@@ -195,7 +202,20 @@ export default {
   },
 
   methods: {
+    getPrice() {
+      console.log(this.userData.isAdmin)
+
+      const prices = {
+        memory : {1: 10,2: 10, 4: 16, 8 : 35, 16 : 59, 32: 120, 64: 150, 128: 198},
+        cpu : {2: 10, 4: 16, 8 : 35, 16 : 59, 32: 120},
+        hdd : {128: 10, 256: 16,  512: 35, 1024 : 59},
+        hddType : {SSD: 1.5, HDD: 1},
+        ip : 10
+      }
+      return prices.memory[this.newProduct.memory] + prices.cpu[this.newProduct.cpu] + prices.hdd[this.newProduct.hdd] * prices.hddType[this.newProduct.hddType] + prices.ip * this.newProduct.ipCount;
+    },
     condition() {
+
       this.trueEditFalseCreate = false;
       return this.userData.isAdmin && this.addIsVisible;
     },
@@ -235,56 +255,75 @@ export default {
       this.newProduct.config_id = product.configuration._id;
     },
     createProduct() {
-      if (this.trueEditFalseCreate) {
+      if(this.userData.isAdmin) {
+        if (this.trueEditFalseCreate) {
+                let product = {
+                  "name":  this.newProduct.name,
+                    "configuration": {
+                    "_id": this.newProduct.config_id,
+                      "os": "Minecraft",
+                      "memory": this.newProduct.memory,
+                      "cpu": this.newProduct.cpu,
+                      "hdd": this.newProduct.hdd,
+                      "hddType": this.newProduct.hddType,
+                      "ipCount": this.newProduct.ipCount
+                  },
+                  "price":  this.newProduct.price,
+                  "icon": "server",
+                  "description": this.newProduct.description
+              }
+              axios.put('http://localhost:4000/api/products/'+ this.newProduct._id, product)
+              .then(response => {
+                console.log(response);
+                this.fetchProducts();
+                this.addIsVisible = !this.addIsVisible;
+              })
+              .catch(e => {
+                this.errors.push(e)
+              })
+        }else {
               let product = {
-                "name":  this.newProduct.name,
+                  "name": this.newProduct.name,
                   "configuration": {
-                  "_id": this.newProduct.config_id,
-                    "os": "Minecraft",
-                    "memory": this.newProduct.memory,
-                    "cpu": this.newProduct.cpu,
-                    "hdd": this.newProduct.hdd,
-                    "hddType": this.newProduct.hddType,
-                    "ipCount": this.newProduct.ipCount
-                },
-                "price":  this.newProduct.price,
-                "icon": "server",
-                "description": this.newProduct.description
-            }
-            axios.put('http://localhost:4000/api/products/'+ this.newProduct._id, product)
-            .then(response => {
-              console.log(response);
-              this.fetchProducts();
-              this.addIsVisible = !this.addIsVisible;
-            })
-            .catch(e => {
-              this.errors.push(e)
-            })
+                      "os": "Minecraft",
+                      "memory": this.newProduct.memory,
+                      "cpu": this.newProduct.cpu,
+                      "hdd": this.newProduct.hdd,
+                      "hddType":  this.newProduct.hddType,
+                      "ipCount": this.newProduct.ipCount,
+                  },
+                  "category": this.$route.params.category_id,
+                  "price": this.newProduct.price,
+                  "icon": "server",
+                  "description": this.newProduct.description
+              }
+              axios.post('http://localhost:4000/api/products/', product)
+              .then(response => {
+                console.log(response);
+                this.fetchProducts();
+                this.addIsVisible = !this.addIsVisible;
+              })
+              .catch(e => {
+                this.errors.push(e)
+              })
+        }
       }else {
-            let product = {
-                "name": this.newProduct.name,
-                "configuration": {
-                    "os": "Minecraft",
-                    "memory": this.newProduct.memory,
-                    "cpu": this.newProduct.cpu,
-                    "hdd": this.newProduct.hdd,
-                    "hddType":  this.newProduct.hddType,
-                    "ipCount": this.newProduct.ipCount,
-                },
-                "category": this.$route.params.category_id,
-                "price": this.newProduct.price,
-                "icon": "server",
-                "description": this.newProduct.description
-            }
-            axios.post('http://localhost:4000/api/products/', product)
-            .then(response => {
-              console.log(response);
-              this.fetchProducts();
-              this.addIsVisible = !this.addIsVisible;
-            })
-            .catch(e => {
-              this.errors.push(e)
-            })
+          let product = {
+                  "name": this.newProduct.name,
+                  "configuration": {
+                      "os": "Minecraft",
+                      "memory": this.newProduct.memory,
+                      "cpu": this.newProduct.cpu,
+                      "hdd": this.newProduct.hdd,
+                      "hddType":  this.newProduct.hddType,
+                      "ipCount": this.newProduct.ipCount,
+                  },
+                  "category": this.$route.params.category_id,
+                  "price": this.newProduct.price,
+                  "icon": "server",
+                  "description": this.newProduct.description
+              }
+              console.log(product)
       }
     }
   }

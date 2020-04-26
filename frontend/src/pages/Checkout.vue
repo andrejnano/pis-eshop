@@ -89,15 +89,23 @@ export default {
       this.clearCart();
     },
 
+    getCartProductsId: function() {
+      let products = this.getCartProducts;
+      var prod;
+      var prod_ids = [];
+      for (prod of products) {
+        prod_ids.push(prod._id);
+      }
+      return prod_ids;
+    },
+
     createOrder: function() {
       let order = {
         "payment": this.payment,
         "price": this.totalPrice(),
-        "products": ['5ea4a02a90cbe20017d8a318', '5ea4a02a90cbe20017d8a31c']
-        // "products": this.getCartProducts(),  - TODO - funkcia getCartProducts musi vracat id-cka produktov, nie cele objekty
+        // "products": ['5ea5ceeb10c9cc013f7aecd3', '5ea5ceeb10c9cc013f7aecd3']
+        "products": this.getCartProductsId() // - malo by byt funkcne, ked uz bude fungovat vkladanie do kosika
       }
-
-      console.log(order);
 
       axios.post('http://localhost:4000/api/orders/', order)
         .then(response => {

@@ -4,6 +4,10 @@ const Configuration = require("../models/Configuration");
 
 
 const productSchema = new mongoose.Schema({
+  _id: {
+    type: mongoose.Schema.ObjectId,
+    auto: true
+  },
   name: {
     type: String,
     required: true,

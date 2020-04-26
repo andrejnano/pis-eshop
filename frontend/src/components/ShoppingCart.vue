@@ -48,6 +48,7 @@ export default {
       cartVisible: false,
 
       exampleProduct: {
+        _id: "5ea5ceeb10c9cc013f7aecd3",
         name: "Docker 2",
         configuration: "TeamSpeak3",
         category: "Containers",

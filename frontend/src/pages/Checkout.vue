@@ -11,7 +11,6 @@
         <li v-if="!cartHasProducts()">Your cart has no products. You can choose and add them at <router-link to="/categories">Products page</router-link>.</li>
 
         <li v-for="(product, index) in getCartProducts" :key="index" class="order-list-item">
-          <button @click="removeFromCart(index)" class="remove-button"><font-awesome-icon :icon="['fad', 'times']" /></button>
           <font-awesome-icon :icon="['fad', product.icon ]" class="product-icon"/>
           <div class="product-name">{{product.name}}</div>
           <div class="product-configuration">[{{product.configuration}}]</div>
@@ -20,6 +19,10 @@
       </ul>
 
       <div v-if="cartHasProducts()" class="order-confirm">
+
+        <div class="to-cart">
+          <router-link to="/cart" >Go back and edit my cart</router-link>
+        </div>
 
         <div class="subtitle">Choose payment type:</div>
 
@@ -44,9 +47,11 @@
 
         <div class="subtitle">Total: {{ totalPrice() }}€</div>
 
-        <router-link to="/orders" class="button primary-button">
-          <span  @click="clearCartAndCreateOrder"> Confirm order </span>
-        </router-link>
+        <div class="buttons">
+          <router-link to="/orders" class="button primary-button">
+            <span  @click="clearCartAndCreateOrder"> Confirm order </span>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -153,11 +158,6 @@ export default {
     color: #5F5CFF;
   }
 
-  li a {
-    text-decoration: none;
-    color: #5F5CFF;
-  }
-
   .order-list {
     list-style: none;
     padding: 1rem;
@@ -214,33 +214,53 @@ export default {
     }
   }
 
+
+
   .order-confirm {
 
-    .primary-button, .secondary-button {
-      text-decoration: none;
-      padding: auto 2rem;
-      transition: background-color 100ms linear;
-      border-radius: 4px;
-    }
+    .to-cart  {
+      padding-top: 2rem;
 
-    .primary-button {
-      background-color: #5F5CFF;
-      border: 1px solid #5F5CFF;
-      color: #fff;
+      a {
+        text-decoration: none;
+        color: #5F5CFF;
 
-      &:hover {
-        background-color: rgb(51, 47, 255);
+        &:hover {
+          font-weight: 400;
+          text-decoration: underline;
+        }
       }
     }
 
-    .secondary-button {
-      color: #5F5CFF;
-      margin-left: 1rem;
-      border: 1px solid #5F5CFF;
+    .buttons{
+      padding-top:2rem;
 
-      &:hover {
-        border: 1px solid rgb(51, 47, 255);
-        color: rgb(51, 47, 255);
+      .primary-button, .secondary-button {
+        text-decoration: none;
+        padding: auto 2rem;
+        transition: background-color 100ms linear;
+        border-radius: 4px;
+      }
+
+      .primary-button {
+        background-color: #5F5CFF;
+        border: 1px solid #5F5CFF;
+        color: #fff;
+
+        &:hover {
+          background-color: rgb(51, 47, 255);
+        }
+      }
+
+      .secondary-button {
+        color: #5F5CFF;
+        margin-left: 1rem;
+        border: 1px solid #5F5CFF;
+
+        &:hover {
+          border: 1px solid rgb(51, 47, 255);
+          color: rgb(51, 47, 255);
+        }
       }
     }
   }

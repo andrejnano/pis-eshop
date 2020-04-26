@@ -15,7 +15,7 @@ const { SuccessResponse, ErrorResponse} = require('../utils/response')
 
 module.exports.init =async function(req,res) {
 
-  await Order.collection.drop();
+  // await Order.collection.drop();
 
   let petr_user = await User.findOne({email: 'petr.kral@gmail.com'}, function (err, user) {
     return user;
@@ -121,7 +121,7 @@ module.exports.getAll = async function(req, res) {
   await req.user.set(req.body);
   if (req.user.isAdmin) { // TODO user can delete own orders
     Order.find({})
-      .populate("user", "email")
+      .populate("user", "fullname email")
       .populate({
         path: 'products',
         populate: {
@@ -146,7 +146,7 @@ module.exports.getMy = async function(req, res) {
   await req.user.set(req.body);
   if (req.user) {
     Order.find({user: req.user._id})
-      .populate("user", "email")
+      .populate("user", "fullname email")
       .populate({
         path: 'products',
         populate: {

@@ -127,7 +127,7 @@ module.exports.getAll = async function(req, res) {
         populate: {
             path: 'configuration',
         }
-    })
+    }).sort({date: -1})
       .exec(function(err, orders) {
         res.send(orders);
       })
@@ -152,7 +152,7 @@ module.exports.getMy = async function(req, res) {
         populate: {
             path: 'configuration',
         }
-    })
+    }).sort({date: -1})
       .exec(function(err, orders) {
         console.log(orders);
           if(orders) {res.send(orders);  }
@@ -236,7 +236,7 @@ module.exports.pay = async function(req, res) {
     let prod = await Product.findOne({_id: product}, function (err, prod) {
       return prod;
     })
-    let doc = await Order.findOneAndUpdate({_id: req.params.order_id}, { state: "paid"});
+    let doc = await Order.findOneAndUpdate({_id: req.params.order_id}, { state: "active"});
     return SuccessResponse(res, { paid_order: doc }, 200)
   } else {
     return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)

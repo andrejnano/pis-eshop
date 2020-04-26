@@ -2,17 +2,17 @@
   <div class="orders-page">
 
     <div class="featured-panel">
-      <div class="title">My orders</div>
+      <div class="title">{{title}}</div>
 
       <ul class="orders three-column-grid">
         <li class="order-item" v-for="order in orders" :key="order.title">
-          <button class="order">
+          <button class="order" v-bind:class="{ opacity: order.state!=='active' }">
             <div class="violet" v-if="!userData.isAdmin">{{ order.price }}€/month</div>
             <div v-if="!userData.isAdmin">
-              <button @click="actionOrder(order._id, 'pay')">
+              <button v-if="order.state!=='cancelled'" @click="actionOrder(order._id, 'pay')">
                 PAY
               </button>
-              <button @click="actionOrder(order._id, 'cancel')">
+              <button v-if="order.state!=='cancelled'" @click="actionOrder(order._id, 'cancel')">
                 CANCEL
               </button>
 
@@ -69,11 +69,13 @@
   export default {
     data() {
       return {
-        orders: []
+        orders: [],
+        title: 'My orders'
       }
     },
 
     created() {
+      if(this.userData.isAdmin) this.title = "All orders";
       this.fetchProducts();
     },
     computed: {
@@ -257,6 +259,10 @@
       font-size: 1.6rem;
       font-weight: 600;
       text-align: left;
+    }
+
+    .opacity {
+      opacity: 0.5;
     }
   }
 

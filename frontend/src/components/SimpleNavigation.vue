@@ -48,7 +48,7 @@
       <li v-if="userData.email" class="nav-item">
         <router-link to="/orders" class="nav-link">
           <font-awesome-icon :icon="[ 'fad', 'shopping-cart' ]" title="Orders" />
-          <span class="link-text">My orders</span>
+          <span class="link-text">Orders</span>
         </router-link>
       </li>
 

@@ -75,7 +75,7 @@
     },
 
     created() {
-      if(this.userData.isAdmin) this.title = "All orders";
+      if (this.userData.isAdmin) this.title = "All orders";
       this.fetchProducts();
     },
     computed: {
@@ -116,7 +116,7 @@
             this.orders = response.data
           })
           .catch(e => {
-            this.errors.push(e)
+            console.log(e)
           })
       },
       reorder(order) {

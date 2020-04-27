@@ -11,7 +11,7 @@
 
       <ul class="products">
         <li class="product-item" v-for="product in products" :key="product._id">
-          <div class="product">
+          <div class="product" v-if="!product.isCustom">
             <div class="cover">
               <div class="admin-buttons">
                 <button v-if="userData.isAdmin" class="edit" @click="setSelectedProduct(product)">
@@ -82,7 +82,6 @@
                 <label>RAM</label>
                 <select v-model="newProduct.memory">
                   <option disabled value="">RAM</option>
-                  <option>1GB</option>
                   <option>2GB</option>
                   <option>4GB</option>
                   <option>8GB</option>
@@ -96,6 +95,7 @@
                 <label>vCPU's</label>
                 <select v-model="newProduct.cpu">
                   <option disabled value="">vCPU count</option>
+                  <option>1</option>
                   <option>2</option>
                   <option>4</option>
                   <option>8</option>
@@ -137,15 +137,15 @@
             <div class="column">
               <div class="main-title">
                 <input class="name-input" v-if="userData.isAdmin" v-model="newProduct.name" placeholder="Product name">
-                <span v-if="!userData.isAdmin">{{userData.email + " WomboConfiguration"}}</span>
+                <!-- <span v-if="!userData.isAdmin">{{userData.email + " WomboConfiguration"}}</span> -->
               </div>
             </div>
-            <div class="column">
+            <!-- <div class="column">
               <div class="label">Price:</div>
               <input class="price-input" v-if="userData.isAdmin" v-model="newProduct.price" placeholder="price">
               <span v-if="!userData.isAdmin">{{this.getPrice()}}</span>
               €/month
-            </div>
+            </div> -->
           </div>
           <div class="description"><textarea v-model="newProduct.description" placeholder="New product description"
               rows="4"></textarea></div>
@@ -227,6 +227,7 @@
             128: 198
           },
           cpu: {
+            1: 7,
             2: 10,
             4: 16,
             8: 35,
@@ -343,9 +344,9 @@
           }
         } else {
           let product = {
-            "name": this.newProduct.name,
+            "name": "Custom configuration",
             "configuration": {
-              "os": "Minecraft",
+              "os": "CentOS",
               "memory": this.newProduct.memory.slice(0, -2),
               "cpu": this.newProduct.cpu,
               "hdd": this.newProduct.hdd.slice(0, -2),
@@ -353,11 +354,35 @@
               "ipCount": this.newProduct.ipCount,
             },
             "category": this.$route.params.category_id,
-            "price": this.newProduct.price,
+            "price": this.getPrice(),
             "icon": "server",
-            "description": this.newProduct.description
+            "description": this.newProduct.description,
+            "isCustom": true
           }
-          console.log(product)
+
+          let lastProductIdx = this.products.length;
+
+          axios.post('http://localhost:4000/api/products/', product)
+            .then(response => {
+              console.log(response);
+
+              axios.get('http://localhost:4000/api/categories/' + this.$route.params.category_id)
+                .then(response => {
+                  this.description = response.data.pop().description;
+                  this.products = response.data;
+
+                  let newProd = this.products[lastProductIdx];
+                  this.addProductToCart(newProd);
+
+                  this.addIsVisible = !this.addIsVisible;
+                })
+                .catch(e => {
+                  this.errors.push(e)
+                })
+            })
+            .catch(e => {
+              this.errors.push(e)
+            });
         }
       }
     }

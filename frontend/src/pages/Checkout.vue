@@ -77,7 +77,7 @@ export default {
     return {
       products: this.getCartProducts,
       price: 0,
-      payment: null
+      payment: "GoPay"
     }
   },
 

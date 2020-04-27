@@ -71,16 +71,10 @@ $navbar-size-closed: 0;
 }
 
 /* For small window */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
   #main {
-    padding-left: 0;
+    padding-top: 50px;
   }
 }
 
-/* For large window */
-@media only screen and (min-width: 600px) {
-  #main {
-    padding-left: $navbar-size-closed;
-  }
-}
 </style>

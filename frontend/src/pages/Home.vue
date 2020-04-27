@@ -1,6 +1,11 @@
 <template>
   <div class="home">
 
+    <div id='illustration-wrapper'>
+      <img class="illustration" src="../assets/undraw_gaming_6oy3.svg" alt="server-cluster"/>
+      <img class="illustration" src="../assets/undraw_secure_server.svg" alt="server-cluster"/>
+      <img class="illustration" src="../assets/undraw_maintenance.svg" alt="server-cluster"/>
+    </div>
 
     <div class="featured-panel">
       <div class="title">VPS Hosting Platform</div>
@@ -18,11 +23,7 @@
 
     <ShoppingCart/>
 
-    <div id='illustration-wrapper'>
-      <img class="illustration" src="../assets/undraw_gaming_6oy3.svg" alt="server-cluster"/>
-      <img class="illustration" src="../assets/undraw_secure_server.svg" alt="server-cluster"/>
-      <img class="illustration" src="../assets/undraw_maintenance.svg" alt="server-cluster"/>
-    </div>
+
   </div>
 </template>
 
@@ -49,37 +50,61 @@ export default {
 
 
   #illustration-wrapper {
-    position: absolute;
-    top: 100px;
-    right: 200px;
-    display: flex;
-    flex-direction: column;
 
-    .illustration {
-      position: relative;
-      width: 200px;
-      margin: 1rem auto;
 
-      &:last-child {
-        /* margin; */
-      }
+    @media screen and (max-width: 900px) {
+      position: initial;
+      padding: 2rem 0;
+      top: 50px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
 
-      &:nth-child(2) {
-        margin-left: 100px;
-      }
-
-      &:first-child {
-        /* margin-top: 400px; */
+      .illustration {
+        width: 150px;
       }
     }
+
+    @media screen and (min-width: 901px) {
+      position: absolute;
+      top: 100px;
+      right: 200px;
+      display: flex;
+      flex-direction: column;
+
+      .illustration {
+        position: relative;
+        width: 200px;
+        margin: 1rem auto;
+
+        &:last-child {
+          /* margin; */
+        }
+
+        &:nth-child(2) {
+          margin-left: 100px;
+        }
+
+        &:first-child {
+          /* margin-top: 400px; */
+        }
+      }
+    }
+
   }
 
 
   .featured-panel {
     width: 100%;
     background: rgb(247, 247, 255);
-
+    z-index: 0;
     height: calc(100vh - 50px);
+
+    @media screen and (max-width: 900px) {
+      height: auto;
+    }
+
     max-width: 90vw;
     margin: 0 auto;
     color: #000;
@@ -109,7 +134,6 @@ export default {
 
     .cta {
       margin-top: 2rem;
-
 
         .primary-button, .secondary-button {
           text-decoration: none;

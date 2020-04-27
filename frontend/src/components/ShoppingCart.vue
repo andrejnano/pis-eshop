@@ -6,7 +6,7 @@
       <div class="cart-window">
         <div class="top-menu">
           <button @click="toggleVisibility" title="Hide cart" class="button"><font-awesome-icon :icon="['fad','window-minimize']"/></button>
-          <button @click="clearCart" class="button">Clear cart <font-awesome-icon :icon="['fad','trash-alt']"/></button>
+          <button v-if="cartHasProducts()" @click="clearCart" class="button">Clear cart <font-awesome-icon :icon="['fad','trash-alt']"/></button>
         </div>
         <ul class="shopping-cart-list">
           <li v-if="!cartHasProducts()">No products</li>
@@ -170,12 +170,23 @@ export default {
 }
 
 .shopping-cart {
-  z-index: 10;
-  position: fixed;
-  bottom: 0rem;
-  right: 2rem;
-  max-width: 500px;
-  padding: 1rem;
+
+  @media screen and (max-width: 900px) {
+    z-index: 10;
+    position: fixed;
+    bottom: 50px;
+    max-width: 90vw;
+    right: 5vw;
+  }
+
+  @media screen and (min-width: 901px) {
+    z-index: 10;
+    position: fixed;
+    bottom: 0rem;
+    right: 2rem;
+    max-width: 500px;
+    padding: 1rem;
+  }
   /* margin: 2rem; */
 
   .cart-window {
@@ -184,6 +195,11 @@ export default {
     box-shadow: 0px 0px 3px 1px #ddd;
     max-width: 500px;
     width: 400px;
+
+
+    @media screen and (max-width: 900px) {
+      max-width: 90vw;
+    }
 
     .top-menu {
       display: flex;

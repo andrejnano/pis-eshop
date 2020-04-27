@@ -11,7 +11,7 @@ import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // import { faShoppingCart, faShapes, faInfo, faInfoCircle, faUser } from '@fortawesome/free-solid-svg-icons'
-import {  faWindowMinimize, faCompressAlt, faLambda, faTimes, faAngleDoubleRight, faHomeLg, faInfoCircle, faShoppingCart, faServer, faSignOut, faSparkles, faCubes, faGamepadAlt, faStream, faStore, faUserAlt, faSackDollar, faHandHoldingUsd, faBoxes, faHistory, faTrashAlt, faEdit, faPlus, faCartPlus } from '@fortawesome/pro-duotone-svg-icons'
+import {  faBars, faCashRegister, faMicrochip, faMemory, faRedo, faWindowClose, faCreditCard, faWindowMinimize, faCompressAlt, faLambda, faTimes, faAngleDoubleRight, faHomeLg, faInfoCircle, faShoppingCart, faServer, faSignOut, faSparkles, faCubes, faGamepadAlt, faStream, faStore, faUserAlt, faSackDollar, faHandHoldingUsd, faBoxes, faHistory, faTrashAlt, faEdit, faPlus, faCartPlus } from '@fortawesome/pro-duotone-svg-icons'
 
 
 library.add([
@@ -38,7 +38,14 @@ library.add([
   faTimes,
   faCompressAlt,
   faWindowMinimize,
-  faCartPlus
+  faCartPlus,
+  faCreditCard,
+  faMicrochip,
+  faMemory,
+  faRedo,
+  faWindowClose,
+  faCashRegister,
+  faBars
 ]);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

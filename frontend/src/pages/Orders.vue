@@ -28,7 +28,8 @@
             </div>
 
             <div class="product-description" v-for="product in order.products" :key="product._id">
-              <div class="main-title">{{ product.name }}</div>
+              <div class="product-name">{{ product.name }}</div>
+              <div class="configuration-label">Configuration Details</div>
               <ul class="configuration">
                 <li>
                   <label>RAM:</label>
@@ -43,7 +44,7 @@
                   <span>{{ product.configuration.hdd }}GB</span>
                 </li>
                 <li>
-                  <label>Storage type:</label>
+                  <label>Type:</label>
                   <span>{{ product.configuration.hddType }}</span>
                 </li>
                 <li>
@@ -55,24 +56,29 @@
                   </span>
                 </li>
               </ul>
+              <div class="price-box">
+                <label class="label">Price:</label>
+                <span class="price">{{ product.price  }}€/month</span>
+              </div>
             </div>
 
-            <div class="price-box">
-              <label class="label">Order price:</label>
-              <span class="price">{{ order.price }}€/month</span>
-            </div>
-            <div class="pay-buttons" v-if="!userData.isAdmin">
-              <button v-if="order.state!=='cancelled'" @click="actionOrder(order._id, 'pay')">
-                PAY
-              </button>
-              <button v-if="order.state!=='cancelled'" @click="actionOrder(order._id, 'cancel')">
-                CANCEL
-              </button>
-              <button @click="reorder(order)">
-                REORDER
-              </button>
-            </div>
-
+            <footer class="order-footer">
+              <div class="total-order-price">
+                <label class="label">Total order price:</label>
+                <span class="price">{{ order.price }}€/month</span>
+              </div>
+              <div class="cta-buttons" v-if="!userData.isAdmin">
+                <button class="pay" v-if="order.state!=='cancelled'" @click="actionOrder(order._id, 'pay')">
+                  <font-awesome-icon :icon="[ 'fad', 'credit-card' ]" /> PAY
+                </button>
+                <button class="cancel" v-if="order.state!=='cancelled'" @click="actionOrder(order._id, 'cancel')">
+                  <font-awesome-icon :icon="[ 'fad', 'window-close' ]" /> CANCEL
+                </button>
+                <button class="reorder" @click="reorder(order)">
+                  <font-awesome-icon :icon="[ 'fad', 'redo' ]" /> REORDER
+                </button>
+              </div>
+            </footer>
           </div>
         </li>
       </ul>
@@ -322,46 +328,45 @@
             }
           }
 
-          .pay-buttons {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 1rem 2rem;
-
-            button {
-              font-size: 1rem;
-              background: #ccc;
-              color: #000;
-              padding: 0.5rem 1rem;
-              margin-right: 0.5rem;
-              transition: 200ms background ease;
-
-              &:hover {
-                background: #aaa;
-              }
-            }
-          }
-
           .product-description {
+            border-bottom: 1px solid #ccc;
             padding: 1rem 2rem;
-            .main-title {
-              font-size: 1rem;
+
+            .product-name {
+              font-size: 1.5rem;
+              font-weight: bold;
+              margin: 0.75rem 0;
+              /* background: #eee; */
+
+              display: inline-block;
             }
+
+            .configuration-label {
+              color: #666;
+              font-size: 1rem;
+              margin-bottom: 0.5rem;
+            }
+
             .configuration {
               display: flex;
               flex-direction: column;
 
               li {
                 display: flex;
+                line-height: 1.5;
+
                 label {
-                  width: 120px;
+                  width: 60px;
                   text-align: right;
+                  color: #666;
+                  font-size: 1rem;
+                  font-weight: 500;
                 }
                 span {
                   margin-left: 0.5rem;
+                  font-size: 1rem;
                   font-weight: 600;
+
 
                   a {
                     text-decoration: none;
@@ -374,6 +379,76 @@
                 }
               }
             }
+          }
+
+          .order-footer {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            .total-order-price {
+              width: 100%;
+              display: flex;
+              flex-direction: row;
+              justify-content: flex-start;
+              align-items: center;
+              padding: 1rem 2rem;
+
+              .label {
+                font-size: 1.5rem;
+                font-weight: 400;
+                color: #666;
+                text-align: left;
+              }
+
+              .price {
+                font-size: 1.5rem;
+                margin-left: 0.5rem;
+                font-weight: 600;
+                color: #000;
+              }
+            }
+
+            .cta-buttons {
+              margin-left: auto;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+
+              button {
+                width: auto;
+                font-size: 1rem;
+                background: #ccc;
+                color: #000;
+                padding: 0.5rem 1rem;
+                margin-right: 0.5rem;
+                transition: 200ms background ease;
+                text-align: center;
+                white-space: nowrap;
+
+                &.pay {
+                  background:  rgb(88, 220, 88);
+                  color: #000;
+                }
+
+                &.cancel {
+                  background: rgb(254, 118, 118);
+                }
+
+                &.reorder {
+                  background: rgba(89, 87, 174, 0.756);
+                }
+                &:hover {
+                  background: #aaa;
+                }
+
+                svg {
+                  margin-right: 0.2rem;
+                  font-size: 1rem;
+                }
+              }
+            }
+
           }
         }
       }

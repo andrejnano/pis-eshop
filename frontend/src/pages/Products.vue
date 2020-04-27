@@ -12,14 +12,15 @@
       <ul class="products">
         <li class="product-item" v-for="product in products" :key="product._id">
           <div class="product">
-            <button v-if="isAdmin" @click="deleteProduct(product._id)" class="delete">
-              <font-awesome-icon :icon="[ 'fad', 'trash-alt' ]" />
-            </button>
-
-            <button v-if="isAdmin" class="edit" @click="setSelectedProduct(product)">
-              <font-awesome-icon :icon="[ 'fad', 'edit' ]" />
-            </button>
             <div class="cover">
+              <div class="admin-buttons">
+                <button v-if="userData.isAdmin" class="edit" @click="setSelectedProduct(product)">
+                  <font-awesome-icon :icon="[ 'fad', 'edit' ]" />
+                </button>
+                <button v-if="userData.isAdmin" @click="deleteProduct(product._id)" class="delete">
+                  <font-awesome-icon :icon="[ 'fad', 'trash-alt' ]" />
+                </button>
+              </div>
               <font-awesome-icon :icon="[ 'fad', 'server' ]" :title="product.title" />
               <div class="main-title">{{ product.name }}</div>
               <ul class="configuration">
@@ -455,6 +456,24 @@
             align-items: center;
             color: #fff;
             font-size: 3rem;
+            position: relative;
+
+            .admin-buttons {
+              position: absolute;
+              top: 0;
+              width: 100%;
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              color: #fff;
+
+              .edit, .delete {
+                color: #fff;
+                padding: 0.5rem;
+                margin: 0.5rem 1rem;
+                &:hover {color: #ccc;}
+              }
+            }
 
             .main-title {
               line-height: 2;
@@ -545,22 +564,6 @@
         }
       }
     }
-  }
-
-  .edit {
-    position: absolute;
-    left: 0.5rem;
-    top: 0.5rem;
-    z-index: 2;
-    color: #fff;
-  }
-
-  .delete {
-    position: absolute;
-    right: 0.5rem;
-    top: 0.5rem;
-    z-index: 1;
-    color: #fff;
   }
 
   .shadow {

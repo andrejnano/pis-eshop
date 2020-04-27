@@ -58,7 +58,7 @@
           <font-awesome-icon :icon="[ 'fad', 'user-alt' ]" title="Account" />
           <span class="link-text">
             {{ userData.email }}
-            <span v-if="isAdmin">[ADMIN]</span>
+            <span v-if="userData.isAdmin">[ADMIN]</span>
           </span>
         </router-link>
       </li>

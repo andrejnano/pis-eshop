@@ -67,7 +67,7 @@ $navbar-size-closed: 0;
 /* For all window sizes */
 #main {
   min-height: 100vh;
-  background: #fff;
+  background: rgb(247, 247, 255);
 }
 
 /* For small window */

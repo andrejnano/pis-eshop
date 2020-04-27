@@ -83,9 +83,8 @@ export default {
 .featured-panel {
   width: 100%;
   background: rgb(247, 247, 255);
-
+  padding:5rem;
   min-height: calc(100vh - 50px);
-  max-width: 90vw;
   margin: 0 auto;
   color: #000;
   display: flex;

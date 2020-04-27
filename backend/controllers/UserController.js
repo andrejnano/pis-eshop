@@ -131,9 +131,11 @@ module.exports.get = function(req, res) {
 // is a new one, if so, it should call the setPassword() method
 // alternatively, userSchema can directly specify password as a hash
 module.exports.update = async function(req, res) {
+  console.log("update")
   try {
-    await req.user.set(req.body)
-    await req.user.save()
+    let { email, fullname, password } = req.body;
+    User.findOneAndUpdate({_id: req.user._id}, {email : email, fullname: fullname})
+      .then((user) => { user.setPassword(password)});
     return SuccessResponse(res, { user: req.user.toWeb() }, 200)
   } catch (error) {
     return ErrorResponse(res, error, 501)

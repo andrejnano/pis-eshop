@@ -12,11 +12,11 @@
       <ul class="products">
         <li class="product-item" v-for="product in products" :key="product._id">
           <div class="product">
-            <button v-if="userData.isAdmin" @click="deleteProduct(product._id)" class="delete">
+            <button v-if="isAdmin" @click="deleteProduct(product._id)" class="delete">
               <font-awesome-icon :icon="[ 'fad', 'trash-alt' ]" />
             </button>
 
-            <button v-if="userData.isAdmin" class="edit" @click="setSelectedProduct(product)">
+            <button v-if="isAdmin" class="edit" @click="setSelectedProduct(product)">
               <font-awesome-icon :icon="[ 'fad', 'edit' ]" />
             </button>
             <div class="cover">

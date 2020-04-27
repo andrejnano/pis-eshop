@@ -11,13 +11,20 @@
         <button @click="setFilter('cancelled')">Cancelled orders</button>
       </div>
       <ul class="orders">
-        <li class="order-item" v-for="order in filteredOrders" :key="order._id">
+        <li class="order-item" v-for="order in orders" :key="order._id">
           <div class="order" v-bind:class="{ opacity: order.state!=='active' }">
             <div class="cover">
               <span class="order-id">#{{order._id}}</span>
-              <span v-if="userData.isAdmin" class="order-user"> {{order.user.fullname}} - {{order.user.email}}</span>
               <time class="order-date">{{ new Date(order.date).toUTCString() }}</time>
-              <div class="order-status">Current status: <span class="status">{{ order.state }}</span></div>
+              <div class="order-user" v-if="userData.isAdmin" >Customer: <span class="user">{{order.user.email}}</span></div>
+              <div class="order-status">Status:
+                <span class="status" v-bind:class="{
+                  'status-active': order.state === 'active',
+                  'status-created': order.state === 'created',
+                  'status-expired': order.state === 'expired',
+                  'status-cancelled': order.state === 'cancelled',
+                }">{{ order.state }}</span>
+              </div>
             </div>
 
             <div class="product-description" v-for="product in order.products" :key="product._id">
@@ -43,7 +50,7 @@
                   <label>IPs:</label>
                   <span>
                     <template v-for="(ip, index) in generateIps(product.configuration.ipCount)">
-                      <a :key="index" :href="ip">{{ip}}</a><br :key="index">
+                      <a :key="index" :href="ip">{{ip}}</a><br :key="ip">
                     </template>
                   </span>
                 </li>
@@ -238,15 +245,51 @@
               font-weight: 600;
               font-size: 1.25rem;
               margin-right: auto;
+              user-select: all;
+              background: #000;
+              color: #fff;
+              padding: 0 0.4rem;
             }
 
             .order-status {
               width: 100%;
               color: rgb(227, 227, 227);
               font-size: 1rem;
+              font-weight: 500;
               .status {
-                font-weight: 600;
+                font-size: 0.9rem;
+                font-weight: 800;
+                text-transform: uppercase;
                 color: #fff;
+                padding: 0 0.4rem;
+              }
+
+              .status-active {
+                background-color: rgb(0, 210, 0);
+              }
+              .status-created {
+                background-color: rgb(255, 0, 195);
+              }
+              .status-expired {
+                background-color: rgb(255, 125, 0);
+              }
+              .status-cancelled {
+                background-color: rgb(193, 27, 27);
+              }
+            }
+
+            .order-user {
+              width: 100%;
+              color: rgb(227, 227, 227);
+              font-size: 1rem;
+              font-weight: 500;
+
+              .user {
+                font-weight: 600;
+                color: #000;
+                background: #fff;
+                user-select: all;
+                padding: 0 0.4rem;
               }
             }
 
@@ -291,6 +334,13 @@
               font-size: 1rem;
               background: #ccc;
               color: #000;
+              padding: 0.5rem 1rem;
+              margin-right: 0.5rem;
+              transition: 200ms background ease;
+
+              &:hover {
+                background: #aaa;
+              }
             }
           }
 
@@ -312,6 +362,15 @@
                 span {
                   margin-left: 0.5rem;
                   font-weight: 600;
+
+                  a {
+                    text-decoration: none;
+                    color:rgb(62, 58, 255);
+
+                    &:hover {
+                      opacity: 0.7;
+                    }
+                  }
                 }
               }
             }

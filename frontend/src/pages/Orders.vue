@@ -11,7 +11,7 @@
         <button @click="setFilter('cancelled')">Cancelled orders</button>
       </div>
       <ul class="orders">
-        <li class="order-item" v-for="order in orders" :key="order._id">
+        <li class="order-item" v-for="order in filteredOrders()" :key="order._id">
           <div class="order" v-bind:class="{ opacity: order.state!=='active' }">
             <div class="cover">
               <span class="order-id">#{{order._id}}</span>
@@ -112,22 +112,22 @@
         isAdmin: state => state.user.isAdmin
       }),
 
-      filteredOrders: function() {
-        if (this.filter) {
-          return this.orders.filter(function(order) {
-            return order.state === this.filter;
-          });
-        } else {
-          return this.orders;
-        }
-      }
-
+      
     },
     methods: {
 
       setFilter: function(filter) {
-        this.filter = filter;
+        this.currentFilter = filter;
       },
+
+      filteredOrders: function() {
+        if (this.currentFilter) {
+          return this.orders.filter((o) => o.state === this.currentFilter);
+        } else {
+          return this.orders;
+        }
+      },
+
 
       actionOrder(order_id, action) {
         axios.get('http://localhost:4000/api/orders/' + order_id + '/' + action)

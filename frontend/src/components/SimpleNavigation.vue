@@ -232,12 +232,11 @@ export default {
     justify-content: space-evenly;
     .button {
       font-size: 1.5rem;
-      padding: 1rem 2rem;
+      padding: 1rem 3rem;
       color: #fff;
       justify-self: stretch;
-      border-radius: 4px;
-      background: #4facfe;
-      &:last-child{ background: #5F5CFF; }
+      border-radius: 3px;
+      background: #5F5CFF;
     }
   }
 

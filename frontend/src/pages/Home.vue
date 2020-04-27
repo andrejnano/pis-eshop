@@ -23,7 +23,6 @@
 
     <ShoppingCart/>
 
-
   </div>
 </template>
 
@@ -45,9 +44,8 @@ export default {
 
 
 .home {
-  background: rgb(247, 247, 255);
+  background: rgba(240, 240, 240, 0.345);
 }
-
 
   #illustration-wrapper {
 
@@ -97,7 +95,7 @@ export default {
 
   .featured-panel {
     width: 100%;
-    background: rgb(247, 247, 255);
+    background: transparent;
     z-index: 0;
     height: calc(100vh - 50px);
 

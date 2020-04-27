@@ -4,7 +4,7 @@
     <div class="featured-panel">
       <div class="title">{{title}}</div>
 
-      <ul class="orders three-column-grid">
+      <ul class="orders">
         <li class="order-item" v-for="order in orders" :key="order.title">
           <button class="order" v-bind:class="{ opacity: order.state!=='active' }">
             <div class="violet" v-if="!userData.isAdmin">{{ order.price }}€/month</div>
@@ -146,11 +146,6 @@
     background: rgb(247, 247, 255);
   }
 
-  .three-column-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    width: 100%;
-  }
 
   .featured-panel {
     width: 100%;
@@ -179,8 +174,12 @@
     }
 
     .orders {
-
-      margin: 4rem 0;
+      width: 100%;
+      padding: 4rem 0;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-auto-rows: auto;
 
       .order-item {
         margin-right: 1rem;

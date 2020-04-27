@@ -12,9 +12,15 @@
 
         <li v-for="(product, index) in getCartProducts" :key="index" class="order-list-item">
           <font-awesome-icon :icon="['fad', product.icon ]" class="product-icon"/>
-          <div class="product-name">{{product.name}}</div>
-          <div class="product-configuration">[{{product.configuration}}]</div>
-          <div class="product-price">{{product.price}}<small>€/mo</small></div>
+            <div class="item-info-box">
+              <div class="product-name">{{product.name}}</div>
+                <div class="product-configuration">
+                  OS: {{ product.configuration.os }}, RAM: {{ product.configuration.memory }}, vCPUs: {{ product.configuration.cpu }}, HDD: {{ product.configuration.hdd }}GB
+                </div>
+            </div>
+            <div class="product-price">{{product.price}}<small>€/mo</small></div>
+
+            <button @click="removeFromCart(index)" class="remove-button"><font-awesome-icon :icon="['fad', 'times']" /></button>
         </li>
       </ul>
 
@@ -133,6 +139,10 @@ export default {
 
 <style lang="scss" scoped>
 
+.checkout-page {
+  background: rgb(247, 247, 255);
+}
+
 .featured-panel {
   width: 100%;
   background: rgb(247, 247, 255);
@@ -167,7 +177,8 @@ export default {
     /* overflow-x: auto; */
 
     .order-list-item {
-      border: 1px solid #ccc;
+      margin: 0.25rem 0;
+      border: 1px solid rgba(0,0,0,0.1);
       padding: 1rem;
       display: flex;
       flex-direction: row;
@@ -176,30 +187,44 @@ export default {
       width: 100%;
 
       .remove-button {
-        color: red;
-        font-size: 1.2rem;
-        margin-top: 2px;
+        color: #ccc;
+        font-size: 1rem;
+        margin-top: -2rem;
         border-radius: 50%;
-        padding: 1rem;
-        margin-right: 0.5rem;
+        padding: 0.25rem;
+        line-height: 1;
+        margin-left: 1rem;
+        margin-right: -1rem;
 
         &:hover {
-          background: rgba(255, 0, 0, 0.1);
+          color: #000;
+          background: initial;
         }
       }
 
-      .product-icon {
+       .product-icon {
         margin-right: 0.5rem;
+        font-size: 2rem;
+        color:#5F5CFF;
       }
-      .product-name {
-        font-weight: 800;
-        margin-right: 0.5rem;
-      }
-      .product-configuration {
-        font-size: 1rem;
-        font-weight: 400;
-        color: #666;
+
+      .item-info-box {
         margin-right: auto;
+        display: flex;
+        flex-wrap: wrap;
+
+        .product-name {
+          font-weight: 600;
+          font-size: 1rem;
+          line-height: 1;
+          width: 100%;
+        }
+        .product-configuration {
+          font-size: 0.7rem;
+          line-height: 1.5;
+          font-weight: 400;
+          color: #666;
+        }
       }
 
       .product-price {
@@ -229,6 +254,12 @@ export default {
           font-weight: 400;
           text-decoration: underline;
         }
+      }
+    }
+
+    .payment-type {
+      label {
+        margin-left: 0.5rem;
       }
     }
 

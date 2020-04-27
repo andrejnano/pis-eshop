@@ -5,10 +5,13 @@
       <div class="title">Choose from pre-set VPS images</div>
       <div class="subtitle">{{description}}</div>
 
+      <div class="go-back">
+        <router-link to="/categories">Go back to all categories</router-link>
+      </div>
 
-      <ul class="products three-column-grid">
-        <li class="product-item" v-for="product in products" :key="product.title">
-          <button class="product">
+      <ul class="products">
+        <li class="product-item" v-for="product in products" :key="product._id">
+          <div class="product">
             <button v-if="userData.isAdmin" @click="deleteProduct(product._id)" class="delete">
               <font-awesome-icon :icon="[ 'fad', 'trash-alt' ]" />
             </button>
@@ -17,47 +20,43 @@
               <font-awesome-icon :icon="[ 'fad', 'edit' ]" />
             </button>
             <div class="cover">
-
-              <div class="configuration">
-                <ul>
-                  <li>
-                    <label>RAM</label>
-                    <span>{{ product.configuration.memory }} GB</span>
-                  </li>
-                  <li>
-                    <label>vCPU's</label>
-                    <span>{{ product.configuration.cpu }}</span>
-                  </li>
-                  <li>
-                    <label>HDD</label>
-                    <span>{{ product.configuration.hdd }} GB</span>
-                  </li>
-                  <li>
-                    <label>Type</label>
-                    <span>{{ product.configuration.hddType }}</span>
-                  </li>
-                  <li>
-                    <label>IP's</label>
-                    <span>{{ product.configuration.ipCount }}</span>
-                  </li>
-                </ul>
-              </div>
               <font-awesome-icon :icon="[ 'fad', 'server' ]" :title="product.title" />
-            </div>
-            <div class="top-info">
+              <div class="main-title">{{ product.name }}</div>
+              <ul class="configuration">
+                <li>
+                  <span>{{ product.configuration.memory }} GB</span>
+                  <label>RAM</label>
+                </li>
+                <li>
+                  <span>{{ product.configuration.cpu }}x</span>
+                  <label>vCPU</label>
+                </li>
+                <li>
+                    <span>{{ product.configuration.hdd }} GB</span>
+                   <label>HDD</label>
+                </li>
+                <li>
 
-              <div class="column">
-                <div class="main-title">{{ product.name }}</div>
-              </div>
-              <div class="column">
+                  <span>{{ product.configuration.hddType }}</span>
+                  <label>Storage</label>
+                </li>
+                <li>
+                  <span>{{ product.configuration.ipCount }}</span>
+                  <label>IP's</label>
+                </li>
+              </ul>
+            </div>
+            <div class="description">{{ product.description }}</div>
+            <div class="top-info">
+              <div class="price-box">
                 <div class="label">Price:</div>
                 <div class="price">{{ product.price }}€/month</div>
               </div>
             </div>
-            <div class="description">{{ product.description }}</div>
-
-
-          </button>
+            <button class="cta" @click="addProductToCart(product)">
+              Add to cart <font-awesome-icon :icon="[ 'fad', 'cart-plus' ]"/>
+            </button>
+          </div>
         </li>
         <button class="product dashed-border" v-if="userData.isAdmin"
           @click="addIsVisible = !addIsVisible; trueEditFalseCreate = false">
@@ -206,6 +205,11 @@
     },
 
     methods: {
+
+      addProductToCart: function(product) {
+        this.$store.dispatch('CART_ADD_PRODUCT', product);
+      },
+
       getPrice() {
         console.log(this.userData.isAdmin)
 
@@ -362,21 +366,25 @@
 
 
 <style lang="scss" scoped>
+
   .dashed-border {
     border: 5px dashed #bbbbbb !important;
   }
 
-
+  .go-back {
+    margin-top: 2rem;
+    > a {
+      text-decoration: none;
+      transition: opacity 100ms ease;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
 
 
   .products-page {
     background: rgb(247, 247, 255);
-  }
-
-  .three-column-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    width: 100%;
   }
 
   .featured-panel {
@@ -413,108 +421,125 @@
     }
 
     .products {
-      margin: 4rem 0;
+      width: 100%;
+      padding: 4rem 0;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-auto-rows: auto;
 
       .product-item {
         margin-right: 1rem;
         margin-bottom: 2rem;
-        display: flex;
 
         .product {
-          flex-grow: 100;
+          width: 100%;
+          height: 100%;
           padding: 0;
           background: #fff;
           /* box-shadow: 1px solid #ccc; */
           appearance: none;
           /* outline: none; */
           border: none;
-          box-shadow: 0 2px 3px rgba(10, 10, 10, .1), 0 0 0 1px rgba(10, 10, 10, .1);
-          position: relative;
-
+          box-shadow: 0 2px 3px rgba(10, 10, 10, .2), 0 0 2px 3px rgba(10, 10, 10, .1);
 
           .cover {
-            background: #5F5CFF;
+            /* background: radial-gradient(circle, rgba(33, 212, 253, 0.5) 0%, rgba(95,92,255,1) 70%); */
+            background: rgb(95,92,255);
             width: 100%;
             height: 200px;
             display: flex;
-            justify-content: space-evenly;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
             color: #fff;
             font-size: 3rem;
-          }
-
-
-          .top-info {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            padding: 2rem 2rem;
-
-            .column {
-              width: 50%;
-            }
 
             .main-title {
               line-height: 2;
-              font-size: 1.6rem;
-              font-weight: 600;
+              font-size: 1.2rem;
+              font-weight: 1000;
               text-align: left;
             }
 
-            .sub-title {
-              font-size: 1rem;
-              font-weight: 600;
-              color: #666;
-              text-align: left;
-            }
+            .configuration {
 
-            .label {
-              font-size: 1rem;
-              font-weight: 500;
-              color: #666;
-              text-align: right;
-              margin: 0.5rem;
-            }
-
-            .price {
-              font-size: 1.4rem;
-              font-weight: 600;
-              text-align: right;
-              color: #5F5CFF;
-            }
-          }
-
-          .configuration {
-            text-align: left;
-            display: table;
-            width: 50%;
-
-            li {
-              list-style-type: circle;
-              color: #fff;
-              display: table-row;
-
-              label {
-                width: 50%;
-                display: table-cell;
-                font-weight: 400;
+              li {
                 font-size: 1rem;
-              }
+                line-height: 1.2;
+                display: flex;
+                justify-content: center;
+                color: rgb(227, 227, 227);
 
-              span {
-                display: table-cell;
-                font-weight: 600;
-                font-size: 1.5rem;
+                label {
+                  font-weight: 400;
+                  margin-left: 0.25rem;
+                }
+
+                span {
+                  text-align: right;
+                  font-weight: 800;
+                }
               }
             }
           }
 
           .description {
+            display: none;
             border-top: 1px solid #ccc;
-            padding: 2rem 2rem;
+            padding: 2rem 2rem 0rem;
             text-align: left;
-            font-weight: 400;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-align: left;
+            height: 50px;
             color: #666;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+
+          .price-box {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding: 1.5rem 2rem 0rem;
+
+            .label {
+              font-size: 1rem;
+              font-weight: 400;
+              color: #666;
+              text-align: left;
+            }
+
+            .price {
+              font-size: 1rem;
+              margin-left: 0.5rem;
+              font-weight: 600;
+              color: #000;
+            }
+          }
+
+          .cta {
+            width: 100%;
+            font-size: 1rem;
+            padding: 1.5rem 1rem;
+            color:rgba(33, 212, 253,1);
+            font-weight: 600;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            border: 2px solid transparent;
+            transition: color 200ms ease;
+
+            &:hover {
+              color: #5F5CFF;
+            }
+
+            > svg {
+              margin: 0 0.5rem;
+            }
           }
         }
       }

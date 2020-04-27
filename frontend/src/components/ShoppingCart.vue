@@ -5,25 +5,31 @@
 
       <div class="cart-window">
         <div class="top-menu">
-          <button @click="toggleVisibility" title="Hide cart" class="hide-button"><font-awesome-icon :icon="['fad','window-minimize']"/></button>
-          <button @click="clearCart" class="clear-button">Clear cart</button>
+          <button @click="toggleVisibility" title="Hide cart" class="button"><font-awesome-icon :icon="['fad','window-minimize']"/></button>
+          <button @click="clearCart" class="button">Clear cart <font-awesome-icon :icon="['fad','trash-alt']"/></button>
         </div>
         <ul class="shopping-cart-list">
           <li v-if="!cartHasProducts()">No products</li>
 
           <li v-for="(product, index) in getCartProducts" :key="index" class="shopping-cart-list-item">
-            <button @click="removeFromCart(index)" class="remove-button"><font-awesome-icon :icon="['fad', 'times']" /></button>
+
             <font-awesome-icon :icon="['fad', product.icon ]" class="product-icon"/>
-            <div class="product-name">{{product.name}}</div>
-            <div class="product-configuration">[{{product.configuration}}]</div>
+            <div class="item-info-box">
+              <div class="product-name">{{product.name}}</div>
+                <div class="product-configuration">
+                  OS: {{ product.configuration.os }}, RAM: {{ product.configuration.memory }}, vCPUs: {{ product.configuration.cpu }}, HDD: {{ product.configuration.hdd }}GB
+                </div>
+            </div>
             <div class="product-price">{{product.price}}<small>€/mo</small></div>
+
+            <button @click="removeFromCart(index)" class="remove-button"><font-awesome-icon :icon="['fad', 'times']" /></button>
           </li>
 
         </ul>
         <div v-if="cartHasProducts()" class="cart-summary">
-          <span>Total: {{ totalPrice() }}€</span>
+          <span class="total-price">Total: <span class="price-value">{{ totalPrice() }}€</span></span>
           <router-link to="/checkout">
-            <button @click="toggleVisibility">Create order</button>
+            <button class="button" @click="toggleVisibility">Create order <font-awesome-icon :icon="['fad','shopping-cart']"/></button>
           </router-link>
         </div>
       </div>
@@ -113,7 +119,6 @@ export default {
       return this.getCartProducts.length;
     }
 
-
   },
 
 
@@ -122,13 +127,6 @@ export default {
       'getCartProducts'
     ]),
   },
-
-
-  mounted() {
-
-    this.addToCart(this.exampleProduct)
-
-  }
 }
 </script>
 
@@ -179,8 +177,6 @@ export default {
   max-width: 500px;
   padding: 1rem;
   /* margin: 2rem; */
-  text-align:center;
-
 
   .cart-window {
     background: #fff;
@@ -197,28 +193,50 @@ export default {
       background: #fafafa;
       border-bottom: 1px solid #ccc;
 
-      .hide-button {
-        padding: 1rem;
+      .button {
+        padding: 0.5rem;
+        margin: 0.5rem;
       }
     }
 
     .cart-summary {
       background: #fafafa;
       border-top: 1px solid #ccc;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+
+      .total-price {
+        padding: 0.5rem;
+        margin: 0.5rem;
+        font-weight: 600;
+
+        .price-value {
+          color: #5F5CFF;
+          font-weight: 800;
+        }
+      }
+
+      .button {
+        padding: 0.5rem;
+        margin: 0.5rem;
+      }
     }
 
   }
 
   .shopping-cart-list {
     list-style: none;
-    padding: 1rem;
+    padding: 0.5rem;
     max-height: 50vh;
     overflow-y: scroll;
     width: auto;
     /* overflow-x: auto; */
 
     .shopping-cart-list-item {
-      border: 1px solid #ccc;
+      margin: 0.25rem 0;
+      border: 1px solid rgba(0,0,0,0.1);
       padding: 1rem;
       display: flex;
       flex-direction: row;
@@ -226,37 +244,47 @@ export default {
       align-items: center;
       width: 100%;
 
-      &:hover {
-        background: rgb(247, 247, 255);
-        cursor: pointer;
-      }
-
       .remove-button {
-        color: red;
-        font-size: 1.2rem;
-        margin-top: 2px;
+        color: #ccc;
+        font-size: 1rem;
+        margin-top: -2rem;
         border-radius: 50%;
-        padding: 1rem;
-        margin-right: 0.5rem;
+        padding: 0.25rem;
+        line-height: 1;
+        margin-left: 1rem;
+        margin-right: -1rem;
 
         &:hover {
-          background: rgba(255, 0, 0, 0.1);
+          color: #000;
+          background: initial;
         }
       }
 
       .product-icon {
         margin-right: 0.5rem;
+        font-size: 2rem;
+        color:#5F5CFF;
       }
-      .product-name {
-        font-weight: 800;
-        margin-right: 0.5rem;
-      }
-      .product-configuration {
-        font-size: 1rem;
-        font-weight: 400;
-        color: #666;
+
+      .item-info-box {
         margin-right: auto;
+        display: flex;
+        flex-wrap: wrap;
+
+        .product-name {
+          font-weight: 600;
+          font-size: 1rem;
+          line-height: 1;
+          width: 100%;
+        }
+        .product-configuration {
+          font-size: 0.7rem;
+          line-height: 1.5;
+          font-weight: 400;
+          color: #666;
+        }
       }
+
 
       .product-price {
         font-weight: 500;

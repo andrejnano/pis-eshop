@@ -42,6 +42,9 @@
         </div>
       </form>
 
+
+      <div class="dont-have-acc-box">Already have an account? <router-link to="/login">Sign in!</router-link></div>
+
     </div>
 
   </div>
@@ -106,6 +109,13 @@ export default {
 
 <style lang="scss" scoped>
 
+
+.dont-have-acc-box {
+  text-align: center;
+  margin-top: 2rem;
+  opacity: 0.75;
+}
+
   .register-form-outer {
     display: flex;
     flex-direction: column;
@@ -152,7 +162,7 @@ export default {
       padding: 5px;
       font-weight: 600;
       /* font-style: italic; */
-      font-size: 1rem;
+      font-size: 0.8rem;
       color: orangered;
     }
 

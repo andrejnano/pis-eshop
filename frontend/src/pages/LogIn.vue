@@ -29,9 +29,7 @@
         </div>
       </form>
 
-      <div v-if="showResult" class='result'>
-        <br>Logged in as <strong>{{ resEmail }}</strong> with the token: <br><textarea v-model='resToken'></textarea>
-      </div>
+      <div class="dont-have-acc-box">Don't have an account? <router-link to="/register">Sign up now.</router-link></div>
 
     </div>
 
@@ -88,6 +86,12 @@ export default {
 
 <style lang="scss" scoped>
 
+
+.dont-have-acc-box {
+  margin-top: 2rem;
+  opacity: 0.75;
+}
+
   .login-form-outer {
     display: flex;
     flex-direction: column;
@@ -134,7 +138,7 @@ export default {
       padding: 5px;
       font-weight: 600;
       /* font-style: italic; */
-      font-size: 1rem;
+      font-size: 0.8rem;
       color: orangered;
     }
 

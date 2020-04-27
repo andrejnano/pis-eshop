@@ -32,11 +32,15 @@ const productSchema = new mongoose.Schema({
   icon: {
     type: String,
     required: true
-},
+  },
   description: {
     type: String,
-    required: true,
+    required: false,
     max: 2048
+  },
+  isCustom: {
+    type: Boolean,
+    default: false
   }
 });
 

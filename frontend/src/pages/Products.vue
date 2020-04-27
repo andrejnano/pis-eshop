@@ -69,69 +69,70 @@
       </ul>
 
       <div class="shadow" v-if="this.addIsVisible">
-        <button class="edit-product" v-if="this.addIsVisible">
-
+        <div class="edit-product" v-if="this.addIsVisible">
           <button class="delete" @click="addIsVisible = !addIsVisible">
             <font-awesome-icon :icon="[ 'fad', 'times' ]" />
           </button>
           <div class="cover">
-
-            <div class="configuration">
-              <ul>
-                <li>
-                  <label>RAM</label>
-                  <select v-model="newProduct.memory">
-                    <option disabled value="">RAM</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>4</option>
-                    <option>8</option>
-                    <option>16</option>
-                    <option>32</option>
-                    <option>64</option>
-                    <option>128</option>
-                  </select> GB
-                </li>
-                <li>
-                  <label>vCPU's</label>
-                  <select v-model="newProduct.cpu">
-                    <option disabled value="">vCPU's</option>
-                    <option>2</option>
-                    <option>4</option>
-                    <option>8</option>
-                    <option>16</option>
-                    <option>32</option>
-                  </select>
-                </li>
-                <li>
-                  <label>HDD</label>
-                  <select v-model="newProduct.hdd">
-                    <option disabled value="">Hdd</option>
-                    <option>128</option>
-                    <option>256</option>
-                    <option>512</option>
-                    <option>1024</option>
-                  </select> GB
-                </li>
-                <li>
-                  <label>Type</label>
-                  <select v-model="newProduct.hddType">
-                    <option disabled value="">Hdd Type</option>
-                    <option>HDD</option>
-                    <option>SSD</option>
-                  </select>
-                </li>
-                <li>
-                  <label>IP's</label>
-                  <input v-model="newProduct.ipCount" placeholder="1 - 255">
-                </li>
-              </ul>
-            </div>
             <font-awesome-icon :icon="[ 'fad', 'server' ]" class="bigicon" />
+            <div class="sub-title">Build your custom configuration.</div>
+            <ul class="configuration">
+              <li>
+                <label>RAM</label>
+                <select v-model="newProduct.memory">
+                  <option disabled value="">RAM</option>
+                  <option>1GB</option>
+                  <option>2GB</option>
+                  <option>4GB</option>
+                  <option>8GB</option>
+                  <option>16GB</option>
+                  <option>32GB</option>
+                  <option>64GB</option>
+                  <option>128GB</option>
+                </select>
+              </li>
+              <li>
+                <label>vCPU's</label>
+                <select v-model="newProduct.cpu">
+                  <option disabled value="">vCPU count</option>
+                  <option>2</option>
+                  <option>4</option>
+                  <option>8</option>
+                  <option>16</option>
+                  <option>32</option>
+                </select>
+              </li>
+              <li>
+                <label>Storage</label>
+                <select v-model="newProduct.hdd">
+                  <option disabled value="">Storage space</option>
+                  <option>128GB</option>
+                  <option>256GB</option>
+                  <option>512GB</option>
+                  <option>1024GB</option>
+                </select>
+              </li>
+              <li>
+                <label>Type</label>
+                <select v-model="newProduct.hddType">
+                  <option disabled value="">Storage Type</option>
+                  <option>HDD</option>
+                  <option>SSD</option>
+                </select>
+              </li>
+              <li>
+                <label>IP's</label>
+                <input v-model="newProduct.ipCount" placeholder="1 - 255">
+              </li>
+            </ul>
 
           </div>
+          <div class="price-box">
+            <div class="label">Price:</div>
+            <input class="price-input" v-if="userData.isAdmin" v-model="newProduct.price" placeholder="price">
+            <span class="price" v-if="!userData.isAdmin">{{this.getPrice()}}€/month</span>
+          </div>
           <div class="top-info">
-
             <div class="column">
               <div class="main-title">
                 <input class="name-input" v-if="userData.isAdmin" v-model="newProduct.name" placeholder="Product name">
@@ -150,10 +151,10 @@
           <div class="footer">
             <button @click="createProduct()" class="addbutton">
               <font-awesome-icon :icon="[ 'fad', 'plus' ]" />
-              Create
+              Create new configuration
             </button>
           </div>
-        </button>
+        </div>
       </div>
 
     </div>
@@ -576,30 +577,112 @@
   .edit-product {
     display: block;
     position: fixed;
-    top: 20%;
-    left: 20%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 0;
     background: #fff;
-    appearance: none;
-    /* outline: none; */
     border: none;
     box-shadow: -26px -13px 62px 4px rgba(0, 0, 0, 0.24);
-    width: 60%;
+    min-width: 50vw;
+    width: 700px;
+    max-width: 90vw;
+    max-height: 90vh;
     z-index: 10;
 
     .cover {
-      background: #5F5CFF;
+      background: radial-gradient(circle, rgba(95,92,255,1) 0%, rgba(33, 212, 253, 0.9) 200%);
+      /* background: rgb(33, 212, 253); */
+      transition: filter 200ms ease;
+      /* #21D4FD;rgb(62, 58, 255); */
+
       width: 100%;
-      height: 250px;
+      height: auto;
       display: flex;
-      justify-content: space-evenly;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
       color: #fff;
       font-size: 3rem;
+      padding: 2rem 0;
+
+
+      .sub-title {
+        margin-top: 1rem;
+        font-size: 1.4rem;
+      }
+
+      .configuration {
+        margin-top: 1rem;
+        font-size: 1rem;
+
+        li {
+          width: 100%;
+          font-size: 1.5rem;
+          margin-top: 0.5rem;
+          line-height: 1.5;
+          display: flex;
+          justify-content: flex-start;
+          color: rgb(227, 227, 227);
+
+          label {
+            width: 40%;
+            font-weight: 400;
+            margin-left: 0.25rem;
+          }
+
+          select {
+
+            background: rgba(255,255,255, 0.2);
+            color: #fff;
+            width: 60%;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.25rem;
+          }
+
+          input {
+            background: rgba(255,255,255, 0.2);
+            color: #fff;
+            width: 60%;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.25rem;
+            /* appearance: none; */
+            /* outline: none; */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.4rem;
+
+            &::placeholder {
+              color: rgba(255, 255, 255, 0.7);
+            }
+          }
+
+        }
+      }
     }
 
+    .price-box {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      padding: 1.5rem 2rem 0rem;
 
+      .label {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #666;
+        text-align: left;
+      }
 
+      .price {
+        font-size: 1rem;
+        margin-left: 0.5rem;
+        font-weight: 600;
+        color: #000;
+      }
+    }
 
     .top-info {
       display: flex;
@@ -634,25 +717,6 @@
 
     }
 
-    .configuration {
-      text-align: left;
-      display: table;
-      width: 70%;
-      padding: 2rem;
-
-      li {
-        color: #fff;
-        display: table-row;
-        width: 100%;
-
-        label {
-          display: table-cell;
-          font-weight: 400;
-          font-size: 2rem;
-        }
-      }
-    }
-
     .description {
       border-top: 1px solid #ccc;
       padding: 2rem 2rem;
@@ -662,9 +726,15 @@
     }
 
     textarea {
-      border: solid 1px #5F5CFF;
+      background: rgba(95, 92, 255, 0.1);
+      border: solid 1px rgba(95, 92, 255, 0.4);
+      padding: 1rem;
       resize: vertical;
-      width: 100%
+      width: 100%;
+
+      &::placeholder {
+        color: #000;
+      }
     }
 
     .name-input {
@@ -675,20 +745,20 @@
   }
 
   .footer {
-    background: #5F5CFF;
-    justify-content: space-evenly;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    padding: 2rem 0;
   }
 
   .addbutton {
+    background: #5F5CFF;
     color: white;
-    padding: 2rem;
-    font-size: 4rem;
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    font-weight: 600;
     margin: 0.5rem;
-  }
-
-  .bigicon {
-    font-size: 9rem;
+    box-shadow: 0px 1px 3px 2px rgba(0, 0, 0, 0.24);
   }
 
 </style>

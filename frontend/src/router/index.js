@@ -119,11 +119,17 @@ const routes = [
   }
 ]
 
+routes.push({
+  path: '*',
+  component: () => import('../pages/Error404.vue')
+})
+
+
 const router = new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
   routes,
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: '/',
 })
 
 

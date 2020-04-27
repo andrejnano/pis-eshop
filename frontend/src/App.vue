@@ -23,6 +23,12 @@ export default {
   components: {
     navigation: () => import(/* webpackChunkName: "navigation" */ './components/SimpleNavigation.vue'),
     shoppingCart: () => import(/* webpackChunkName: "shoppingCart" */ './components/ShoppingCart.vue')
+  },
+
+  created() {
+    if (localStorage.getItem('authToken')) {
+      this.$store.dispatch('USER_REQUEST')
+    }
   }
 }
 </script>

@@ -3,32 +3,26 @@
 
     <div class="featured-panel">
       <div class="title">{{title}}</div>
-
+      <div class="filters">
+        <button @click="setFilter(null)">All orders</button>
+        <button @click="setFilter('active')">Active orders</button>
+        <button @click="setFilter('created')">New orders</button>
+        <button @click="setFilter('expired')">Expired orders</button>
+        <button @click="setFilter('cancelled')">Cancelled orders</button>
+      </div>
       <ul class="orders">
-        <li class="order-item" v-for="order in orders" :key="order.title">
-          <button class="order" v-bind:class="{ opacity: order.state!=='active' }">
-            <div class="violet" v-if="!userData.isAdmin">{{ order.price }}€/month</div>
-            <div v-if="!userData.isAdmin">
-              <button v-if="order.state!=='cancelled'" @click="actionOrder(order._id, 'pay')">
-                PAY
-              </button>
-              <button v-if="order.state!=='cancelled'" @click="actionOrder(order._id, 'cancel')">
-                CANCEL
-              </button>
-
-              <button @click="reorder(order)">
-                REORDER
-              </button>
+        <li class="order-item" v-for="order in orders" :key="order._id">
+          <div class="order" v-bind:class="{ opacity: order.state!=='active' }">
+            <div class="cover">
+              <span class="order-id">#{{order._id}}</span>
+              <span v-if="userData.isAdmin" class="order-user"> {{order.user.fullname}} - {{order.user.email}}</span>
+              <time class="order-date">{{ new Date(order.date).toUTCString() }}</time>
+              <div class="order-status">Current status: <span class="status">{{ order.state }}</span></div>
             </div>
-            <span v-if="userData.isAdmin" class="violet"> {{order.user.fullname}} - {{order.user.email}}</span>
-            <br>
-            Current status: <span class="violet">{{ order.state }}</span> <br>
-            {{ new Date(order.date).toUTCString() }}<br>
-            <div class="violet" v-if="userData.isAdmin">{{ order.price }}€/month</div>
 
-            <div class="description" v-for="product in order.products" :key="product._id">
+            <div class="product-description" v-for="product in order.products" :key="product._id">
               <div class="main-title">{{ product.name }}</div>
-              <ul>
+              <ul class="configuration">
                 <li>
                   <label>RAM</label>
                   <span>{{ product.configuration.memory }} GB</span>
@@ -52,7 +46,23 @@
               </ul>
             </div>
 
-          </button>
+            <div class="price-box">
+              <label class="label">Order price:</label>
+              <span class="price">{{ order.price }}€/month</span>
+            </div>
+            <div class="pay-buttons" v-if="!userData.isAdmin">
+              <button v-if="order.state!=='cancelled'" @click="actionOrder(order._id, 'pay')">
+                PAY
+              </button>
+              <button v-if="order.state!=='cancelled'" @click="actionOrder(order._id, 'cancel')">
+                CANCEL
+              </button>
+              <button @click="reorder(order)">
+                REORDER
+              </button>
+            </div>
+
+          </div>
         </li>
       </ul>
     </div>
@@ -70,7 +80,8 @@
     data() {
       return {
         orders: [],
-        title: 'My orders'
+        title: 'My orders',
+        currentFilter: null,
       }
     },
 
@@ -84,8 +95,19 @@
         isAdmin: state => state.user.isAdmin
       }),
 
+      filteredOrders: function() {
+        return this.orders.filter(function(order) {
+          return order.state === this.filter;
+        });
+      }
+
     },
     methods: {
+
+      setFilter: function(filter) {
+        this.filter = filter;
+      },
+
       actionOrder(order_id, action) {
         axios.get('http://localhost:4000/api/orders/' + order_id + '/' + action)
           .then(() => {
@@ -176,81 +198,105 @@
     .orders {
       width: 100%;
       padding: 4rem 0;
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      grid-auto-rows: auto;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
 
       .order-item {
-        margin-right: 1rem;
+        width: 100%;
         margin-bottom: 2rem;
 
         .order {
           width: 100%;
-          padding: 2rem;
           background: #fff;
-          /* box-shadow: 1px solid #ccc; */
-          appearance: none;
-          /* outline: none; */
-          border: none;
           box-shadow: 0 2px 3px rgba(10, 10, 10, .1), 0 0 0 1px rgba(10, 10, 10, .1);
 
-
-          .top-info {
+          .cover {
+            background: radial-gradient(circle, rgba(95,92,255,1) 0%, rgba(33, 212, 253, 0.9) 200%);
+            /* background: rgb(33, 212, 253); */
+            transition: filter 200ms ease;
+            /* #21D4FD;rgb(62, 58, 255); */
+            width: 100%;
+            height: auto;
             display: flex;
             flex-direction: row;
+            justify-content: flex-start;
+            flex-wrap: wrap;
             align-items: center;
-            padding: 2rem 2rem;
+            color: #fff;
+            padding: 2rem;
 
-            .column {
-              width: 50%;
+            .order-id {
+              font-weight: 600;
+              font-size: 1.25rem;
+              margin-right: auto;
             }
 
+            .order-status {
+              width: 100%;
+              color: rgb(227, 227, 227);
+              font-size: 1rem;
+              .status {
+                font-weight: 600;
+                color: #fff;
+              }
+            }
 
-
-            .sub-title {
+            .order-date {
               font-size: 1rem;
               font-weight: 600;
+            }
+          }
+
+          .price-box {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 1rem 2rem;
+
+            .label {
+              font-size: 1rem;
+              font-weight: 400;
               color: #666;
               text-align: left;
             }
 
-
-
             .price {
-              font-size: 1.4rem;
+              font-size: 1rem;
+              margin-left: 0.5rem;
               font-weight: 600;
-              text-align: right;
-              color: #5F5CFF;
-
+              color: #000;
             }
           }
 
+          .pay-buttons {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 1rem 2rem;
 
-          .description {
-            border-top: 1px solid #ccc;
-            padding: 2rem 2rem;
-            text-align: left;
-            font-weight: 400;
-            color: #666;
+            button {
+              font-size: 1rem;
+              background: #ccc;
+              color: #000;
+            }
           }
 
+          .product-description {
+            .main-title {
+              font-size: 1rem;
+            }
+            .configuration {
+              display: flex;
+              flex-direction: row;
+            }
+          }
         }
       }
-    }
-
-    .violet {
-      color: #5F5CFF;
-      font-size: 1.4rem;
-      font-weight: 600;
-    }
-
-    label {
-      font-size: 1rem;
-      font-weight: 500;
-      color: #5F5CFF;
-      text-align: right;
-      margin: 1.5rem;
     }
 
     .main-title {
@@ -259,10 +305,11 @@
       font-weight: 600;
       text-align: left;
     }
+  }
 
-    .opacity {
-      opacity: 0.5;
-    }
+
+  .filters {
+    margin-top: 1rem;
   }
 
 </style>

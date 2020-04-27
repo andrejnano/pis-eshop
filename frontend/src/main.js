@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 import './styles/all.scss'
 import Vuelidate from 'vuelidate'
+import axios from 'axios'
 
 // icons
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -45,6 +46,15 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
+
+// load auth token from local storage and attach to every axios request in the future
+const authToken = localStorage.getItem('authToken')
+if (authToken) {
+  axios.defaults.headers.common['Authorization'] = authToken
+} else {
+  axios.defaults.headers.common['Authorization'] = null
+}
+
 
 new Vue({
   router,

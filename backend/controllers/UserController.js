@@ -27,7 +27,7 @@ module.exports.init =async function(req,res) {
   User.create({ email: 'jiri.maly@seznam.cz', fullname: 'Jiry Maly',})
     .then((user) => {
       user.setPassword("jirimaly")
-      user.setRegularUser()
+      user.setAdmin()
     })
 
   User.create({ email: 'anezka.kratka@test.com', fullname: 'Anezka Kratka',})

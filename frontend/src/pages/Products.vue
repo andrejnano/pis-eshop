@@ -245,8 +245,8 @@
           },
           ip: 10
         }
-        return prices.memory[this.newProduct.memory] + prices.cpu[this.newProduct.cpu] + prices.hdd[this.newProduct
-          .hdd] * prices.hddType[this.newProduct.hddType] + prices.ip * this.newProduct.ipCount;
+        return prices.memory[this.newProduct.memory.slice(0, -2)] + prices.cpu[this.newProduct.cpu] + prices.hdd[this.newProduct
+          .hdd.slice(0, -2)] * prices.hddType[this.newProduct.hddType] + prices.ip * this.newProduct.ipCount;
       },
       condition() {
 
@@ -277,9 +277,9 @@
         if (this.addIsVisible == false) this.addIsVisible = !this.addIsVisible;
         this.trueEditFalseCreate = true;
         this.selected = product;
-        this.newProduct.memory = product.configuration.memory;
+        this.newProduct.memory = product.configuration.memory+'GB';
         this.newProduct.cpu = product.configuration.cpu;
-        this.newProduct.hdd = product.configuration.hdd;
+        this.newProduct.hdd = product.configuration.hdd+'GB';
         this.newProduct.hddType = product.configuration.hddType;
         this.newProduct.ipCount = product.configuration.ipCount;
         this.newProduct.name = product.name;
@@ -296,9 +296,9 @@
               "configuration": {
                 "_id": this.newProduct.config_id,
                 "os": "Minecraft",
-                "memory": this.newProduct.memory,
+                "memory": this.newProduct.memory.slice(0, -2),
                 "cpu": this.newProduct.cpu,
-                "hdd": this.newProduct.hdd,
+                "hdd": this.newProduct.hdd.slice(0, -2),
                 "hddType": this.newProduct.hddType,
                 "ipCount": this.newProduct.ipCount
               },
@@ -320,9 +320,9 @@
               "name": this.newProduct.name,
               "configuration": {
                 "os": "Minecraft",
-                "memory": this.newProduct.memory,
+                "memory": this.newProduct.memory.slice(0, -2),
                 "cpu": this.newProduct.cpu,
-                "hdd": this.newProduct.hdd,
+                "hdd": this.newProduct.hdd.slice(0, -2),
                 "hddType": this.newProduct.hddType,
                 "ipCount": this.newProduct.ipCount,
               },
@@ -346,9 +346,9 @@
             "name": this.newProduct.name,
             "configuration": {
               "os": "Minecraft",
-              "memory": this.newProduct.memory,
+              "memory": this.newProduct.memory.slice(0, -2),
               "cpu": this.newProduct.cpu,
-              "hdd": this.newProduct.hdd,
+              "hdd": this.newProduct.hdd.slice(0, -2),
               "hddType": this.newProduct.hddType,
               "ipCount": this.newProduct.ipCount,
             },

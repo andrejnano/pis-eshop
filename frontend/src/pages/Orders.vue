@@ -11,7 +11,7 @@
         <button @click="setFilter('cancelled')">Cancelled orders</button>
       </div>
       <ul class="orders">
-        <li class="order-item" v-for="order in orders" :key="order._id">
+        <li class="order-item" v-for="order in filteredOrders" :key="order._id">
           <div class="order" v-bind:class="{ opacity: order.state!=='active' }">
             <div class="cover">
               <span class="order-id">#{{order._id}}</span>
@@ -24,24 +24,28 @@
               <div class="main-title">{{ product.name }}</div>
               <ul class="configuration">
                 <li>
-                  <label>RAM</label>
-                  <span>{{ product.configuration.memory }} GB</span>
+                  <label>RAM:</label>
+                  <span>{{ product.configuration.memory }}GB</span>
                 </li>
                 <li>
-                  <label>vCPU's</label>
+                  <label>vCPUs:</label>
                   <span>{{ product.configuration.cpu }}</span>
                 </li>
                 <li>
-                  <label>HDD</label>
-                  <span>{{ product.configuration.hdd }} GB</span>
+                  <label>Storage:</label>
+                  <span>{{ product.configuration.hdd }}GB</span>
                 </li>
                 <li>
-                  <label>Type</label>
+                  <label>Storage type:</label>
                   <span>{{ product.configuration.hddType }}</span>
                 </li>
                 <li>
-                  <label>IP's</label>
-                  <span>{{ generateIps(product.configuration.ipCount) }}</span>
+                  <label>IPs:</label>
+                  <span>
+                    <template v-for="(ip, index) in generateIps(product.configuration.ipCount)">
+                      <a :key="index" :href="ip">{{ip}}</a><br :key="index">
+                    </template>
+                  </span>
                 </li>
               </ul>
             </div>
@@ -96,9 +100,13 @@
       }),
 
       filteredOrders: function() {
-        return this.orders.filter(function(order) {
-          return order.state === this.filter;
-        });
+        if (this.filter) {
+          return this.orders.filter(function(order) {
+            return order.state === this.filter;
+          });
+        } else {
+          return this.orders;
+        }
       }
 
     },
@@ -118,13 +126,13 @@
           })
       },
       generateIps(count) {
-        var text = ""
+        let ips = []
         for (var i = 0; i < count; i++) {
           var ip = (Math.floor(Math.random() * 255) + 1) + "." + (Math.floor(Math.random() * 255)) + "." + (Math.floor(
             Math.random() * 255)) + "." + (Math.floor(Math.random() * 255));
-          text += ", " + ip;
+          ips.push(ip)
         }
-        return text;
+        return ips;
       },
       fetchProducts() {
         var url = '';
@@ -287,12 +295,25 @@
           }
 
           .product-description {
+            padding: 1rem 2rem;
             .main-title {
               font-size: 1rem;
             }
             .configuration {
               display: flex;
-              flex-direction: row;
+              flex-direction: column;
+
+              li {
+                display: flex;
+                label {
+                  width: 120px;
+                  text-align: right;
+                }
+                span {
+                  margin-left: 0.5rem;
+                  font-weight: 600;
+                }
+              }
             }
           }
         }

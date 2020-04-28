@@ -78,6 +78,20 @@
                   <font-awesome-icon :icon="[ 'fad', 'redo' ]" /> REORDER
                 </button>
               </div>
+              <div class="cta-buttons" v-if="userData.isAdmin">
+                <button class="reset" v-if="order.state!=='created'" @click="actionOrder(order._id, 'reset')">
+                  <font-awesome-icon :icon="[ 'fad', 'credit-card' ]" /> RESET
+                </button>
+                 <button class="pay" v-if="order.state!=='active'&&order.state!=='cancelled'" @click="actionOrder(order._id, 'pay')">
+                  <font-awesome-icon :icon="[ 'fad', 'credit-card' ]" /> PAY
+                </button>
+                <button class="cancel" v-if="order.state!=='cancelled'" @click="actionOrder(order._id, 'cancel')">
+                  <font-awesome-icon :icon="[ 'fad', 'window-close' ]" /> CANCEL
+                </button>
+                <button class="pay" v-if="order.state==='cancelled'" @click="actionOrder(order._id, 'pay')">
+                  <font-awesome-icon :icon="[ 'fad', 'redo' ]" /> REACTIVATE
+                </button>
+              </div>
             </footer>
           </div>
         </li>
@@ -428,6 +442,11 @@
 
                 &.pay {
                   background:  rgb(88, 220, 88);
+                  color: #000;
+                }
+
+                &.reset {
+                  background:  rgb(255, 92, 217);
                   color: #000;
                 }
 

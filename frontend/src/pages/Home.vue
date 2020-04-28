@@ -33,11 +33,6 @@
 <script>
 import { mapState } from 'vuex'
 import ShoppingCart from '../components/ShoppingCart'
-<<<<<<< HEAD
-=======
-
->>>>>>> 72137de003f16d49dc7dffc3cc5eefb262cee91b
-
 
 export default {
   name: 'Home',

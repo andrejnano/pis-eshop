@@ -56,8 +56,8 @@ export default {
 
 /* For all window sizes */
 #main {
-  min-height: calc(100vh-50px);
-  background: #fff;
+  min-height: 100vh;
+  background: rgb(247, 247, 255);
 }
 
 /* For small window */

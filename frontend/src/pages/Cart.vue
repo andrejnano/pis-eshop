@@ -13,8 +13,12 @@
         <li v-for="(product, index) in getCartProducts" :key="index" class="order-list-item">
           <button @click="removeFromCart(index)" class="remove-button"><font-awesome-icon :icon="['fad', 'times']" /></button>
           <font-awesome-icon :icon="['fad', product.icon ]" class="product-icon"/>
-          <div class="product-name">{{product.name}}</div>
-          <div class="product-configuration">[{{product.configuration}}]</div>
+          <div class="item-info-box">
+            <div class="product-name">{{product.name}}</div>
+              <div class="product-configuration">
+                OS: {{ product.configuration.os }}, RAM: {{ product.configuration.memory }}, vCPUs: {{ product.configuration.cpu }}, HDD: {{ product.configuration.hdd }}GB
+            </div>
+          </div>
           <div class="product-price">{{product.price}}<small>€/mo</small></div>
         </li>
       </ul>
@@ -83,9 +87,8 @@ export default {
 .featured-panel {
   width: 100%;
   background: rgb(247, 247, 255);
-
+  padding:5rem;
   min-height: calc(100vh - 50px);
-  max-width: 90vw;
   margin: 0 auto;
   color: #000;
   display: flex;
@@ -142,16 +145,28 @@ export default {
 
       .product-icon {
         margin-right: 0.5rem;
+        font-size: 2rem;
+        color:#5F5CFF;
       }
-      .product-name {
-        font-weight: 800;
-        margin-right: 0.5rem;
-      }
-      .product-configuration {
-        font-size: 1rem;
-        font-weight: 400;
-        color: #666;
+
+      .item-info-box {
         margin-right: auto;
+        margin-left: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+
+        .product-name {
+          font-weight: 600;
+          font-size: 1.2rem;
+          line-height: 1.2;
+          width: 100%;
+        }
+        .product-configuration {
+          font-size: 1rem;
+          line-height: 1.5;
+          font-weight: 400;
+          color: #666;
+        }
       }
 
       .product-price {

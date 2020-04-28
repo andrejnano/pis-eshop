@@ -246,8 +246,8 @@
           },
           ip: 10
         }
-        return prices.memory[this.newProduct.memory.slice(0, -2)] + prices.cpu[this.newProduct.cpu] + prices.hdd[this.newProduct
-          .hdd.slice(0, -2)] * prices.hddType[this.newProduct.hddType] + prices.ip * this.newProduct.ipCount;
+        return (prices.memory[this.newProduct.memory.slice(0, -2)] + prices.cpu[this.newProduct.cpu] + prices.hdd[this.newProduct
+          .hdd.slice(0, -2)] * prices.hddType[this.newProduct.hddType] + prices.ip * this.newProduct.ipCount) || 0;
       },
       condition() {
 
@@ -661,7 +661,7 @@
 
           select {
 
-            background: rgba(255,255,255, 0.2);
+            background: rgb(140, 161, 255);
             color: #fff;
             width: 60%;
             text-align: left;

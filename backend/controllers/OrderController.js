@@ -264,3 +264,25 @@ module.exports.cancel = async function(req, res) {
     return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)
   }
 }
+
+/*
+|--------------------------------------------------------------------------------
+| reactivate a Order (:order_id)
+|--------------------------------------------------------------------------------
+*/
+module.exports.reset = async function(req, res) {
+  await req.user.set(req.body);
+  if (req.user) {
+    let user = await User.findById(req.user._id, function (err, user) {
+      return user;
+    })
+    let { payment, price, product } = req.body;
+    let prod = await Product.findOne({_id: product}, function (err, prod) {
+      return prod;
+    })
+    let doc = await Order.findOneAndUpdate({_id: req.params.order_id}, { state: "created"});
+    return SuccessResponse(res, { cancelled: doc }, 200)
+  } else {
+    return ErrorResponse(res, { message: "You don't have permission to edit this type resource." }, 404)
+  }
+}

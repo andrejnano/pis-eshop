@@ -12,8 +12,11 @@
       <div class="subtitle">Servers for gaming, e-commerce and web app deployment.</div>
       <div class="subtitle-2">Built by developers for developers.</div>
       <div class="cta">
-        <router-link to="register" class="button primary-button" v-if="!this.userData.email">
-          <span class="link-text" >Sign up</span>
+        <router-link v-if="!userData.email" to="/register" class="button primary-button">
+          <span class="link-text">Sign up</span>
+        </router-link>
+        <router-link v-if="userData.email" to="/categories" class="button primary-button">
+          <span class="link-text">View all VPS categories</span>
         </router-link>
         <router-link to="pricing" class="button secondary-button">
           <span class="link-text">View pricing</span>
@@ -28,7 +31,7 @@
 
 
 <script>
-
+import { mapState } from 'vuex'
 import ShoppingCart from '../components/ShoppingCart'
 import {
   mapState
@@ -40,12 +43,13 @@ export default {
   components: {
     ShoppingCart,
   },
-   computed: {
-      ...mapState({
-        userData: state => state.user.userData,
-        isAdmin: state => state.user.isAdmin
+
+  computed: {
+    ...mapState({
+      userData: state => state.user.userData,
       }),
-    },
+  }
+
 }
 </script>
 

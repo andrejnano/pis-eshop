@@ -2,11 +2,10 @@
 - [x] add healthcheck, visualize communication between FE <-> BE
 - [x] add font-awesome
 - [x] design & create layout
-- [ ] create backend ***API spec***
 - [x] create backend ***API routes***
 - [x] create backend *Controllers*
 - [x] create backend **Model** (DataModel)
-- [ ] Make *Controllers* use **Model** <-> Database
+- [x] Make *Controllers* use **Model** <-> Database
 - [ ] Fix production deployment pipeline: dont stop running production containers when rebuilding updated images.
 - [x] add http2
 - [x] add SSL/https

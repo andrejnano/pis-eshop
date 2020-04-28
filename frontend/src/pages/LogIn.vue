@@ -31,6 +31,12 @@
 
       <div class="dont-have-acc-box">Don't have an account? <router-link to="/register">Sign up now.</router-link></div>
 
+
+      <transition name="wobbleHor">
+        <div v-if="authError" class="auth-error">
+          Email or password incorrect!
+        </div>
+      </transition>
     </div>
 
   </div>
@@ -50,7 +56,8 @@ export default {
       password: '',
       showResult: false,
       resEmail: '',
-      resToken: ''
+      resToken: '',
+      authError: false
     }
   },
 
@@ -67,14 +74,16 @@ export default {
   },
   methods: {
     submit: function () {
-
+      this.authError = false;
       // validate input and only then send to API
       if (this.email && this.password) {
         this.$store.dispatch('AUTH_REQUEST', { email: this.email, password: this.password })
           .then(() => {
+            this.authError = false;
             this.$router.push('/')
           })
           .catch((error) => {
+            this.authError = true;
             console.error(error)
           })
       }
@@ -86,6 +95,17 @@ export default {
 
 <style lang="scss" scoped>
 
+
+
+.auth-error {
+  font-size: 2rem;
+  background-color: orangered;
+  border-radius: 3px;
+  padding: 1rem 2rem;
+  font-weight: 500;
+  margin: 2rem 0;
+  color: #fff;
+}
 
 .dont-have-acc-box {
   margin-top: 2rem;
@@ -169,4 +189,36 @@ export default {
       }
     }
   }
+
+  .wobbleHor-enter-active {
+    animation: wobble-hor-bottom 0.8s;
+  }
+
+  .wobbleHor-leave-active {
+    animation: wobble-hor-bottom 0.8s reverse;
+  }
+
+@keyframes wobble-hor-bottom {
+  0%,
+  100% {
+    transform: translateX(0%);
+    transform-origin: 50% 50%;
+  }
+  15% {
+    transform: translateX(-30px) rotate(-6deg);
+  }
+  30% {
+    transform: translateX(15px) rotate(6deg);
+  }
+  45% {
+    transform: translateX(-15px) rotate(-3.6deg);
+  }
+  60% {
+    transform: translateX(9px) rotate(2.4deg);
+  }
+  75% {
+    transform: translateX(-6px) rotate(-1.2deg);
+  }
+}
+
 </style>

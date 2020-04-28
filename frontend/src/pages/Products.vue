@@ -33,11 +33,10 @@
                   <label>vCPU</label>
                 </li>
                 <li>
-                    <span>{{ product.configuration.hdd }} GB</span>
+                  <span>{{ product.configuration.hdd }} GB</span>
                    <label>HDD</label>
                 </li>
                 <li>
-
                   <span>{{ product.configuration.hddType }}</span>
                   <label>Storage</label>
                 </li>
@@ -47,16 +46,24 @@
                 </li>
               </ul>
             </div>
+
             <div class="description">{{ product.description }}</div>
-            <div class="top-info">
+
+            <div class="product-footer">
               <div class="price-box">
-                <div class="label">Price:</div>
-                <div class="price">{{ product.price }}€/month</div>
+                <!-- <div class="label">Price:</div> -->
+                <div class="price">{{ product.price }}€<span class="per-month">/month</span></div>
               </div>
+              <button v-if="!productInCart(product._id)" class="add-to-cart" @click="addProductToCart(product)">
+                <font-awesome-icon :icon="[ 'fad', 'cart-plus' ]"/> Add to cart
+              </button>
+              <transition name="bounce">
+                <button v-if="productInCart(product._id)" disabled class="added-to-cart">
+                  <font-awesome-icon :icon="[ 'fad', 'badge-check' ]"/>
+                </button>
+              </transition>
             </div>
-            <button class="cta" @click="addProductToCart(product)">
-              Add to cart <font-awesome-icon :icon="[ 'fad', 'cart-plus' ]"/>
-            </button>
+
           </div>
         </li>
         <button class="product dashed-border" v-if="userData.isAdmin"
@@ -166,7 +173,8 @@
 <script>
   import axios from 'axios';
   import {
-    mapState
+    mapState,
+    mapGetters
   } from 'vuex'
 
   export default {
@@ -195,7 +203,6 @@
 
     created() {
       this.fetchProducts();
-
     },
 
     computed: {
@@ -203,10 +210,26 @@
         userData: state => state.user.userData,
         isAdmin: state => state.user.isAdmin
       }),
-
+      ...mapGetters([
+        'getCartProducts',
+        'cartEmpty'
+      ]),
     },
 
     methods: {
+
+      productInCart: function(productId) {
+
+        if (!this.cartEmpty) {
+          let productFromCart = this.getCartProducts.find(function(product) {
+            return product._id === productId;
+          });
+          if (productFromCart) {
+            return true;
+          }
+        }
+        return false;
+      },
 
       addProductToCart: function(product) {
         this.$store.dispatch('CART_ADD_PRODUCT', product);
@@ -461,7 +484,7 @@
 
         .product {
           width: 100%;
-          height: 100%;
+          height: auto;
           padding: 0;
           background: #fff;
           /* box-shadow: 1px solid #ccc; */
@@ -473,14 +496,16 @@
           .cover {
             /* background: radial-gradient(circle, rgba(33, 212, 253, 0.5) 0%, rgba(95,92,255,1) 70%); */
             background: rgb(95,92,255);
+            background: radial-gradient(circle, rgba(95,92,255,1) 0%, rgba(33, 212, 253, 0.9) 200%);
             width: 100%;
             height: 200px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: center;
+            flex-wrap: wrap;
             align-items: center;
             color: #fff;
-            font-size: 3rem;
+            font-size: 4rem;
             position: relative;
 
             .admin-buttons {
@@ -500,24 +525,36 @@
               }
             }
 
+            svg {
+              position: absolute;
+              top: 1.5rem;
+              right: 1.5rem;
+            }
+
             .main-title {
+              width: 100%;
               line-height: 2;
-              font-size: 1.2rem;
-              font-weight: 1000;
+              font-size: 1.6rem;
+              font-weight: 800;
+              margin-left: 1.5rem;
               text-align: left;
+              margin-top: 0.5rem;
             }
 
             .configuration {
-
+              width: 100%;
+              margin-left: 2.5rem;
+              margin-top: -2rem;
               li {
-                font-size: 1rem;
-                line-height: 1.2;
+                font-size: 1.2rem;
+                line-height: 1.4;
                 display: flex;
-                justify-content: center;
+                justify-content: flex-start;
                 color: rgb(227, 227, 227);
 
                 label {
-                  font-weight: 400;
+                  color: #ccc;
+                  font-weight: 300;
                   margin-left: 0.25rem;
                 }
 
@@ -544,48 +581,101 @@
             overflow: hidden;
           }
 
-          .price-box {
-            width: 100%;
+          .product-footer {
+            /* background: red; */
             display: flex;
+            height: 50px;
             flex-direction: row;
-            justify-content: center;
-            padding: 1.5rem 2rem 0rem;
+            align-items: center;
+            background: rgb(48, 48, 48);
+            /* border: 2px inset rgba(65, 65, 65, 0.5); */
 
-            .label {
-              font-size: 1rem;
-              font-weight: 400;
-              color: #666;
-              text-align: left;
+            .price-box {
+              width: 50%;
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              position: relative;
+              padding-bottom: 0.25rem;
+
+
+              .label {
+                margin-left: 0.25rem;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: #666;
+                text-align: left;
+              }
+
+              .price {
+                font-size: 1.5rem;
+                margin-left: 0.5rem;
+                /* text-align:right; */
+                font-weight: 600;
+                color: #fff;
+
+                .per-month {
+                  margin-left: 0.125rem;
+                  font-size: 0.9rem;
+                  color: rgb(143, 143, 143);
+                }
+              }
             }
 
-            .price {
-              font-size: 1rem;
-              margin-left: 0.5rem;
+            .added-to-cart {
+              width: 50%;
+              margin:0;
+              /* line-height: 2rem; */
+              padding:0.5rem auto;
+              height: 100%;
+              display: block;
+              background-color:rgb(70, 70, 70);
               font-weight: 600;
-              color: #000;
+              color: rgb(65, 184, 103);
+              display: flex;
+              justify-content: center;
+              /* border: 2px solid transparent; */
+              transition: background-color 200ms ease;
+              white-space: nowrap;
+              > svg {
+                /* margin: 0 0.5rem; */
+                font-size: 2rem;
+              }
+            }
+
+            .add-to-cart {
+              width: 50%;
+              font-size: 1rem;
+              /* margin: 1rem auto; */
+              margin:0;
+              height: 100%;
+              /* padding: 0.75rem 1rem; */
+              padding: 0.5rem auto;
+              background-color:rgb(65, 184, 103);
+              font-weight: 600;
+              color: #fff;
+              display: flex;
+              justify-content: center;
+              /* border: 2px solid transparent; */
+              transition: background-color 200ms ease;
+              white-space: nowrap;
+
+              &:hover {
+                background-color:rgb(43, 125, 69);
+
+                svg {
+                  color: #fff;
+                }
+              }
+
+              > svg {
+                margin: 0 0.5rem;
+              }
             }
           }
 
-          .cta {
-            width: 100%;
-            font-size: 1rem;
-            padding: 1.5rem 1rem;
-            color:rgba(33, 212, 253,1);
-            font-weight: 600;
-            background-color: #fff;
-            display: flex;
-            justify-content: center;
-            border: 2px solid transparent;
-            transition: color 200ms ease;
 
-            &:hover {
-              color: #5F5CFF;
-            }
-
-            > svg {
-              margin: 0 0.5rem;
-            }
-          }
         }
       }
     }
@@ -788,5 +878,23 @@
     margin: 0.5rem;
     box-shadow: 0px 1px 3px 2px rgba(0, 0, 0, 0.24);
   }
+
+
+.bounce-enter-active {
+  animation: fade-in 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+.bounce-leave-active {
+  animation:  fade-in 0.6s reverse;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 
 </style>

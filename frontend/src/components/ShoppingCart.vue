@@ -37,8 +37,9 @@
     <template v-else>
       <button @click="toggleVisibility" class="show-cart-button">
         <font-awesome-icon :icon="[ 'fad', 'shopping-cart' ]" title="Shopping cart" />
-
-        <span v-if="cartHasProducts()" class="quantity-ticker">{{ totalQuantity() }}</span>
+        <transition name="bounce">
+          <span :key="totalQuantity()" v-if="cartHasProducts()" class="quantity-ticker">{{ totalQuantity() }}</span>
+        </transition>
       </button>
     </template>
   </div>
@@ -52,7 +53,7 @@ export default {
   data() {
     return {
       cartVisible: false,
-
+      tickerBounce: false,
       exampleProduct: {
         _id: "5ea5ceeb10c9cc013f7aecd3",
         name: "Docker 2",
@@ -64,23 +65,7 @@ export default {
       },
 
       shoppingCart: {
-        cartProducts: [
-          {
-            id: 12424,
-            productName: "VPS 1",
-            price: 24
-          },
-          {
-            id: 62424,
-            productName: "VPS 2",
-            price: 56
-          },
-          {
-            id: 42424,
-            productName: "VPS 3",
-            price: 43
-          },
-        ]
+        cartProducts: [ ]
       }
     }
   },
@@ -127,6 +112,15 @@ export default {
       'getCartProducts'
     ]),
   },
+
+  watch: {
+    getCartProducts() {
+      this.tickerBounce = true;
+      setTimeout(function() {
+        this.tickerBounce = false;
+      }.bind(this), 1000);
+    }
+  }
 }
 </script>
 
@@ -141,7 +135,9 @@ export default {
   color: #5F5CFF;
   box-shadow: 1px 1px 0px 0px #ddd;
   appearance: none;
-  transition: background-color 100ms ease;
+  transition: background-color 200ms ease;
+  color: rgb(176, 176, 176);
+  background-color:rgb(70, 70, 70);
 
   &:hover {
     background-color: #5F5CFF;
@@ -157,8 +153,9 @@ export default {
     /* transform: translateX(-50%); */
     font-size: 1.3rem;
     color: #666;
-    background: #fff;
-    border: 1px solid #ccc;
+    background-color: #5F5CFF;
+    color: #fff;
+    border: 2px solid #fff;
     border-radius: 50%;
     width: 2rem;
     height: 2rem;
@@ -166,6 +163,12 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+
+
+    &.spin {
+      animation:spin 2s linear infinite;
+      @keyframes spin { 100% { -webkit-transform: rotateZ(360deg); transform:rotateZ(360deg); } }
+    }
   }
 }
 
@@ -315,6 +318,24 @@ export default {
   }
 
 
+}
+
+.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 </style>

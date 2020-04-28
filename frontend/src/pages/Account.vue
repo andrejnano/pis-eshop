@@ -12,7 +12,7 @@
 
         <div class="column">
           <div class="main-title" v-if="!editing">{{user.fullname}}</div>
-          <input class="main-title" v-if="editing" v-model="newUsername" placeholder="Change email">
+          <input class="main-title" v-if="editing" v-model="newUsername" placeholder="Change full name">
         </div>
         <div class="column">
           <div class="label">Currently paying:</div>

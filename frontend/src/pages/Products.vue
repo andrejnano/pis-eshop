@@ -511,6 +511,8 @@
             .admin-buttons {
               position: absolute;
               top: 0;
+              /* left: 0; */
+              /* border: 1px solid red; */
               width: 100%;
               display: flex;
               flex-direction: row;
@@ -520,14 +522,14 @@
               .edit, .delete {
                 color: #fff;
                 padding: 0.5rem;
-                margin: 0.5rem 1rem;
+                margin: 0.25rem 0.5rem;
                 &:hover {color: #ccc;}
               }
             }
 
-            svg {
+            > svg {
               position: absolute;
-              top: 1.5rem;
+              top: 2rem;
               right: 1.5rem;
             }
 
